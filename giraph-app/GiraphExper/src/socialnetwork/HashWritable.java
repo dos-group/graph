@@ -17,16 +17,20 @@ import org.apache.hadoop.classification.InterfaceStability;
 
 public class HashWritable implements WritableComparable<HashWritable> {
 	
-	private Hashtable<String, Object> value = new Hashtable<String, Object>();
+	private Hashtable<String, Object> value;
 
 	//-- Constructors
 	
 	public HashWritable() {
-		
+		value = new Hashtable<String, Object>();
 	}
 	
 	public HashWritable(Hashtable<String, Object> value) {
 		value = new Hashtable<String, Object>(value);
+	}
+	
+	public HashWritable(String s) {
+		setValueFromString(s);
 	}
 	
 	//-- String Converters
@@ -89,7 +93,7 @@ public class HashWritable implements WritableComparable<HashWritable> {
 
 	@Override
 	public void readFields(DataInput in) throws IOException {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
