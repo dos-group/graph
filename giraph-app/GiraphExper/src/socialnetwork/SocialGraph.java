@@ -1,4 +1,4 @@
-package dlx;
+package socialnetwork;
 
 import java.io.IOException;
 
@@ -10,8 +10,8 @@ import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.log4j.Logger;
 
-public class FirstGraph extends BasicComputation<LongWritable, DoubleWritable, FloatWritable, DoubleWritable> {
-	protected static Logger log = Logger.getLogger(FirstGraph.class);
+public class SocialGraph extends BasicComputation<LongWritable, DoubleWritable, FloatWritable, DoubleWritable> {
+	protected static Logger log = Logger.getLogger(SocialGraph.class);
 	
 	
 	@Override
