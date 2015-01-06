@@ -10,37 +10,38 @@ import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.log4j.Logger;
 
-public class FirstGraph extends BasicComputation<LongWritable, DoubleWritable, FloatWritable, DoubleWritable> {
+public class FirstGraph
+		extends
+		BasicComputation<LongWritable, DoubleWritable, FloatWritable, DoubleWritable> {
 	protected static Logger log = Logger.getLogger(FirstGraph.class);
-	
-	
+
 	@Override
 	public void compute(
 			Vertex<LongWritable, DoubleWritable, FloatWritable> vertex,
 			Iterable<DoubleWritable> messages) throws IOException {
 
 		// Basic log at a vertex
-		log.info("At: super step " + getSuperstep() + " vertex " + vertex.toString());
-				
-		
+		log.info("At: super step " + getSuperstep() + " vertex "
+				+ vertex.toString());
+
 		// Send message with random number along each outgoing
 		// edge.
 		if (getSuperstep() == 0) {
 			for (Edge<LongWritable, FloatWritable> edge : vertex.getEdges()) {
 				double randomNumber = Math.random();
-				sendMessage(edge.getTargetVertexId(), 
-					new DoubleWritable(randomNumber));
-				log.info("Sent random number " + randomNumber 
-						+ " at vertex " + vertex.toString());
+				sendMessage(edge.getTargetVertexId(), new DoubleWritable(
+						randomNumber));
+				log.info("Sent random number " + randomNumber + " at vertex "
+						+ vertex.toString());
 			}
 		}
-		
+
 		// Just log message you received.
 		for (DoubleWritable message : messages) {
-			log.info("Got random number " + message.get() 
-					+ " at vertex " + vertex.toString());
+			log.info("Got random number " + message.get() + " at vertex "
+					+ vertex.toString());
 		}
-	
+
 		vertex.voteToHalt();
 	}
 

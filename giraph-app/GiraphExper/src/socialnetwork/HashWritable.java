@@ -87,20 +87,18 @@ public class HashWritable implements WritableComparable<HashWritable> {
 	
 	@Override
 	public void write(DataOutput out) throws IOException {
-		// TODO Auto-generated method stub
-		
+		out.writeChars(toString() + "\n");
 	}
 
 	@Override
 	public void readFields(DataInput in) throws IOException {
-		
-		
+		String readState = in.readLine();
+		setValueFromString(readState);
 	}
 
 	@Override
 	public int compareTo(HashWritable o) {
-		// TODO Auto-generated method stub
-		return 0;
+		return toString().compareTo(o.toString());
 	}
 
 }
