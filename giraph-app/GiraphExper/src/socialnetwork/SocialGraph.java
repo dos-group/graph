@@ -20,7 +20,7 @@ public class SocialGraph extends BasicComputation<LongWritable, HashWritable, Fl
 			Iterable<DoubleWritable> messages) throws IOException {
 
 		// Basic log at a vertex
-		log.info("At: super step " + getSuperstep() + " vertex " + vertex.toString());
+//		log.info("At: super step " + getSuperstep() + " vertex " + vertex.toString());
 				
 		
 		// Send message with random number along each outgoing
@@ -30,15 +30,15 @@ public class SocialGraph extends BasicComputation<LongWritable, HashWritable, Fl
 				double randomNumber = Math.random();
 				sendMessage(edge.getTargetVertexId(), 
 					new DoubleWritable(randomNumber));
-				log.info("Sent random number " + randomNumber 
-						+ " at vertex " + vertex.toString());
+//				log.info("Sent random number " + randomNumber 
+//						+ " at vertex " + vertex.toString());
 			}
 		}
 		
 		// Just log message you received.
 		for (DoubleWritable message : messages) {
-			log.info("Got random number " + message.get() 
-					+ " at vertex " + vertex.toString());
+//			log.info("Got random number " + message.get() 
+//					+ " at vertex " + vertex.toString());
 		}
 	
 		vertex.voteToHalt();

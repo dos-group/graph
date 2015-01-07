@@ -12,9 +12,11 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.apache.log4j.Logger;
 
 public class JsonVertexEdgeHashOutputFormat extends
 		TextVertexOutputFormat<LongWritable, DoubleWritable, FloatWritable> {
+	protected static Logger log = Logger.getLogger(JsonVertexEdgeHashOutputFormat.class);
 
 	@Override
 	public TextVertexWriter createVertexWriter(TaskAttemptContext context) {
@@ -26,6 +28,7 @@ public class JsonVertexEdgeHashOutputFormat extends
 		public Text convertVertexToLine(
 				Vertex<LongWritable, DoubleWritable, FloatWritable> vertex)
 				throws IOException {
+			log.info("About to write a line.");
 			JSONArray jsonVertex = new JSONArray();
 			try {
 				jsonVertex.put(vertex.getId().get());

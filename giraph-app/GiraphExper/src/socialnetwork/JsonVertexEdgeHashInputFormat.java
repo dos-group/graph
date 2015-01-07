@@ -14,15 +14,18 @@ import org.apache.giraph.graph.Vertex;
 import org.apache.giraph.io.formats.TextVertexInputFormat;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.apache.log4j.Logger;
 
 import com.google.common.collect.Lists;
 
 public class JsonVertexEdgeHashInputFormat extends
 		TextVertexInputFormat<LongWritable, HashWritable, FloatWritable> {
+	protected static Logger log = Logger.getLogger(JsonVertexEdgeHashInputFormat.class);
 
 	@Override
 	public TextVertexReader createVertexReader(InputSplit split,
 			TaskAttemptContext context) {
+		log.info("Creating vertex reader.");
 		return new JsonVertexEdgeHashReader();
 	}
 
@@ -41,24 +44,28 @@ public class JsonVertexEdgeHashInputFormat extends
 
 		@Override
 		protected JSONArray preprocessLine(Text line) throws JSONException {
+			log.info("Precessing line.");
 			return new JSONArray(line.toString());
 		}
 
 		@Override
 		protected LongWritable getId(JSONArray jsonVertex)
 				throws JSONException, IOException {
+			log.info("Getting ID.");
 			return new LongWritable(jsonVertex.getLong(0));
 		}
 
 		@Override
 		protected HashWritable getValue(JSONArray jsonVertex)
 				throws JSONException, IOException {
+			log.info("Getting Value.");
 			return new HashWritable(jsonVertex.getString(1));
 		}
 
 		@Override
 		protected Iterable<Edge<LongWritable, FloatWritable>> getEdges(
 				JSONArray jsonVertex) throws JSONException, IOException {
+			log.info("Getting edges.");
 			JSONArray jsonEdgeArray = jsonVertex.getJSONArray(2);
 			List<Edge<LongWritable, FloatWritable>> edges = Lists
 					.newArrayListWithCapacity(jsonEdgeArray.length());
@@ -74,6 +81,7 @@ public class JsonVertexEdgeHashInputFormat extends
 		@Override
 		protected Vertex<LongWritable, HashWritable, FloatWritable> handleException(
 				Text line, JSONArray jsonVertex, JSONException e) {
+			log.info("Handling exception.");
 			throw new IllegalArgumentException("Couldn't get vertex from line "
 					+ line, e);
 		}
