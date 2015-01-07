@@ -8,6 +8,7 @@ import java.util.Hashtable;
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
+import org.mortbay.log.Log;
 
 /**
  * Writable for hashmaps with key:String, value:Object.
@@ -92,6 +93,8 @@ public class HashWritable implements WritableComparable<HashWritable> {
 
 	@Override
 	public void readFields(DataInput in) throws IOException {
+		// When is this executed???
+		Log.info("reading entire line");
 		String readState = in.readLine();
 		setValueFromString(readState);
 	}
