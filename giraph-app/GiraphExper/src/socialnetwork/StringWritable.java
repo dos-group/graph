@@ -27,7 +27,17 @@ public class StringWritable implements WritableComparable<StringWritable> {
   
   @Override
   public void readFields(DataInput in) throws IOException {
-    value = in.readUTF();
+	  
+	String s = "";
+	char c = in.readChar();
+	while (c != '}') {
+		if (c != '{') {
+			s += c;
+		}
+		c = in.readChar();
+	}
+    value = s;
+    
   }
 
   @Override
