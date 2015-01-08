@@ -17,6 +17,7 @@ public class FirstGraph
 
 	@Override
 	public void compute(
+			
 			Vertex<LongWritable, DoubleWritable, FloatWritable> vertex,
 			Iterable<DoubleWritable> messages) throws IOException {
 

@@ -10,14 +10,16 @@ import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.log4j.Logger;
 
-public class SocialGraph extends BasicComputation<LongWritable, HashWritable, FloatWritable, DoubleWritable> {
+public class SocialGraph extends BasicComputation<LongWritable, StringWritable, FloatWritable, DoubleWritable> {
 	protected static Logger log = Logger.getLogger(SocialGraph.class);
 	
 	
 	@Override
 	public void compute(
-			Vertex<LongWritable, HashWritable, FloatWritable> vertex,
+			Vertex<LongWritable, StringWritable, FloatWritable> vertex,
 			Iterable<DoubleWritable> messages) throws IOException {
+		
+		log.info("Starting computations at a vertex.");
 
 		// Basic log at a vertex
 //		log.info("At: super step " + getSuperstep() + " vertex " + vertex.toString());
@@ -36,10 +38,10 @@ public class SocialGraph extends BasicComputation<LongWritable, HashWritable, Fl
 		}
 		
 		// Just log message you received.
-		for (DoubleWritable message : messages) {
+//		for (DoubleWritable message : messages) {
 //			log.info("Got random number " + message.get() 
 //					+ " at vertex " + vertex.toString());
-		}
+//		}
 	
 		vertex.voteToHalt();
 	}
