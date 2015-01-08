@@ -31,20 +31,16 @@ public class StringWritable implements WritableComparable<StringWritable> {
 	public void readFields(DataInput in) throws IOException {
 
 		String s = "";
-		try {
 
-			char c = in.readChar();
-			while (c != '}') {
-				if (c != '{') {
-					s += c;
-				}
-				c = in.readChar();
+		char c = in.readChar();
+		while (c != '}') {
+			if (c != '{') {
+				s += c;
 			}
-
-		} catch (Exception e) {
-			log.info("Starting computations at a vertex.");
-			throw e;
+			c = in.readChar();
+			log.info("Read so far: " + s);
 		}
+
 		value = s;
 
 	}
