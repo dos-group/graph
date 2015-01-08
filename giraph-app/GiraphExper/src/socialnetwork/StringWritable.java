@@ -30,13 +30,13 @@ public class StringWritable implements WritableComparable<StringWritable> {
 	@Override
 	public void readFields(DataInput in) throws IOException {
 
-		byte[] b = new byte[7];
+		short[] sh = new short[7];
 		for (int i = 0; i < 7; i ++) {
-			b[i] = (byte) in.readUnsignedByte();
-			log.info("Read byte: " + b[i]);
+			sh[i] = (short) in.readUnsignedShort();
+			log.info("Read short: " + sh[i]);
 		}
 		
-		value = new String(b);
+		value = "something";
 
 //		char c = in.readChar();
 //		log.info("Read char0: " + c);
