@@ -12,13 +12,13 @@ import org.apache.log4j.Logger;
 
 public class HashTest
 		extends
-		BasicComputation<LongWritable, DoubleWritable, FloatWritable, DoubleWritable> {
+		BasicComputation<LongWritable, HashWritable, FloatWritable, DoubleWritable> {
 	protected static Logger log = Logger.getLogger(HashTest.class);
 
 	@Override
 	public void compute(
 
-	Vertex<LongWritable, DoubleWritable, FloatWritable> vertex,
+	Vertex<LongWritable, HashWritable, FloatWritable> vertex,
 			Iterable<DoubleWritable> messages) throws IOException {
 
 		// Basic log at a vertex
