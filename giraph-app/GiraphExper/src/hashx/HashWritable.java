@@ -1,4 +1,4 @@
-package hash;
+package hashx;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -8,6 +8,7 @@ import java.util.Hashtable;
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.classification.InterfaceAudience;
 import org.apache.hadoop.classification.InterfaceStability;
+import org.apache.log4j.Logger;
 import org.mortbay.log.Log;
 
 /**
@@ -17,26 +18,31 @@ import org.mortbay.log.Log;
 @InterfaceStability.Stable
 
 public class HashWritable implements WritableComparable<HashWritable> {
+	protected static Logger log = Logger.getLogger(HashTest.class);
 	
 	private Hashtable<String, Object> value;
 
 	//-- Constructors
 	
 	public HashWritable() {
+		log.info("Constructing Hash Writable 1");
 		value = new Hashtable<String, Object>();
 	}
 	
 	public HashWritable(Hashtable<String, Object> value) {
+		log.info("Constructing Hash Writable 2");
 		value = new Hashtable<String, Object>(value);
 	}
 	
 	public HashWritable(String s) {
+		log.info("Constructing Hash Writable 3");
 		setValueFromString(s);
 	}
 	
 	//-- String Converters
 	
 	private Object getObjectFromString(String source) {
+		log.info("getObjectFromString");
 		
 		String s = source.trim();
 		
@@ -59,6 +65,7 @@ public class HashWritable implements WritableComparable<HashWritable> {
 	}
 	
 	private Hashtable<String, Object> getHashtableFromString(String s) {
+		log.info("getHashtableFromString");
 		
 		Hashtable<String, Object> h = new Hashtable<String, Object>();
 		String strimmed = s.trim();
@@ -80,6 +87,7 @@ public class HashWritable implements WritableComparable<HashWritable> {
 	}
 	
 	public void setValueFromString(String s) {
+		log.info("setValueFromString");
 		value = getHashtableFromString(s);
 	}
 	
@@ -88,17 +96,20 @@ public class HashWritable implements WritableComparable<HashWritable> {
 	
 	@Override
 	public void write(DataOutput out) throws IOException {
+		log.info("write(DataOutput out)");
 		out.writeUTF(toString());
 	}
 
 	@Override
 	public void readFields(DataInput in) throws IOException {
+		log.info("readFields(DataInput in)");
 		String readState = in.readUTF();
 		setValueFromString(readState);
 	}
 
 	@Override
 	public int compareTo(HashWritable o) {
+		log.info("compareTo(HashWritable o)");
 		return toString().compareTo(o.toString());
 	}
 

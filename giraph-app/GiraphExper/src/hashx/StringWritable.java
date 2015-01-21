@@ -1,4 +1,4 @@
-package hash;
+package hashx;
 
 import java.io.DataInput;
 import java.io.DataOutput;

@@ -1,4 +1,4 @@
-package hash;
+package hashx;
 
 import java.io.IOException;
 import java.util.List;
@@ -59,7 +59,9 @@ public class JsonVertexEdgeHashInputFormat extends
 		protected HashWritable getValue(JSONArray jsonVertex)
 				throws JSONException, IOException {
 			log.info("Getting Value.");
-			return new HashWritable(jsonVertex.getString(1));
+			// Next two lines just for testing
+			String s = jsonVertex.getString(1);
+			return new HashWritable("{name=Peter}");
 		}
 
 		@Override
