@@ -88,14 +88,12 @@ public class HashWritable implements WritableComparable<HashWritable> {
 	
 	@Override
 	public void write(DataOutput out) throws IOException {
-		out.writeChars(toString() + "\n");
+		out.writeUTF(toString());
 	}
 
 	@Override
 	public void readFields(DataInput in) throws IOException {
-		// When is this executed???
-		Log.info("reading entire line");
-		String readState = in.readLine();
+		String readState = in.readUTF();
 		setValueFromString(readState);
 	}
 
