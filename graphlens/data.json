@@ -1,0 +1,9 @@
+[
+  {"source": "Peter", "target": "Emma", "type": "loInFollows"},
+  {"source": "Martin", "target": "Felix", "type": "looks"},
+  {"source": "Peter", "target": "Paul", "type": "loInteracts"},
+  {"source": "Peter", "target": "Martin", "type": "looks"},
+  {"source": "Martin", "target": "Emma", "type": "loInFollows"},
+  {"source": "Paul", "target": "Felix", "type": "loInteracts"},
+  {"source": "Felix", "target": "Peter", "type": "loInFollows"}
+]
