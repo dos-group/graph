@@ -13,7 +13,8 @@ public class GraphHashtable {
 	}
 	
 	public GraphHashtable(String source) {
-		
+		this();
+		setFromString(source);
 	}
 	
 	//-- Setters
@@ -46,8 +47,8 @@ public class GraphHashtable {
 	
 	public void setFromString(String s) {
 		String a = s.trim();
-		String asub = a.substring(2, a.length() - 1 - 2);
-		String[] strings = asub.split("),(");
+		String asub = a.substring(2, a.length() - 2);
+		String[] strings = asub.split("[)][,][(]");
 		
 		for (String e : strings) {
 			String[] es = e.split(",");

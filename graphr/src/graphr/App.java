@@ -1,7 +1,6 @@
 package graphr;
 
 import graphr.data.GraphHashtable;
-import graphr.data.PrimData;
 
 public class App {
 
@@ -15,8 +14,13 @@ public class App {
 		gh.put("income", 1283.32);
 		gh.put("vegan", true);
 		
+		String encoded = gh.toString();
+		
 		System.out.println(gh.toString());
 		
+		GraphHashtable gh2 = new GraphHashtable(encoded);
+		
+		System.out.println(gh2.toString());
 
 	}
 
