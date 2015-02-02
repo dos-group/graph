@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 import org.mortbay.log.Log;
 
 /**
- * Writable for hashmaps with key:String, value:Object.
+ * Writable for hashmaps with key: String, value: Object.
  */
 @InterfaceAudience.Public
 @InterfaceStability.Stable

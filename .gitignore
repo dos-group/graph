@@ -2,3 +2,7 @@ giraph-app/GiraphExper/target/classes/dlx/FirstGraph.class
 
 
 *.class
+
+graphr/.project
+
+graphr/.classpath
