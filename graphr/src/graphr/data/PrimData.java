@@ -45,7 +45,7 @@ public class PrimData {
 	}
 	
 	public void set(boolean b) {
-		b = new Boolean(b);
+		o = new Boolean(b);
 	}
 	
 	public void set(String s) {

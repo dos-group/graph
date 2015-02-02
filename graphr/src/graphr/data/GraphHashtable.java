@@ -22,6 +22,26 @@ public class GraphHashtable {
 		table.put(key, value);
 	}
 	
+	public void put(String key, int i) {
+		put(key, new PrimData(i));
+	}
+	
+	public void put(String key, long l) {
+		put(key, new PrimData(l));
+	}
+	
+	public void put(String key, double d) {
+		put(key, new PrimData(d));
+	}
+	
+	public void put(String key, boolean b) {
+		put(key, new PrimData(b));
+	}
+	
+	public void put(String key, String s) {
+		put(key, new PrimData(s));
+	}
+	
 	//-- Conversions
 	
 	public void setFromString(String s) {
@@ -39,7 +59,7 @@ public class GraphHashtable {
 	
 	public String toString() {
 		
-		String s = "(";
+		String s = "{";
 		int remainingKeys = table.size();
 		
 		for (String k : table.keySet()) {
@@ -54,7 +74,7 @@ public class GraphHashtable {
 			
 		}
 		
-		return s + ")";
+		return s + "}";
 		
 	}
 	

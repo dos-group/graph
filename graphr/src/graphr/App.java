@@ -10,10 +10,12 @@ public class App {
 		System.out.println("Hello world.");
 		
 		GraphHashtable gh = new GraphHashtable();
-		gh.put("name", new PrimData("Anna"));
-		gh.put("age", new PrimData(24));
+		gh.put("name", "Anna");
+		gh.put("age", 24);
+		gh.put("income", 1283.32);
+		gh.put("vegan", true);
 		
-	
+		System.out.println(gh.toString());
 		
 
 	}
