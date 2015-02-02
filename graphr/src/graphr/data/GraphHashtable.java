@@ -16,6 +16,12 @@ public class GraphHashtable {
 		
 	}
 	
+	//-- Setters
+	
+	public void put(String key, PrimData value) {
+		table.put(key, value);
+	}
+	
 	//-- Conversions
 	
 	public void setFromString(String s) {

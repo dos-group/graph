@@ -4,9 +4,33 @@ public class PrimData {
 	
 	Object o;
 	
+	//-- Constructors
+	
 	public PrimData(String abbrev, String someString) {
 		setFromSomeString(abbrev, someString);
 	}
+	
+	public PrimData(int i) {
+		set(i);
+	}
+	
+	public PrimData(long l) {
+		set(l);
+	}
+	
+	public PrimData(double d) {
+		set(d);
+	}
+	
+	public PrimData(boolean b) {
+		set(b);
+	}
+	
+	public PrimData(String s) {
+		set(s);
+	}
+	
+	// -- Setters
 	
 	public void set(int i) {
 		o = new Integer(i);
@@ -43,6 +67,28 @@ public class PrimData {
 			
 	}
 	
+	//-- Getters
+	
+	public int i() {
+		return ((Integer) o).intValue();
+	}
+	
+	public long l() {
+		return ((Long) o).longValue();
+	}
+	
+	public double d() {
+		return ((Double) o).doubleValue();
+	}
+	
+	public boolean b() {
+		return ((Boolean) o).booleanValue();
+	}
+	
+	public String s() {
+		return (String) o;
+	}
+	
 	public String toString() {
 		
 		if (o instanceof Integer) {
@@ -74,6 +120,8 @@ public class PrimData {
 		return PrimData.getDataAbbrev(o);
 		
 	}
+	
+	//-- Convenience Methods
 	
 	public static String getDataAbbrev(Object o) {
 		
