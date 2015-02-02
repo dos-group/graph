@@ -1,6 +1,9 @@
 package graphr;
 
 import graphr.data.GraphHashtable;
+import graphr.graph.Edge;
+import graphr.graph.Graph;
+import graphr.graph.Vertex;
 
 public class App {
 
@@ -21,7 +24,16 @@ public class App {
 		GraphHashtable gh2 = new GraphHashtable(encoded);
 		
 		System.out.println(gh2.toString());
-
+		
+		Vertex<GraphHashtable, GraphHashtable> v = new Vertex<GraphHashtable, GraphHashtable>();
+		v.setData(gh);
+		Edge<GraphHashtable> e = new Edge<GraphHashtable>();
+		e.setData(gh2);
+		
+		Graph<GraphHashtable, GraphHashtable> g = 
+				new Graph<GraphHashtable, GraphHashtable>();
+		g.addVertex(v);
+	
 	}
 
 }

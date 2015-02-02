@@ -2,8 +2,10 @@ package graphr.graph;
 
 import java.util.ArrayList;
 
-public class Vertex extends GraphElement {
+public class Vertex<D,E> extends GraphElement<D> {
 	
-	ArrayList<Edge> edges;
-       
+	ArrayList<Edge<E>> edges;
+ 
+	
+	
 }
