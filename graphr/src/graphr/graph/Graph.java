@@ -13,5 +13,6 @@ public class Graph<DV,DE> {
 	public void addVertex(Vertex<DV,DE> v) {
 		vertices.add(v.id, v);
 	}
+	
 
 }

@@ -27,12 +27,16 @@ public class App {
 		
 		Vertex<GraphHashtable, GraphHashtable> v = new Vertex<GraphHashtable, GraphHashtable>();
 		v.setData(gh);
-		Edge<GraphHashtable> e = new Edge<GraphHashtable>();
+		Edge<GraphHashtable, GraphHashtable> e = new Edge<GraphHashtable, GraphHashtable>();
 		e.setData(gh2);
 		
 		Graph<GraphHashtable, GraphHashtable> g = 
 				new Graph<GraphHashtable, GraphHashtable>();
 		g.addVertex(v);
+		v.addEdge(e);
+		e.setTarget(v);
+		
+		System.out.println(v);
 	
 	}
 
