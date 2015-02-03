@@ -2,17 +2,18 @@ package graphr.data;
 
 import java.util.Hashtable;
 
-public class GraphHashtable {
+public class GHT {
+	         // Stands for graph hashtable
 
 	Hashtable<String, PrimData> table;
 	
 	//-- Constructors
 	
-	public GraphHashtable() {
+	public GHT() {
 		table = new Hashtable<String, PrimData>();
 	}
 	
-	public GraphHashtable(String source) {
+	public GHT(String source) {
 		this();
 		setFromString(source);
 	}
@@ -65,7 +66,7 @@ public class GraphHashtable {
 		
 		for (String k : table.keySet()) {
 			
-			s += GraphHashtable.primDataToString(k, table.get(k));
+			s += GHT.primDataToString(k, table.get(k));
 			
 			remainingKeys --;
 			
