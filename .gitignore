@@ -6,3 +6,5 @@ giraph-app/GiraphExper/target/classes/dlx/FirstGraph.class
 graphr/.project
 
 graphr/.classpath
+
+*.jar
