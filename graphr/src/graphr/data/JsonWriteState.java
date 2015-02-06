@@ -16,7 +16,7 @@ public class JsonWriteState {
 	
 	public String toJson() {
 		
-		return JSONFacility.getInstance().generateJson(table);
+		return JsonFacility.getInstance().generateJson(table);
 	}
 
 }

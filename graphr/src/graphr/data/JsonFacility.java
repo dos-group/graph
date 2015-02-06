@@ -8,16 +8,16 @@ import java.util.Hashtable;
 import com.json.generators.JSONGenerator;
 import com.json.generators.JsonGeneratorFactory;
 
-public class JSONFacility {
+public class JsonFacility {
 	
-	private static JSONFacility facility;
+	private static JsonFacility facility;
 	private JsonGeneratorFactory factory;
     private JSONGenerator generator;
     
 	
     //-- Constructors
     
-	public JSONFacility() {
+	public JsonFacility() {
 		factory=JsonGeneratorFactory.getInstance();
 		generator=factory.newJsonGenerator();
 
@@ -25,9 +25,9 @@ public class JSONFacility {
 	
 	//-- Singleton
 	
-	public static JSONFacility getInstance() {
+	public static JsonFacility getInstance() {
 		if (facility == null) {
-			facility = new JSONFacility();
+			facility = new JsonFacility();
 		} 
 		
 		return facility;
@@ -40,16 +40,16 @@ public class JSONFacility {
 		return generator.generateJson(h);
 	}
 	
-	private <K,V> String stringFromData(Hashtable<K,V> h) {
-		
-        return generator.generateJson(h);
-		
-	}
-	
-	private <K,V> Hashtable<K,V> dataFromString(String s) {
-		
-		return null;
-		
-	}
+//	private <K,V> String stringFromData(Hashtable<K,V> h) {
+//		
+//        return generator.generateJson(h);
+//		
+//	}
+//	
+//	private <K,V> Hashtable<K,V> dataFromString(String s) {
+//		
+//		return null;
+//		
+//	}
 
 }
