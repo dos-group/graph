@@ -1,8 +1,10 @@
 package graphr.graph;
 
+import graphr.data.JsonReadableWritable;
+
 import java.util.ArrayList;
 
-public class Graph<DV,DE> {
+public class Graph<DV extends JsonReadableWritable,DE extends JsonReadableWritable> {
 	
 	ArrayList<Vertex<DV,DE>> vertices;
 	

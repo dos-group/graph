@@ -1,6 +1,8 @@
 package graphr.graph;
 
-public class Edge<DV,DE> extends GraphElement<DE> {
+import graphr.data.JsonReadableWritable;
+
+public class Edge<DV extends JsonReadableWritable,DE extends JsonReadableWritable> extends GraphElement<DE> {
 	
 	protected Vertex<DV,DE> target;
 		

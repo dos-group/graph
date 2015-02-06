@@ -2,7 +2,7 @@ package graphr.data;
 
 import java.util.Hashtable;
 
-public class GHT {
+public class GHT implements JsonReadableWritable {
 	         // Stands for graph hashtable
 
 	Hashtable<String, PrimData> table;
@@ -58,17 +58,7 @@ public class GHT {
 		}
 		
 	}
-	
-	public String toJson() {
-		
-		JsonWriteState j = new JsonWriteState();
-		
-        for (String k : table.keySet()) {
-        	j.add(k, table.get(k).toJson());
-        }
-        
-        return j.toJson();
-	}
+
 	
 	public String toString() {
 		
@@ -96,6 +86,22 @@ public class GHT {
 	public static String primDataToString(String key, PrimData d) {
 		
 		return "(" + key + "," + d.getDataAbbrev() + "," + d.toString() + ")"; 
+		
+	}
+
+	@Override
+	public String getAsJson() {
+		JsonWriteState j = new JsonWriteState();
+		
+        for (String k : table.keySet()) {
+        	j.add(k, table.get(k).getAsJson());
+        }
+        
+        return j.toJson();
+	}
+
+	@Override
+	public void setFromJson() {
 		
 	}
 	

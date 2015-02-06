@@ -1,6 +1,8 @@
 package graphr.data;
 
-public class PrimData {
+import java.util.Hashtable;
+
+public class PrimData implements JsonReadableWritable {
 	
 	Object o;
 	
@@ -88,16 +90,7 @@ public class PrimData {
 	public String s() {
 		return (String) o;
 	}
-	
-	public String toJson() {
-		
-		JsonWriteState j = new JsonWriteState();
-		j.add("type", o.getClass().getSimpleName());
-		j.add("value",o);
-		return j.toJson();
-		
-	}
-	
+
 	public String toString() {
 		
 		if (o instanceof Integer) {
@@ -155,6 +148,22 @@ public class PrimData {
 		}
 		
 		throw new IllegalArgumentException("Examined object type invalid.");
+		
+	}
+
+	@Override
+	public String getAsJson() {
+
+		JsonWriteState j = new JsonWriteState();
+		j.add("type", o.getClass().getSimpleName());
+		j.add("value",o);
+		return j.toJson();
+		
+	}
+
+	@Override
+	public void setFromJson() {
+		// TODO Auto-generated method stub
 		
 	}
 

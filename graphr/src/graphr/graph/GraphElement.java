@@ -1,6 +1,8 @@
 package graphr.graph;
 
-public abstract class GraphElement<D> {
+import graphr.data.JsonReadableWritable;
+
+public abstract class GraphElement<D extends JsonReadableWritable> {
 
 	private static int nextIdToIssue = 0;
 	

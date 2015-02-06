@@ -2,7 +2,12 @@ package graphr.graph;
 
 import java.util.ArrayList;
 
-public class Vertex<DV,DE> extends GraphElement<DV> {
+import graphr.data.JsonReadableWritable;
+import graphr.data.JsonWriteState;
+
+
+public class Vertex<DV extends JsonReadableWritable,DE extends JsonReadableWritable>
+	extends GraphElement<DV> implements JsonReadableWritable {
 	
 	ArrayList<Edge<DV,DE>> edges;
 	
@@ -27,5 +32,24 @@ public class Vertex<DV,DE> extends GraphElement<DV> {
 		
 		return s + "})";
 	}
+
+	@Override
+	public String getAsJson() {
+		
+		JsonWriteState j = new JsonWriteState();
+		
+		j.add("type", "Vertex");
+		j.add("data", data.getAsJson());
+
+		return j.toJson();
+	}
+
+	@Override
+	public void setFromJson() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 	
 }
