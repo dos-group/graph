@@ -1,7 +1,5 @@
 package graphr.data;
 
-import java.util.Hashtable;
-
 public class PrimData implements JsonReadableWritable {
 	
 	Object o;
@@ -14,10 +12,6 @@ public class PrimData implements JsonReadableWritable {
 	
 	public PrimData(int i) {
 		set(i);
-	}
-	
-	public PrimData(long l) {
-		set(l);
 	}
 	
 	public PrimData(double d) {
@@ -36,10 +30,6 @@ public class PrimData implements JsonReadableWritable {
 	
 	public void set(int i) {
 		o = new Integer(i);
-	}
-	
-	public void set(long l) {
-		o = new Long(l);
 	}
 	
 	public void set(double d) {
@@ -61,7 +51,6 @@ public class PrimData implements JsonReadableWritable {
 	public void setFromSomeString(String abbrev, String s) {
 		switch (abbrev){
 		case "i": set(new Integer(s)); break;
-		case "l": set(new Long(s)); break;
 		case "d": set(new Double(s)); break;
 		case "b": set(new Boolean(s)); break;
 		default: set(s);
@@ -73,10 +62,6 @@ public class PrimData implements JsonReadableWritable {
 	
 	public int i() {
 		return ((Integer) o).intValue();
-	}
-	
-	public long l() {
-		return ((Long) o).longValue();
 	}
 	
 	public double d() {
@@ -95,10 +80,6 @@ public class PrimData implements JsonReadableWritable {
 		
 		if (o instanceof Integer) {
 			return ((Integer) o).toString();  
-		}
-		
-		if (o instanceof Long) {
-			return ((Long) o).toString();  
 		}
 		
 		if (o instanceof Double) {
@@ -130,10 +111,7 @@ public class PrimData implements JsonReadableWritable {
 		if (o instanceof Integer) {
 			return "i";  
 		}
-		
-		if (o instanceof Long) {
-			return "l";  
-		}
+
 		
 		if (o instanceof Double) {
 			return "d"; 
