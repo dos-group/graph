@@ -39,7 +39,16 @@ public class Vertex<DV extends JsonReadableWritable,DE extends JsonReadableWrita
 		JsonWriteState j = new JsonWriteState();
 		
 		j.add("type", "Vertex");
+		j.add("id", new Integer(id).toString());
 		j.add("data", data.getAsJson());
+	
+		JsonWriteState es = new JsonWriteState();
+		
+		for (Edge<DV,DE> e : edges) {
+			es.add(e.getAsJson());
+		}
+		
+		j.add("edges", es.toJson());
 
 		return j.toJson();
 	}

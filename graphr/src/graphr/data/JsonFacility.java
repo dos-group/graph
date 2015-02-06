@@ -1,6 +1,8 @@
 package graphr.data;
 
+import java.util.HashSet;
 import java.util.Hashtable;
+
 
 
 // Assumes jar from here:
@@ -35,8 +37,13 @@ public class JsonFacility {
 	
 	//-- Converters
 	
-	protected String generateJson(Hashtable<String, String> h) {
+	protected String generateJsonFromStringTable(Hashtable<String, String> h) {
 	
+		return generator.generateJson(h);
+	}
+	
+	protected String generateJsonFromSetTable(Hashtable<String, HashSet<String>> h) {
+		
 		return generator.generateJson(h);
 	}
 	
