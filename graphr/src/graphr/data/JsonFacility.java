@@ -8,7 +8,7 @@ import java.util.Hashtable;
 // Assumes jar from here:
 // https://code.google.com/p/quick-json/
 
-// Can check valid Json with:
+// Can check valid Json with & format:
 // http://jsonformatter.curiousconcept.com
 
 import com.json.generators.JSONGenerator;

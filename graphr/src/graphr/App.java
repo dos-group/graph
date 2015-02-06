@@ -12,23 +12,23 @@ public class App {
 	
 		System.out.println("Hello world.");
 		
-//		GHT gh = new GHT();
-//		gh.put("name", "Anna");
+		GHT gh = new GHT();
+		gh.put("name", "Anna");
 //		gh.put("age", 24);
-//		
+		
 //		GHT gh2 = new GHT();
 //		gh2.put("name", "Martin");
 //		gh2.put("age", 28);
+		
+		
+//		String encoded = gh.toString();
 //		
+//		System.out.println(gh.toString());
 //		
-////		String encoded = gh.toString();
-////		
-////		System.out.println(gh.toString());
-////		
-////		GHT gh2 = new GHT(encoded);
-////		
-////		System.out.println(gh2.toString());
+//		GHT gh2 = new GHT(encoded);
 //		
+//		System.out.println(gh2.toString());
+		
 //		Vertex<GHT, GHT> v = new Vertex<GHT, GHT>();
 //		v.setData(gh);
 //		Edge<GHT, GHT> e = new Edge<GHT, GHT>();
@@ -41,9 +41,9 @@ public class App {
 //		e.setTarget(v);
 //		
 		
-		PrimData p = new PrimData(2.0);
+//		PrimData p = new PrimData("Peter");
 		
-		System.out.println(p.getAsJson());
+		System.out.println(gh.getAsJson());
 		
 		
 		

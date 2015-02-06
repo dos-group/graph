@@ -94,6 +94,9 @@ public class GHT implements JsonReadableWritable {
 		JsonKeyValueState j = new JsonKeyValueState();
 		
         for (String k : table.keySet()) {
+        	
+//        	System.out.println("Key:" + k);
+//        	System.out.println("Value:" + table.get(k).getAsJson());
         	j.add(k, table.get(k).getAsJson());
         }
         
