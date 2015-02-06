@@ -14,7 +14,7 @@ public class App {
 		
 		GHT gh = new GHT();
 		gh.put("name", "Anna");
-//		gh.put("age", 24);
+		gh.put("age", 24);
 		
 //		GHT gh2 = new GHT();
 //		gh2.put("name", "Martin");

@@ -132,10 +132,7 @@ public class PrimData implements JsonReadableWritable {
 	@Override
 	public String getAsJson() {
 
-		JsonKeyValueState j = new JsonKeyValueState();
-		j.add("type", o.getClass().getSimpleName());
-		j.add("value",o);
-		return j.toJson();
+		return o.toString();
 		
 	}
 
