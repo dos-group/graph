@@ -2,8 +2,9 @@ package graphr.graph;
 
 import java.util.ArrayList;
 
+import graphr.data.JsonArrayState;
 import graphr.data.JsonReadableWritable;
-import graphr.data.JsonWriteState;
+import graphr.data.JsonKeyValueState;
 
 
 public class Vertex<DV extends JsonReadableWritable,DE extends JsonReadableWritable>
@@ -36,19 +37,19 @@ public class Vertex<DV extends JsonReadableWritable,DE extends JsonReadableWrita
 	@Override
 	public String getAsJson() {
 		
-		JsonWriteState j = new JsonWriteState();
+		JsonKeyValueState j = new JsonKeyValueState();
 		
 		j.add("type", "Vertex");
 		j.add("id", new Integer(id).toString());
 		j.add("data", data.getAsJson());
 	
-		JsonWriteState es = new JsonWriteState();
+		JsonArrayState jsonEdges = new JsonArrayState();
 		
 		for (Edge<DV,DE> e : edges) {
-			es.add(e.getAsJson());
+			jsonEdges.add(e.getAsJson());
 		}
 		
-		j.add("edges", es.toJson());
+		j.add("edges", jsonEdges.toJson());
 
 		return j.toJson();
 	}

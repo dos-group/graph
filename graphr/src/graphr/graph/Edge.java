@@ -1,7 +1,7 @@
 package graphr.graph;
 
 import graphr.data.JsonReadableWritable;
-import graphr.data.JsonWriteState;
+import graphr.data.JsonKeyValueState;
 
 public class Edge<DV extends JsonReadableWritable, DE extends JsonReadableWritable>
 		extends GraphElement<DE> implements JsonReadableWritable {
@@ -23,7 +23,7 @@ public class Edge<DV extends JsonReadableWritable, DE extends JsonReadableWritab
 
 	public String getAsJson() {
 
-		JsonWriteState j = new JsonWriteState();
+		JsonKeyValueState j = new JsonKeyValueState();
 
 		j.add("type", "Edge");
 		j.add("id", new Integer(id).toString());
