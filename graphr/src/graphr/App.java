@@ -1,6 +1,7 @@
 package graphr;
 
 import graphr.data.GHT;
+import graphr.data.PrimData;
 import graphr.graph.Edge;
 import graphr.graph.Graph;
 import graphr.graph.Vertex;
@@ -13,27 +14,31 @@ public class App {
 		
 		GHT gh = new GHT();
 		gh.put("name", "Anna");
+		gh.put("age", 24);
 		
-		String encoded = gh.toString();
+//		String encoded = gh.toString();
+//		
+//		System.out.println(gh.toString());
+//		
+//		GHT gh2 = new GHT(encoded);
+//		
+//		System.out.println(gh2.toString());
+//		
+//		Vertex<GHT, GHT> v = new Vertex<GHT, GHT>();
+//		v.setData(gh);
+//		Edge<GHT, GHT> e = new Edge<GHT, GHT>();
+//		e.setData(gh2);
+//		
+//		Graph<GHT, GHT> g = 
+//				new Graph<GHT, GHT>();
+//		g.addVertex(v);
+//		v.addEdge(e);
+//		e.setTarget(v);
 		
-		System.out.println(gh.toString());
+		PrimData p = new PrimData(2.0);
 		
-		GHT gh2 = new GHT(encoded);
 		
-		System.out.println(gh2.toString());
-		
-		Vertex<GHT, GHT> v = new Vertex<GHT, GHT>();
-		v.setData(gh);
-		Edge<GHT, GHT> e = new Edge<GHT, GHT>();
-		e.setData(gh2);
-		
-		Graph<GHT, GHT> g = 
-				new Graph<GHT, GHT>();
-		g.addVertex(v);
-		v.addEdge(e);
-		e.setTarget(v);
-		
-		System.out.println(v);
+		System.out.println(p.toJson());
 		
 		
 		

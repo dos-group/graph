@@ -89,6 +89,16 @@ public class PrimData {
 		return (String) o;
 	}
 	
+	public String toJson() {
+		
+		JSONFacility j = JSONFacility.getInstance();
+		j.clearWriteState();
+		j.addToWriteState("type", o.getClass().getSimpleName());
+		j.addToWriteState("value",o.toString());
+		return j.getWriteStateAsJson();
+		
+	}
+	
 	public String toString() {
 		
 		if (o instanceof Integer) {

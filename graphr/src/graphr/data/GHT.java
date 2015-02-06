@@ -59,6 +59,11 @@ public class GHT {
 		
 	}
 	
+	public String toJson() {
+		
+         return null;
+	}
+	
 	public String toString() {
 		
 		String s = "{";
