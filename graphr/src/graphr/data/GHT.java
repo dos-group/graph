@@ -61,7 +61,13 @@ public class GHT {
 	
 	public String toJson() {
 		
-         return null;
+		JsonWriteState j = new JsonWriteState();
+		
+        for (String k : table.keySet()) {
+        	j.add(k, table.get(k).toJson());
+        }
+        
+        return j.toJson();
 	}
 	
 	public String toString() {

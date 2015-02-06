@@ -91,11 +91,10 @@ public class PrimData {
 	
 	public String toJson() {
 		
-		JSONFacility j = JSONFacility.getInstance();
-		j.clearWriteState();
-		j.addToWriteState("type", o.getClass().getSimpleName());
-		j.addToWriteState("value",o.toString());
-		return j.getWriteStateAsJson();
+		JsonWriteState j = new JsonWriteState();
+		j.add("type", o.getClass().getSimpleName());
+		j.add("value",o);
+		return j.toJson();
 		
 	}
 	

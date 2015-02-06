@@ -2,6 +2,7 @@ package graphr.data;
 
 import java.util.Hashtable;
 
+
 // Assumes jar from here:
 // https://code.google.com/p/quick-json/
 import com.json.generators.JSONGenerator;
@@ -12,14 +13,14 @@ public class JSONFacility {
 	private static JSONFacility facility;
 	private JsonGeneratorFactory factory;
     private JSONGenerator generator;
-    private Hashtable<String, String> reusableHashtable;
+    
 	
     //-- Constructors
     
 	public JSONFacility() {
 		factory=JsonGeneratorFactory.getInstance();
 		generator=factory.newJsonGenerator();
-		reusableHashtable = new Hashtable<String, String>();
+
 	}
 	
 	//-- Singleton
@@ -32,22 +33,12 @@ public class JSONFacility {
 		return facility;
 	}
 	
-	//-- Writing
-	
-	public void clearWriteState() {
-		reusableHashtable.clear();
-	}
-	
-	public void addToWriteState(String key, String value) {
-		reusableHashtable.put(key, value);
-	}
-	
-	public String getWriteStateAsJson() {
-		return generator.generateJson(reusableHashtable);
-	}
-
-	
 	//-- Converters
+	
+	protected String generateJson(Hashtable<String, String> h) {
+	
+		return generator.generateJson(h);
+	}
 	
 	private <K,V> String stringFromData(Hashtable<K,V> h) {
 		

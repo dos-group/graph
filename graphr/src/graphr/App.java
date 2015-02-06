@@ -35,10 +35,10 @@ public class App {
 //		v.addEdge(e);
 //		e.setTarget(v);
 		
-		PrimData p = new PrimData(2.0);
+//		PrimData p = new PrimData(2.0);
 		
 		
-		System.out.println(p.toJson());
+		System.out.println(gh.toJson());
 		
 		
 		
