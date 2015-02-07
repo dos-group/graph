@@ -8,6 +8,9 @@ import graphr.io.FileSystemHandler;
 
 public class App {
 	
+	private static final String FULL_FILE_PATH 
+		= "/Users/pjanacik/Desktop/ouputFile.txt";
+	
 	public static Graph<GHT, GHT> getExampleGraph() {
 		
 		GHT gh = new GHT();
@@ -45,8 +48,11 @@ public class App {
 		
 		Graph<GHT, GHT> g = App.getExampleGraph();
 		
-		FileSystemHandler f = FileSystemHandler.getInstance();
-		f.write(g.getAsJson(), "/Users/pjanacik/Desktop/ouputFile.txt");
+		FileSystemHandler.getInstance().write(g.getAsJson(), 
+				App.FULL_FILE_PATH);
+		
+		System.out.println(
+				FileSystemHandler.getInstance().read(App.FULL_FILE_PATH));
 
 	}
 
