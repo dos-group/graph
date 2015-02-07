@@ -1,6 +1,7 @@
 package graphr.graph;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import graphr.data.JsonArrayState;
 import graphr.data.JsonReadableWritable;
@@ -10,28 +11,20 @@ import graphr.data.JsonKeyValueState;
 public class Vertex<DV extends JsonReadableWritable,DE extends JsonReadableWritable>
 	extends GraphElement<DV> implements JsonReadableWritable {
 	
-	ArrayList<Edge<DV,DE>> edges;
+	Hashtable<Integer, Edge<DV,DE>> edges;
 	
 	public Vertex() {
-		edges = new ArrayList<Edge<DV,DE>>();
+		edges = new Hashtable<Integer, Edge<DV,DE>>();
 	}
  
 	public void addEdge(Edge<DV,DE> e) {
-		edges.add(e);
+		edges.put(new Integer(e.id), e);
 	}
 	
 	public String toString() {
-		String s = "(" + getId() + "," + getData().toString() + ",{";
-		int remainingEdges = edges.size();
-		for (Edge<DV,DE> e : edges) {
-			s += e.toString();
-			remainingEdges --;
-			if (remainingEdges > 0) {
-				s += ",";
-			}
-		}
+
+		return "Vertex"; // to do ;)
 		
-		return s + "})";
 	}
 
 	@Override
@@ -43,13 +36,13 @@ public class Vertex<DV extends JsonReadableWritable,DE extends JsonReadableWrita
 		j.add("id", new Integer(id).toString());
 		j.add("data", data.getAsJson());
 	
-		JsonArrayState jsonEdges = new JsonArrayState();
+		JsonArrayState edgesForJson = new JsonArrayState();
 		
-		for (Edge<DV,DE> e : edges) {
-			jsonEdges.add(e.getAsJson());
+		for (Edge<DV,DE> e : edges.values()) {
+			edgesForJson.add(e.getAsJson());
 		}
 		
-		j.add("edges", jsonEdges.toJson());
+		j.add("edges", edgesForJson.toJson());
 
 		return j.toJson();
 	}

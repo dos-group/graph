@@ -27,7 +27,7 @@ public class Edge<DV extends JsonReadableWritable, DE extends JsonReadableWritab
 
 		j.add("type", "Edge");
 		j.add("id", new Integer(id).toString());
-		j.add("data", data.getAsJson());
+		j.add("data", (data== null ? "null" : data.getAsJson()));
 		j.add("target", (target == null ? "null" : new Integer(target.id).toString()));
 
 		return j.toJson();

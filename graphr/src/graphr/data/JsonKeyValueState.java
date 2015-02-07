@@ -4,12 +4,13 @@ import java.util.Hashtable;
 
 public class JsonKeyValueState {
 	
-	private Hashtable<String, Object> t;
+	private Hashtable<String, String> t;
 	
-	public void add(String key, Object value) {
-		if (t == null) {
-			t = new Hashtable<String, Object>();
-		}
+	public JsonKeyValueState() {
+		t = new Hashtable<String, String>();
+	}
+	
+	public void add(String key, String value) {
 		t.put(key, value.toString());
 	}
 	
@@ -21,7 +22,7 @@ public class JsonKeyValueState {
 	
 		for (String k : t.keySet()) {
 			
-			String valueString = t.get(k).toString();
+			String valueString = t.get(k);
 			s += "\"" + k + "\":" + (useQuotationMarks(valueString) ? 
 					"\"" + valueString + "\"" : valueString)
 					+ (remainingKeys > 1 ? "," : "}");
@@ -38,6 +39,10 @@ public class JsonKeyValueState {
 	private boolean useQuotationMarks(String s) {
 		
 		if (s.equals("true") || s.equals("false") || s.equals("null")) {
+			return false;
+		}
+		
+		if (s.matches("\\[.*\\]")) {
 			return false;
 		}
 		
