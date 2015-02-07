@@ -1,10 +1,17 @@
 package graphr;
 
+//import java.util.HashMap;
+//
+//import com.json.parsers.JsonParserFactory;
+
 import graphr.data.GHT;
 import graphr.graph.Edge;
 import graphr.graph.Graph;
 import graphr.graph.Vertex;
 import graphr.io.FileSystemHandler;
+
+//import com.json.parsers.JSONParser;
+//import com.sun.javafx.collections.MappingChange.Map;
 
 public class App {
 	
@@ -51,8 +58,20 @@ public class App {
 		FileSystemHandler.getInstance().write(g.getAsJson(), 
 				App.FULL_FILE_PATH);
 		
-		System.out.println(
-				FileSystemHandler.getInstance().read(App.FULL_FILE_PATH));
+		String readString = FileSystemHandler.getInstance().read(
+				App.FULL_FILE_PATH);
+		
+		System.out.println(readString);
+		
+		// Reading in Json
+		
+//		JsonParserFactory factory=JsonParserFactory.getInstance();
+//		JSONParser parser=factory.newJsonParser();
+//		
+//		@SuppressWarnings({ "unchecked", "rawtypes" })
+//		Map jsonData = (Map) parser.parseJson(readString);
+//
+//		 String value=jsonData.get("samplejson").get("key_2");
 
 	}
 
