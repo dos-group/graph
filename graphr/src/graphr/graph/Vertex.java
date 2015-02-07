@@ -1,6 +1,5 @@
 package graphr.graph;
 
-import java.util.ArrayList;
 import java.util.Hashtable;
 
 import graphr.data.JsonArrayState;
