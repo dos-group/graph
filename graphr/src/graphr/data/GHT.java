@@ -2,7 +2,7 @@ package graphr.data;
 
 import java.util.Hashtable;
 
-public class GHT implements JsonReadableWritable {
+public class GHT implements GraphData {
 	         // Stands for graph hashtable
 
 	Hashtable<String, PrimData> table;

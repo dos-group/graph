@@ -2,12 +2,13 @@ package graphr.graph;
 
 import java.util.Hashtable;
 
+import graphr.data.GraphData;
 import graphr.data.JsonArrayState;
-import graphr.data.JsonReadableWritable;
 import graphr.data.JsonKeyValueState;
+import graphr.data.JsonReadableWritable;
 
 
-public class Vertex<DV extends JsonReadableWritable,DE extends JsonReadableWritable>
+public class Vertex<DV extends GraphData,DE extends GraphData>
 	extends GraphElement<DV> implements JsonReadableWritable {
 	
 	Hashtable<Integer, Edge<DV,DE>> edges;

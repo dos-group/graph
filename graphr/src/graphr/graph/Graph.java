@@ -1,13 +1,14 @@
 package graphr.graph;
 
+import graphr.data.GraphData;
 import graphr.data.JsonArrayState;
 import graphr.data.JsonKeyValueState;
 import graphr.data.JsonReadableWritable;
 
 import java.util.Hashtable;
 
-public class Graph<DV extends JsonReadableWritable,
-	DE extends JsonReadableWritable> 
+public class Graph<DV extends GraphData,
+	DE extends GraphData> 
 	implements JsonReadableWritable {
 	
 	Hashtable<Integer, Vertex<DV,DE>> vertices;

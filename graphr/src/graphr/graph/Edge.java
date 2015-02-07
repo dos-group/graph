@@ -1,9 +1,10 @@
 package graphr.graph;
 
+import graphr.data.GraphData;
 import graphr.data.JsonReadableWritable;
 import graphr.data.JsonKeyValueState;
 
-public class Edge<DV extends JsonReadableWritable, DE extends JsonReadableWritable>
+public class Edge<DV extends GraphData, DE extends GraphData>
 		extends GraphElement<DE> implements JsonReadableWritable {
 
 	protected Vertex<DV, DE> target;
