@@ -42,9 +42,9 @@ public class Vertex<DV extends GraphData,DE extends GraphData>
 			edgesForJson.add(e.getAsJson());
 		}
 		
-		j.add("edges", edgesForJson.toJson());
+		j.add("edges", edgesForJson.getAsJson());
 
-		return j.toJson();
+		return j.getAsJson();
 	}
 
 	@Override

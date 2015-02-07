@@ -14,7 +14,7 @@ public class JsonArrayState {
 		a.add(s);
 	}
 
-	public String toJson() {
+	public String getAsJson() {
 		
 		String s = "[";
 		

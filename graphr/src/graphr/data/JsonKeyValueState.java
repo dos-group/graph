@@ -14,7 +14,7 @@ public class JsonKeyValueState {
 		t.put(key, value.toString());
 	}
 	
-	public String toJson() {
+	public String getAsJson() {
 		
 		String s = "{";
 		

@@ -100,7 +100,7 @@ public class GHT implements GraphData {
         	j.add(k, table.get(k).getAsJson());
         }
         
-        return j.toJson();
+        return j.getAsJson();
 	}
 
 	@Override

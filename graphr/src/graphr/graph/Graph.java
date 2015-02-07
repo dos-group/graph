@@ -33,9 +33,9 @@ public class Graph<DV extends GraphData,
 			verticesForJson.add(v.getAsJson());
 		}
 		
-		j.add("vertices",verticesForJson.toJson());
+		j.add("vertices",verticesForJson.getAsJson());
 
-		return j.toJson();
+		return j.getAsJson();
 		
 	}
 
