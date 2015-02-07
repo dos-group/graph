@@ -4,12 +4,11 @@ import graphr.data.GHT;
 import graphr.graph.Edge;
 import graphr.graph.Graph;
 import graphr.graph.Vertex;
+import graphr.io.FileSystemHandler;
 
 public class App {
-
-	public static void main(String[] args) {
 	
-		System.out.println("Hello world.");
+	public static Graph<GHT, GHT> getExampleGraph() {
 		
 		GHT gh = new GHT();
 		gh.put("name", "Anna");
@@ -36,7 +35,19 @@ public class App {
 		e2.setTarget(v);
 		v2.setData(gh2);
 		
-		System.out.println(g.getAsJson());
+		return g;
+		
+	}
+
+	public static void main(String[] args) {
+	
+		System.out.println("Hello world.");
+		
+		Graph<GHT, GHT> g = App.getExampleGraph();
+		
+		FileSystemHandler f = FileSystemHandler.getInstance();
+		f.write(g.getAsJson(), "/Users/pjanacik/Desktop/ouputFile.txt");
+
 	}
 
 }
