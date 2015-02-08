@@ -16,7 +16,7 @@ import graphr.io.FileSystemHandler;
 public class App {
 	
 	private static final String FULL_FILE_PATH 
-		= "/Users/pjanacik/Desktop/ouputFile.txt";
+		= "ouputFile.txt";
 	
 	public static Graph<GHT, GHT> getExampleGraph() {
 		
