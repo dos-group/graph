@@ -70,11 +70,8 @@ public class App {
 
 		FileSystemHandler.getInstance().write(JsonFormatter.getInstance().getJsonString(parsed), 
 				App.FULL_FILE_PATH);
-		
-		readString = FileSystemHandler.getInstance().read(
-				App.FULL_FILE_PATH);
-		
-		System.out.println(readString);
+				
+		System.out.println(JsonFormatter.getInstance().getJsonString(parsed));
 
 		
 	}

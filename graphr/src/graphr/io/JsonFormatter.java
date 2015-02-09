@@ -177,32 +177,39 @@ public class JsonFormatter {
 	 * @return String with serialized graph of JSON format
 	 */
 	public String getJsonString(Graph<GHT, GHT> graph) {
-		StringBuffer sb = new StringBuffer();
 		
 		JsonKeyValueState root = new JsonKeyValueState();
 		root.add("type", "Graph");
 		
+		JsonArrayState verticesForJson = new JsonArrayState();
 		
 		for(Vertex<GHT, GHT> v : graph.getVertices()) {
 
-			JsonKeyValueState j = new JsonKeyValueState();
+			JsonKeyValueState vertexProp = new JsonKeyValueState();
 			
-			j.add("type", "Vertex");
-			j.add("id", new Integer((int) v.getId()).toString());
-			j.add("data", v.getData() != null ? v.getData().getAsJson() : "null");
+			vertexProp.add("type", "Vertex");
+			vertexProp.add("id", new Integer((int) v.getId()).toString());
+			vertexProp.add("data", v.getData() != null ? v.getData().getAsJson() : "null");
 		
-			JsonArrayState edgesForJson = new JsonArrayState();
-			
-			for (Edge<GHT,GHT> e : v.getEdges()) {
-				edgesForJson.add(e.getAsJson());
-			}
-			
-			j.add("edges", edgesForJson.getAsJson());
+			// get JSON array for edges
+			JsonArrayState edgesForJson = new JsonArrayState();			
+			for (Edge<GHT,GHT> e : v.getEdges()) {				
+				JsonKeyValueState edgeProp = new JsonKeyValueState();
+				edgeProp.add("type", "Edge");
+				edgeProp.add("id", new Integer((int) e.getId()).toString());
+				edgeProp.add("data", (e.getData() == null ? "null" : e.getData().getAsJson()));
+				edgeProp.add("target", (e.getTarget() == null ? "null" : new Integer((int) e.getTarget().getId()).toString()));
+				edgesForJson.add(edgeProp.getAsJson());
+			}			
+			vertexProp.add("edges", edgesForJson.getAsJson());
 
-			sb.append(j.getAsJson());			
+			// add serialized vertex into the list of vertices
+			verticesForJson.add(vertexProp.getAsJson());
 		}
+
+		root.add("vertices", verticesForJson.getAsJson());
 		
-		return sb.toString();
+		return root.getAsJson();
 	}
 
 }
