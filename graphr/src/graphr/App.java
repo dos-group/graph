@@ -9,6 +9,7 @@ import graphr.graph.Edge;
 import graphr.graph.Graph;
 import graphr.graph.Vertex;
 import graphr.io.FileSystemHandler;
+import graphr.io.JsonFormatter;
 
 //import com.json.parsers.JSONParser;
 //import com.sun.javafx.collections.MappingChange.Map;
@@ -55,7 +56,7 @@ public class App {
 		
 		Graph<GHT, GHT> g = App.getExampleGraph();
 		
-		FileSystemHandler.getInstance().write(g.getAsJson(), 
+		FileSystemHandler.getInstance().write(JsonFormatter.getInstance().getJsonString(g), 
 				App.FULL_FILE_PATH);
 		
 		String readString = FileSystemHandler.getInstance().read(
@@ -63,16 +64,19 @@ public class App {
 		
 		System.out.println(readString);
 		
-		// Reading in Json
+		Graph<GHT, GHT> parsed = JsonFormatter.getInstance().parseJsonString(readString);
 		
-//		JsonParserFactory factory=JsonParserFactory.getInstance();
-//		JSONParser parser=factory.newJsonParser();
-//		
-//		@SuppressWarnings({ "unchecked", "rawtypes" })
-//		Map jsonData = (Map) parser.parseJson(readString);
-//
-//		 String value=jsonData.get("samplejson").get("key_2");
+		System.out.println("+++++++++++++");
 
+		FileSystemHandler.getInstance().write(JsonFormatter.getInstance().getJsonString(parsed), 
+				App.FULL_FILE_PATH);
+		
+		readString = FileSystemHandler.getInstance().read(
+				App.FULL_FILE_PATH);
+		
+		System.out.println(readString);
+
+		
 	}
 
 }

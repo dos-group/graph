@@ -5,6 +5,7 @@ import graphr.data.JsonArrayState;
 import graphr.data.JsonKeyValueState;
 import graphr.data.JsonReadableWritable;
 
+import java.util.Collection;
 import java.util.Hashtable;
 
 public class Graph<DV extends GraphData,
@@ -19,6 +20,19 @@ public class Graph<DV extends GraphData,
 	
 	public void addVertex(Vertex<DV,DE> v) {
 		vertices.put(new Integer(v.id), v);
+	}
+	
+	/**
+	 * Finds vertex of given ID
+	 * @param id Identifier of vertex
+	 * @return Vertex with given ID, if does not exist then null
+	 */
+	public Vertex<DV,DE> getVertex(int id) {		
+		return vertices.get(new Integer(id));
+	}
+	
+	public Collection<Vertex<DV,DE>> getVertices() {
+		return vertices.values();
 	}
 	
 	@Override

@@ -16,13 +16,16 @@ public class JsonArrayState {
 
 	public String getAsJson() {
 		
+		if(a.size() == 0)
+			return "null";
+		
 		String s = "[";
 		
 		for (int i = 0; i < a.size(); i ++) {
-			s += a.get(i) + (i < a.size() - 1 ? "," : "");
+			s += a.get(i) + (i < a.size() - 1 ? "," : "]");
 		}
 		
-		return s + "]";
+		return s;
 		
 	}
 	

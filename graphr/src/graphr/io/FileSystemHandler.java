@@ -41,18 +41,16 @@ public class FileSystemHandler {
 
 	public String read(String fullFilePath) {
 
-		String readStuff = "";
-
+		StringBuffer sb = new StringBuffer();
 		BufferedReader br = null;
 
 		try {
 
 			String sCurrentLine;
-
 			br = new BufferedReader(new FileReader(fullFilePath));
 
 			while ((sCurrentLine = br.readLine()) != null) {
-				readStuff += sCurrentLine;
+				sb.append(sCurrentLine);
 			}
 
 		} catch (IOException e) {
@@ -65,8 +63,8 @@ public class FileSystemHandler {
 				ex.printStackTrace();
 			}
 		}
-
-		return readStuff;
+		
+		return sb.toString();
 	}
 	
 //	public String readJsonObject(String fullFilePath) {

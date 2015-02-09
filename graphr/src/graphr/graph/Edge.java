@@ -18,7 +18,7 @@ public class Edge<DV extends GraphData, DE extends GraphData>
 	}
 
 	public String toString() {
-		return "(" + getId() + "," + data.toString() + ","
+		return "(" + getId() + "," + (data != null ? data.toString() : "null") + ","
 				+ (target != null ? target.getId() : "null") + ")";
 	}
 

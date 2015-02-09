@@ -1,5 +1,6 @@
 package graphr.graph;
 
+import java.util.Collection;
 import java.util.Hashtable;
 
 import graphr.data.GraphData;
@@ -21,10 +22,12 @@ public class Vertex<DV extends GraphData,DE extends GraphData>
 		edges.put(new Integer(e.id), e);
 	}
 	
+	public Collection<Edge<DV, DE>> getEdges() {
+		return edges.values();
+	}
+	
 	public String toString() {
-
 		return "Vertex"; // to do ;)
-		
 	}
 
 	@Override
@@ -34,7 +37,7 @@ public class Vertex<DV extends GraphData,DE extends GraphData>
 		
 		j.add("type", "Vertex");
 		j.add("id", new Integer(id).toString());
-		j.add("data", data.getAsJson());
+		j.add("data", data != null ? data.getAsJson() : "null");
 	
 		JsonArrayState edgesForJson = new JsonArrayState();
 		

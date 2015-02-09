@@ -17,6 +17,10 @@ public abstract class GraphElement<D extends JsonReadableWritable> {
 	public long getId() {
 		return id;
 	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 	public D getData() {
 		return data;
