@@ -3,6 +3,9 @@ package graphr.data;
 import java.util.HashSet;
 import java.util.Hashtable;
 
+import com.codesnippets4all.json.generators.JSONGenerator;
+import com.codesnippets4all.json.generators.JsonGeneratorFactory;
+
 
 
 // Assumes jar from here:
@@ -11,8 +14,6 @@ import java.util.Hashtable;
 // Can check valid Json with & format:
 // http://jsonformatter.curiousconcept.com
 
-import com.json.generators.JSONGenerator;
-import com.json.generators.JsonGeneratorFactory;
 
 public class JsonFacility {
 	

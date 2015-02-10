@@ -4,17 +4,21 @@ package graphr;
 //
 //import com.json.parsers.JsonParserFactory;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import graphr.data.GHT;
 import graphr.graph.Edge;
 import graphr.graph.Graph;
 import graphr.graph.Vertex;
 import graphr.io.FileSystemHandler;
 import graphr.io.JsonFormatter;
-
-//import com.json.parsers.JSONParser;
-//import com.sun.javafx.collections.MappingChange.Map;
+import graphr.io.JsonFormatterTest;
 
 public class App {
+	
+	private static Logger log = LogManager.getLogger(); 
+
 	
 	private static final String FULL_FILE_PATH 
 		= "ouputFile.txt";
@@ -51,7 +55,7 @@ public class App {
 	}
 
 	public static void main(String[] args) {
-	
+			
 		System.out.println("Hello world.");
 		
 		Graph<GHT, GHT> g = App.getExampleGraph();

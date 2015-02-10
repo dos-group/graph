@@ -4,8 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.json.parsers.JSONParser;
-import com.json.parsers.JsonParserFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import com.codesnippets4all.json.parsers.JSONParser;
+import com.codesnippets4all.json.parsers.JsonParserFactory;
 
 import graphr.data.GHT;
 import graphr.data.JsonArrayState;
@@ -35,6 +38,8 @@ import graphr.graph.Vertex;
  *
  */
 public class JsonFormatter {
+	
+	private static Logger log = LogManager.getLogger(); 
 
 	private static JsonFormatter instance = null;
 	
@@ -56,19 +61,18 @@ public class JsonFormatter {
 	 * @param readString String to be parsed
 	 * @return Initialized graph
 	 */
-	public Graph<GHT, GHT> parseJsonString(String readString) {
-		// Reading in Json
+	public Graph<GHT, GHT> parseJsonString(String readString) {		
+		log.entry(readString);
 		
 		JsonParserFactory factory=JsonParserFactory.getInstance();
 		JSONParser parser=factory.newJsonParser();
 		
-		//@SuppressWarnings({ "unchecked", "rawtypes" })
 		Map<?,?> jsonData = (Map<?,?>) parser.parseJson(readString);
 
 		// get JSON list of vertices
 		List<?> value = (List<?>) jsonData.get("vertices");
-		
-		System.out.println(value);
+				
+		log.debug(value);
 		
 		Graph<GHT, GHT> parsedGraph = new Graph<GHT, GHT>();
 
@@ -77,9 +81,9 @@ public class JsonFormatter {
 		
 		// parse vertices
 		for(Object obj : value) {
-			System.out.println("-----");
+			log.debug("-----");
 			
-			System.out.println("read: " + obj);
+			log.debug("read: " + obj);
 			Map<?,?> propMap = (Map<?,?>) obj;
 			
 			Vertex<GHT, GHT> v = new Vertex<GHT, GHT>();
@@ -90,16 +94,16 @@ public class JsonFormatter {
 			// now we can insert it into the graph because ID is the correct right now
 			parsedGraph.addVertex(v);
 			
-			System.out.println("data: " + propMap.get("data").toString());
+			log.debug("data: " + propMap.get("data").toString());
 			
 			// vertex data
 			if(propMap.get("data") instanceof String) {				
 				// do nothing
 			} else if(propMap.get("data") instanceof Map) {
 				Map<?,?> dataMap = (Map<?,?>) propMap.get("data");
-				v.setData( parseData(dataMap) );
+				v.setData( parseGHT(dataMap) );
 			} else {
-				System.err.println("Error: Data of the vertex is neither \"null\" string nor as map. Instead it is " + propMap.get("data").getClass().getName());
+				log.error("Error: Data of the vertex is neither \"null\" string nor as map. Instead it is " + propMap.get("data").getClass().getName());
 			}
 			
 			// parse edges
@@ -108,49 +112,50 @@ public class JsonFormatter {
 				if(((String)unkwEdges).compareTo("null") == 0) {
 					// do nothing, there are no edges
 				} else {
-					System.err.println("Error: Expecting string equal to \"null\" or list, instead got: " + unkwEdges);
+					log.error("Error: Expecting string equal to \"null\" or list, instead got: " + unkwEdges);
 				}
 			} else if (unkwEdges instanceof List) {			
 				List<?> edges = (List<?>) propMap.get("edges");
 			
 				// iterate over edges
 				for(Object jsonEdge : edges) {
-					System.out.println("edge: " + jsonEdge);
-					Edge<GHT, GHT> edge = new Edge<GHT, GHT>();
-					v.addEdge(edge);
+					log.debug("edge: " + jsonEdge);
+					Edge<GHT, GHT> edge = new Edge<GHT, GHT>();					
 					
 					// set id
 					Map<?,?> edgeProp = (Map<?,?>)jsonEdge;
 					edge.setId( (new PrimData("i", (String) edgeProp.get("id")).i()) );
+					
+					v.addEdge(edge);
 					
 					// edge's data					
 					if(edgeProp.get("data") instanceof String) {				
 						// do nothing
 					} else if(edgeProp.get("data") instanceof Map) {
 						Map<?,?> edgeDataMap = (Map<?,?>) edgeProp.get("data");
-						edge.setData( parseData(edgeDataMap) );
+						edge.setData( parseGHT(edgeDataMap) );
 					} else {
-						System.err.println("Error: Data of the edge is neither \"null\" string nor as map. Instead it is " + propMap.get("data").getClass().getName());
+						log.debug("Error: Data of the edge is neither \"null\" string nor as map. Instead it is " + propMap.get("data").getClass().getName());
 					}
 					
 					// save edge's id for later initialization
 					edge.setTarget(null);
 					untargetedEdges.put(edge, (new PrimData("i", (String) edgeProp.get("target")).i()));
 					
-					System.out.println("parsed edge: " + edge);
+					log.debug("parsed edge: " + edge);
 				}			
 			}
 
 			
 		}
 		
-		System.out.println("-->> Updating edges' target");
+		log.trace("-->> Updating edges' target");
 		for(Map.Entry<Edge<GHT, GHT>,Integer> entry : untargetedEdges.entrySet()) {
 			Vertex<GHT, GHT> vertex = parsedGraph.getVertex(entry.getValue());
 			if(vertex != null) {
 				entry.getKey().setTarget(vertex);
 			} else {
-				System.err.println("Error: Given target vertex with id " + entry.getValue() + " does not exist! Edge: " + entry.getKey());
+				log.error("Error: Given target vertex with id " + entry.getValue() + " does not exist! Edge: " + entry.getKey());
 			}
 		}
 		
@@ -158,11 +163,11 @@ public class JsonFormatter {
 		
 	}
 	
-	public GHT parseData(Map<?,?> dataMap) {
+	public GHT parseGHT(Map<?,?> dataMap) {
 		GHT data = new GHT();
 		for(Object mapKey : dataMap.keySet()) {
 			Object mapValue = dataMap.get(mapKey);
-			System.out.println("key: " + mapKey + "; value: " + mapValue);
+			log.debug("key: " + mapKey + "; value: " + mapValue);
 			data.put(mapKey.toString(), mapValue.toString());
 		}
 		
@@ -177,6 +182,7 @@ public class JsonFormatter {
 	 * @return String with serialized graph of JSON format
 	 */
 	public String getJsonString(Graph<GHT, GHT> graph) {
+		log.entry(graph);
 		
 		JsonKeyValueState root = new JsonKeyValueState();
 		root.add("type", "Graph");

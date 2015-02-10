@@ -25,11 +25,16 @@ public class Vertex<DV extends GraphData,DE extends GraphData>
 	public Collection<Edge<DV, DE>> getEdges() {
 		return edges.values();
 	}
+
+	public Edge<DV, DE> getEdge(int id) {
+		return edges.get(id);
+	}
 	
 	public String toString() {
 		return "Vertex"; // to do ;)
 	}
 
+	
 	@Override
 	public String getAsJson() {
 		

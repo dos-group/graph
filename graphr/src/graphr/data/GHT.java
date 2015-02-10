@@ -1,6 +1,7 @@
 package graphr.data;
 
 import java.util.Hashtable;
+import java.util.Map;
 
 public class GHT implements GraphData {
 	         // Stands for graph hashtable
@@ -44,6 +45,9 @@ public class GHT implements GraphData {
 		put(key, new PrimData(s));
 	}
 	
+	//-- Getters
+
+	
 	//-- Conversions
 	
 	public void setFromString(String s) {
@@ -80,6 +84,38 @@ public class GHT implements GraphData {
 		return s + "}";
 		
 	}
+
+	/**
+	 * Compares this object with other GHT whether keys and values are identical. Comparison can be either
+	 * strict type (type of value is checked) or not (string representation of values are compared).
+	 * @param other To which table to compare data
+	 * @param strictTypes True if strict type comparison or not.
+	 * @return True if GHT's are equal otherwise false
+	 */
+	public boolean compareTables(GHT other, boolean strictTypes) {
+		
+		if(table.entrySet().size() != other.table.entrySet().size())
+			return false;
+		
+		for(Map.Entry<String, PrimData> myEntry: table.entrySet()) {
+			PrimData otherValue = other.table.get(myEntry.getKey());
+			if(otherValue == null)
+				return false;
+			
+			if(strictTypes) {
+				if(!myEntry.getValue().equals(otherValue)) {
+					return false;
+				}
+			} else {
+				if(!myEntry.getValue().toString().equals( otherValue.toString() ))
+					return false;
+			}
+			
+		}
+		
+		return true;
+	}
+
 	
 	//-- Generic Converters
 	
