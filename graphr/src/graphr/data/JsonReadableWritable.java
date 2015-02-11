@@ -1,6 +1,8 @@
 package graphr.data;
 
-public interface JsonReadableWritable {
+import java.io.Serializable;
+
+public interface JsonReadableWritable extends GraphData {
 	
 	public String getAsJson();
 	public void setFromJson();

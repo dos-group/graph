@@ -21,9 +21,29 @@ public class JsonFormatterTest {
 		
 		Graph<GHT, GHT> graphSource = getExampleGraph();
 		String graphSerialized = JsonFormatter.getInstance().getJsonString(graphSource);
+		Graph<GHT, GHT> graphProcessed = JsonFormatter.getInstance().parseJsonString(graphSerialized);		
+		checkGraphs(graphSource, graphProcessed);		
+	}
 
-		Graph<GHT, GHT> graphProcessed = JsonFormatter.getInstance().parseJsonString(graphSerialized);
+	/**
+	 * Tests whether both serialization and deserialization works correctly with the {@link JsonVisitor} class. 
+	 * It checks whether we get the same graph after serialization of the source and its immediate parsing (deserialization).
+	 */
+	@Test
+	public void testJsonVisitorSerilization() {
 		
+		Graph<GHT, GHT> graphSource = getExampleGraph();
+		
+		JsonVisitor<GHT, GHT> jsonVisitor = new JsonVisitor<GHT, GHT>();		
+		graphSource.accept(jsonVisitor);		
+		String graphSerialized = jsonVisitor.getJsonString();
+		
+		Graph<GHT, GHT> graphProcessed = JsonFormatter.getInstance().parseJsonString(graphSerialized);		
+		checkGraphs(graphSource, graphProcessed);		
+	}
+
+	
+	protected void checkGraphs(Graph<GHT, GHT> graphSource, Graph<GHT, GHT> graphProcessed) {
 		// compare graphs: for each vertex in source graph find and match vertex in processed graph 
 		for(Vertex<GHT, GHT> sourceVertex : graphSource.getVertices()) {
 			
@@ -72,7 +92,7 @@ public class JsonFormatterTest {
 			}
 			
 		}
-		
+
 	}
 	
 	/**

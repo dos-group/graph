@@ -1,16 +1,16 @@
 package graphr.graph;
 
+//import graphr.data.JsonArrayState;
+//import graphr.data.JsonKeyValueState;
+//import graphr.data.JsonReadableWritable;
+
 import java.util.Collection;
 import java.util.Hashtable;
 
 import graphr.data.GraphData;
-import graphr.data.JsonArrayState;
-import graphr.data.JsonKeyValueState;
-import graphr.data.JsonReadableWritable;
 
 
-public class Vertex<DV extends GraphData,DE extends GraphData>
-	extends GraphElement<DV> implements JsonReadableWritable {
+public class Vertex<DV extends GraphData,DE extends GraphData> extends GraphElement<DV> {
 	
 	Hashtable<Integer, Edge<DV,DE>> edges;
 	
@@ -33,34 +33,34 @@ public class Vertex<DV extends GraphData,DE extends GraphData>
 	public String toString() {
 		return "Vertex"; // to do ;)
 	}
-
 	
+	/**
+	 * Part of the visitor design pattern -accept method.
+	 */
 	@Override
-	public String getAsJson() {
-		
-		JsonKeyValueState j = new JsonKeyValueState();
-		
-		j.add("type", "Vertex");
-		j.add("id", new Integer(id).toString());
-		j.add("data", data != null ? data.getAsJson() : "null");
-	
-		JsonArrayState edgesForJson = new JsonArrayState();
-		
-		for (Edge<DV,DE> e : edges.values()) {
-			edgesForJson.add(e.getAsJson());
-		}
-		
-		j.add("edges", edgesForJson.getAsJson());
-
-		return j.getAsJson();
+	public void accept(GraphElementVisitor visitor) {
+		visitor.visit(this);
 	}
 
-	@Override
-	public void setFromJson() {
-		// TODO Auto-generated method stub
-		
-	}
 	
-	
+
+//	public String getAsJson() {
+//		
+//		JsonKeyValueState j = new JsonKeyValueState();
+//		
+//		j.add("type", "Vertex");
+//		j.add("id", new Integer(id).toString());
+//		j.add("data", data != null ? data.getAsJson() : "null");
+//	
+//		JsonArrayState edgesForJson = new JsonArrayState();
+//		
+//		for (Edge<DV,DE> e : edges.values()) {
+//			edgesForJson.add(e.getAsJson());
+//		}
+//		
+//		j.add("edges", edgesForJson.getAsJson());
+//
+//		return j.getAsJson();
+//	}	
 	
 }

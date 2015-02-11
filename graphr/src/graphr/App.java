@@ -4,16 +4,15 @@ package graphr;
 //
 //import com.json.parsers.JsonParserFactory;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import graphr.data.GHT;
 import graphr.graph.Edge;
 import graphr.graph.Graph;
 import graphr.graph.Vertex;
 import graphr.io.FileSystemHandler;
 import graphr.io.JsonFormatter;
-import graphr.io.JsonFormatterTest;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class App {
 	

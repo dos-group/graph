@@ -1,6 +1,9 @@
 package graphr.data;
 
+import java.io.Serializable;
+
 public class PrimData implements JsonReadableWritable {
+	private static final long serialVersionUID = -2410903391512626771L;
 	
 	Object o;
 	
@@ -140,6 +143,11 @@ public class PrimData implements JsonReadableWritable {
 	public void setFromJson() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Serializable accept(GraphDataVisitor visitor) {
+		return visitor.visit(this);
 	}
 
 }

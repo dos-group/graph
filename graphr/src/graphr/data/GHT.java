@@ -1,11 +1,13 @@
 package graphr.data;
 
+import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.Map;
 
 public class GHT implements GraphData {
-	         // Stands for graph hashtable
+	private static final long serialVersionUID = 4824632181734657401L;
 
+	// Stands for graph hashtable
 	Hashtable<String, PrimData> table;
 	
 	//-- Constructors
@@ -47,6 +49,9 @@ public class GHT implements GraphData {
 	
 	//-- Getters
 
+	public Hashtable<String, PrimData> getTable() {
+		return table;
+	}
 	
 	//-- Conversions
 	
@@ -125,23 +130,24 @@ public class GHT implements GraphData {
 		
 	}
 
-	@Override
+
+	@Deprecated
 	public String getAsJson() {
 		JsonKeyValueState j = new JsonKeyValueState();
 		
         for (String k : table.keySet()) {
-        	
-//        	System.out.println("Key:" + k);
-//        	System.out.println("Value:" + table.get(k).getAsJson());
         	j.add(k, table.get(k).getAsJson());
         }
         
         return j.getAsJson();
 	}
 
+	/**
+	 * Part of the visitor design pattern -accept method
+	 */
 	@Override
-	public void setFromJson() {
-		
+	public Serializable accept(GraphDataVisitor visitor) {
+		return visitor.visit(this);
 	}
 	
 }

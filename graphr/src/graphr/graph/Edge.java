@@ -1,11 +1,10 @@
 package graphr.graph;
 
-import graphr.data.GraphData;
-import graphr.data.JsonReadableWritable;
-import graphr.data.JsonKeyValueState;
+//import graphr.data.JsonKeyValueState;
 
-public class Edge<DV extends GraphData, DE extends GraphData>
-		extends GraphElement<DE> implements JsonReadableWritable {
+import graphr.data.GraphData;
+
+public class Edge<DV extends GraphData, DE extends GraphData> extends GraphElement<DE> {
 
 	protected Vertex<DV, DE> target;
 
@@ -22,21 +21,27 @@ public class Edge<DV extends GraphData, DE extends GraphData>
 				+ (target != null ? target.getId() : "null") + ")";
 	}
 
-	public String getAsJson() {
-
-		JsonKeyValueState j = new JsonKeyValueState();
-
-		j.add("type", "Edge");
-		j.add("id", new Integer(id).toString());
-		j.add("data", (data== null ? "null" : data.getAsJson()));
-		j.add("target", (target == null ? "null" : new Integer(target.id).toString()));
-
-		return j.getAsJson();
-
+	/**
+	 * Part of the visitor design pattern -accept method.
+	 * <br>
+	 * This method is actually never called. It is responsibility of the vertex' visitor method to handle edges as well.
+	 */
+	@Override
+	public void accept(GraphElementVisitor visitor) {
+		visitor.visit(this);
 	}
 
-	public void setFromJson() {
-
-	}
+//	public String getAsJson() {
+//
+//		JsonKeyValueState j = new JsonKeyValueState();
+//
+//		j.add("type", "Edge");
+//		j.add("id", new Integer(id).toString());
+//		j.add("data", (data== null ? "null" : data.getAsJson()));
+//		j.add("target", (target == null ? "null" : new Integer(target.id).toString()));
+//
+//		return j.getAsJson();
+//
+//	}
 
 }

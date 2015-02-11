@@ -11,15 +11,20 @@ import com.codesnippets4all.json.parsers.JSONParser;
 import com.codesnippets4all.json.parsers.JsonParserFactory;
 
 import graphr.data.GHT;
+import graphr.data.GraphData;
+import graphr.data.GraphDataVisitor;
 import graphr.data.JsonArrayState;
 import graphr.data.JsonKeyValueState;
 import graphr.data.PrimData;
 import graphr.graph.Edge;
 import graphr.graph.Graph;
+import graphr.graph.GraphElementVisitor;
 import graphr.graph.Vertex;
 
 /**
- * Class that serializes and deserializes graph into a customized JSON format of the form:
+ * Attempt to create a visitor pattern for graph serialization. 
+ * <br>
+ * Visitor that serializes/desirializes a graph into customized JSON output of the following format:
  * <pre>
  * {
  *  "vertices": [
@@ -34,25 +39,68 @@ import graphr.graph.Vertex;
  *  "type" : graph
  * }
  * </pre>
- * @author dalxo
  *
  */
-@Deprecated
-public class JsonFormatter {
-	
+public class JsonVisitor<DV extends GraphData,DE extends GraphData> implements GraphElementVisitor {
 	private static Logger log = LogManager.getLogger(); 
 
-	private static JsonFormatter instance = null;
+	JsonKeyValueState root;
+	JsonArrayState verticesForJson;
+	GraphDataVisitor dataVisitor;
 	
-	public static JsonFormatter getInstance() {
-		if(instance == null)
-			instance = new JsonFormatter();
-		return instance;
+	@Override
+	public void before() {
+		dataVisitor = new GHTJsonVisitor();
 	}
-	
-	private JsonFormatter() {
+
+
+	@Override
+	public void visit(Graph<?, ?> graph) {
+		root = new JsonKeyValueState();
+		root.add("type", "Graph");
+		verticesForJson = new JsonArrayState();
+	}
+
+	@Override
+	public void visit(Vertex<?, ?> vertex) {
+
+		JsonKeyValueState vertexProp = new JsonKeyValueState();
 		
+		vertexProp.add("type", "Vertex");
+		vertexProp.add("id", new Integer((int) vertex.getId()).toString());
+		vertexProp.add("data", vertex.getData() != null ? vertex.getData().accept(dataVisitor).toString() : "null");
+	
+		// get JSON array for edges
+		JsonArrayState edgesForJson = new JsonArrayState();			
+		for (Edge<?,?> e : vertex.getEdges()) {				
+			JsonKeyValueState edgeProp = new JsonKeyValueState();
+			edgeProp.add("type", "Edge");
+			edgeProp.add("id", new Integer((int) e.getId()).toString());
+			edgeProp.add("data", (e.getData() == null ? "null" : e.getData().accept(dataVisitor).toString() ));
+			edgeProp.add("target", (e.getTarget() == null ? "null" : new Integer((int) e.getTarget().getId()).toString()));
+			edgesForJson.add(edgeProp.getAsJson());
+		}			
+		vertexProp.add("edges", edgesForJson.getAsJson());
+
+		// add serialized vertex into the list of vertices
+		verticesForJson.add(vertexProp.getAsJson());
 	}
+
+	@Override
+	public void visit(Edge<?, ?> edge) {
+		// do nothing		
+	}
+
+	@Override
+	public void after() {
+		root.add("vertices", verticesForJson.getAsJson());
+	}
+
+
+	public String getJsonString() {
+		return root != null ? root.getAsJson() : "null";
+	}
+
 	
 	/**
 	 * Experimental method to parse graph in JSON. 
@@ -164,6 +212,11 @@ public class JsonFormatter {
 		
 	}
 	
+	/**
+	 * Helper method to parse given JSON map into the Graph hashtable 
+	 * @param dataMap JSON map of keys and properties
+	 * @return Graph hashtable
+	 */
 	public GHT parseGHT(Map<?,?> dataMap) {
 		GHT data = new GHT();
 		for(Object mapKey : dataMap.keySet()) {
@@ -174,49 +227,6 @@ public class JsonFormatter {
 		
 		return data;
 	}
+
 	
-	/**
-	 * Generate JSON string from given graph.
-	 * <br>
-	 * NOT FINISHED.
-	 * @param graph Graph to be serialized into JSON string
-	 * @return String with serialized graph of JSON format
-	 */
-	public String getJsonString(Graph<GHT, GHT> graph) {
-		log.entry(graph);
-		
-		JsonKeyValueState root = new JsonKeyValueState();
-		root.add("type", "Graph");
-		
-		JsonArrayState verticesForJson = new JsonArrayState();
-		
-		for(Vertex<GHT, GHT> v : graph.getVertices()) {
-
-			JsonKeyValueState vertexProp = new JsonKeyValueState();
-			
-			vertexProp.add("type", "Vertex");
-			vertexProp.add("id", new Integer((int) v.getId()).toString());
-			vertexProp.add("data", v.getData() != null ? v.getData().getAsJson() : "null");
-		
-			// get JSON array for edges
-			JsonArrayState edgesForJson = new JsonArrayState();			
-			for (Edge<GHT,GHT> e : v.getEdges()) {				
-				JsonKeyValueState edgeProp = new JsonKeyValueState();
-				edgeProp.add("type", "Edge");
-				edgeProp.add("id", new Integer((int) e.getId()).toString());
-				edgeProp.add("data", (e.getData() == null ? "null" : e.getData().getAsJson()));
-				edgeProp.add("target", (e.getTarget() == null ? "null" : new Integer((int) e.getTarget().getId()).toString()));
-				edgesForJson.add(edgeProp.getAsJson());
-			}			
-			vertexProp.add("edges", edgesForJson.getAsJson());
-
-			// add serialized vertex into the list of vertices
-			verticesForJson.add(vertexProp.getAsJson());
-		}
-
-		root.add("vertices", verticesForJson.getAsJson());
-		
-		return root.getAsJson();
-	}
-
 }

@@ -1,16 +1,14 @@
 package graphr.graph;
 
+//import graphr.data.JsonArrayState;
+//import graphr.data.JsonKeyValueState;
+
 import graphr.data.GraphData;
-import graphr.data.JsonArrayState;
-import graphr.data.JsonKeyValueState;
-import graphr.data.JsonReadableWritable;
 
 import java.util.Collection;
 import java.util.Hashtable;
 
-public class Graph<DV extends GraphData,
-	DE extends GraphData> 
-	implements JsonReadableWritable {
+public class Graph<DV extends GraphData, DE extends GraphData> extends GraphElement<DV> {
 	
 	Hashtable<Integer, Vertex<DV,DE>> vertices;
 	
@@ -35,28 +33,40 @@ public class Graph<DV extends GraphData,
 		return vertices.values();
 	}
 	
+	
+	/**
+	 * Part of the visitor design pattern -accept method.
+	 * <br>
+	 * Main entry method for the entire graph. 
+	 */
 	@Override
-	public String getAsJson() {
-		
-		JsonKeyValueState j = new JsonKeyValueState();
-		j.add("type", "Graph");
-		
-		JsonArrayState verticesForJson = new JsonArrayState();
-		
+	public void accept(GraphElementVisitor visitor) {
+		visitor.before();
+		visitor.visit(this);
+
 		for (Vertex<DV,DE> v : vertices.values()) {
-			verticesForJson.add(v.getAsJson());
+			v.accept(visitor);
 		}
-		
-		j.add("vertices",verticesForJson.getAsJson());
-
-		return j.getAsJson();
-		
+	
+		visitor.after();
 	}
 
-	@Override
-	public void setFromJson() {
-		// TODO Auto-generated method stub
-		
-	}
+	
+//	public String getAsJson() {
+//	
+//	JsonKeyValueState j = new JsonKeyValueState();
+//	j.add("type", "Graph");
+//	
+//	JsonArrayState verticesForJson = new JsonArrayState();
+//	
+//	for (Vertex<DV,DE> v : vertices.values()) {
+//		verticesForJson.add(v.getAsJson());
+//	}
+//	
+//	j.add("vertices",verticesForJson.getAsJson());
+//
+//	return j.getAsJson();
+//	
+//}
 
 }

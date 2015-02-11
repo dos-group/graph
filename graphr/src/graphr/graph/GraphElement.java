@@ -1,8 +1,8 @@
 package graphr.graph;
 
-import graphr.data.JsonReadableWritable;
+import java.io.Serializable;
 
-public abstract class GraphElement<D extends JsonReadableWritable> {
+public abstract class GraphElement<D extends Serializable> {
 
 	private static int nextIdToIssue = 0;
 	
@@ -30,4 +30,10 @@ public abstract class GraphElement<D extends JsonReadableWritable> {
 		this.data = data;
 	}
 	
+	/**
+	 * Part of the visitor design pattern -accept method.
+	 * @param visitor Reference to visitor
+	 */
+	public abstract void accept(GraphElementVisitor visitor);
+
 }
