@@ -3,8 +3,6 @@ package graphr.graph;
 //import graphr.data.JsonArrayState;
 //import graphr.data.JsonKeyValueState;
 
-import graphr.data.GraphData;
-
 import java.util.Collection;
 import java.util.Hashtable;
 

@@ -11,13 +11,13 @@ import com.codesnippets4all.json.parsers.JSONParser;
 import com.codesnippets4all.json.parsers.JsonParserFactory;
 
 import graphr.data.GHT;
-import graphr.data.GraphData;
-import graphr.data.GraphDataVisitor;
 import graphr.data.JsonArrayState;
 import graphr.data.JsonKeyValueState;
 import graphr.data.PrimData;
 import graphr.graph.Edge;
 import graphr.graph.Graph;
+import graphr.graph.GraphData;
+import graphr.graph.GraphDataVisitor;
 import graphr.graph.GraphElementVisitor;
 import graphr.graph.Vertex;
 

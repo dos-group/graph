@@ -1,5 +1,7 @@
 package graphr.data;
 
+import graphr.graph.GraphDataVisitor;
+
 import java.io.Serializable;
 
 public class PrimData implements JsonReadableWritable {

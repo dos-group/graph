@@ -2,7 +2,6 @@ package graphr.graph;
 
 //import graphr.data.JsonKeyValueState;
 
-import graphr.data.GraphData;
 
 public class Edge<DV extends GraphData, DE extends GraphData> extends GraphElement<DE> {
 

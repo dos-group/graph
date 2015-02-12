@@ -7,8 +7,6 @@ package graphr.graph;
 import java.util.Collection;
 import java.util.Hashtable;
 
-import graphr.data.GraphData;
-
 
 public class Vertex<DV extends GraphData,DE extends GraphData> extends GraphElement<DV> {
 	

@@ -1,5 +1,8 @@
 package graphr.data;
 
+import graphr.graph.GraphData;
+import graphr.graph.GraphDataVisitor;
+
 import java.io.Serializable;
 import java.util.Hashtable;
 import java.util.Map;

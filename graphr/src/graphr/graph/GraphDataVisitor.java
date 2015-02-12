@@ -1,4 +1,4 @@
-package graphr.data;
+package graphr.graph;
 
 import java.io.Serializable;
 

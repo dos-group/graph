@@ -1,9 +1,9 @@
 package graphr.io;
 
 import graphr.data.GHT;
-import graphr.data.GraphData;
-import graphr.data.GraphDataVisitor;
 import graphr.data.JsonKeyValueState;
+import graphr.graph.GraphData;
+import graphr.graph.GraphDataVisitor;
 
 import java.io.Serializable;
 
