@@ -8,3 +8,5 @@ graphr/.project
 graphr/.classpath
 
 *.jar
+
+*.prefs
