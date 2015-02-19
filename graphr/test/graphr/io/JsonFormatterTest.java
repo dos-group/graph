@@ -129,6 +129,10 @@ public class JsonFormatterTest {
 		v.setData(gh);
 		
 		Edge<GHT, GHT> e = new Edge<GHT, GHT>(new GHT());
+		e.getData().put("strength", 7);
+		e.getData().put("strong", true);
+		e.getData().put("transitionPrbability", 0.7832);
+		
 		Edge<GHT, GHT> e2 = new Edge<GHT, GHT>(new GHT());
 		v.addEdge(e);
 		v.addEdge(e2);
