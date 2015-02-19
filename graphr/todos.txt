@@ -1,0 +1,12 @@
+# Next steps
+
+1. Write some code that allows graph to be visualized as js
+2. Implemented a simple sample algo with agents
+3. Implement filtering code for debugging
+4. Implement transformation of sample real social network data to our json format
+5. Implement new algo
+6. Implement reference algo
+7. Implement some kick ass visualizatin that uses the above-mentioned filters
+
+
+
