@@ -16,18 +16,18 @@ public class JsonFormatterTest {
 	
 	private static Logger log = LogManager.getLogger(); 
 
-	/**
-	 * Tests whether both serialization and deserialization works correctly with the {@link JsonFormatter} class. 
-	 * It checks whether we get the same graph after serialization of the source and its immediate parsing (deserialization).
-	 */
-	@Test
-	public void testJsonSerilization() {
-		
-		Graph<GHT, GHT> graphSource = getExampleGraph();
-		String graphSerialized = JsonFormatter.getInstance().getJsonString(graphSource);
-		Graph<GHT, GHT> graphProcessed = JsonFormatter.getInstance().parseJsonString(graphSerialized);		
-		checkGraphs(graphSource, graphProcessed);		
-	}
+//	/**
+//	 * Tests whether both serialization and deserialization works correctly with the {@link JsonFormatter} class. 
+//	 * It checks whether we get the same graph after serialization of the source and its immediate parsing (deserialization).
+//	 */
+//	@Test
+//	public void testJsonSerilization() {
+//		
+//		Graph<GHT, GHT> graphSource = getExampleGraph();
+//		String graphSerialized = JsonFormatter.getInstance().getJsonString(graphSource);
+//		Graph<GHT, GHT> graphProcessed = JsonFormatter.getInstance().parseJsonString(graphSerialized);		
+//		checkGraphs(graphSource, graphProcessed);		
+//	}
 
 	/**
 	 * Tests whether both serialization and deserialization works correctly with the {@link JsonVisitor} class. 
@@ -43,9 +43,7 @@ public class JsonFormatterTest {
 		String graphSerialized = jsonVisitor.getJsonString();
 		
 		log.debug("---- Serialized graph:   " + graphSerialized);
-		
-
-		
+	
 		Graph<GHT, GHT> graphDeserialized = jsonVisitor.parseJsonString(graphSerialized);	
 		
 		// Now let's reserialize the graph
@@ -56,24 +54,7 @@ public class JsonFormatterTest {
 		log.debug("---- Graph reserialized: " + graphSerializedRe);
 		log.debug("---- SameString: " + graphSerializedRe.equals(graphSerialized));
 		
-		
 		checkGraphs(graphSource, graphDeserialized);	
-		
-		// Assuming:
-		// https://github.com/douglascrockford/JSON-java
-		
-//		JSONObject jo = new JSONObject(graphSerialized);
-//		log.debug("---- json object: " + jo.toString());
-		
-//		// Third check
-//		
-//		JsonVisitor<GHT, GHT> jsonVisitor2 = new JsonVisitor<GHT, GHT>();
-//		graphProcessed.accept(jsonVisitor2);
-//		String graphSerialized2 = jsonVisitor2.getJsonString();
-//		log.debug("---- Serialized graph2: " + graphSerialized2);
-		
-		
-	
 	}
 
 	
@@ -144,16 +125,16 @@ public class JsonFormatterTest {
 		gh2.put("age", 28);
 		gh2.put("income", 24.7);
 		
-		Vertex<GHT, GHT> v = new Vertex<GHT, GHT>();
+		Vertex<GHT, GHT> v = new Vertex<GHT, GHT>(new GHT());
 		v.setData(gh);
 		
-		Edge<GHT, GHT> e = new Edge<GHT, GHT>();
-		Edge<GHT, GHT> e2 = new Edge<GHT, GHT>();
+		Edge<GHT, GHT> e = new Edge<GHT, GHT>(new GHT());
+		Edge<GHT, GHT> e2 = new Edge<GHT, GHT>(new GHT());
 		v.addEdge(e);
 		v.addEdge(e2);
 		
 		Graph<GHT, GHT> g = new Graph<GHT, GHT>();
-		Vertex<GHT, GHT> v2 = new Vertex<GHT, GHT>();
+		Vertex<GHT, GHT> v2 = new Vertex<GHT, GHT>(new GHT());
 		g.addVertex(v);
 		g.addVertex(v2);
 		e.setTarget(v2);

@@ -10,5 +10,6 @@ public interface GraphData extends Serializable {
 	 * @return Object that is serializable
 	 */
 	Serializable accept(GraphDataVisitor visitor);
+	
 
 }

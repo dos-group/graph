@@ -12,7 +12,8 @@ public class Vertex<DV extends GraphData,DE extends GraphData> extends GraphElem
 	
 	Hashtable<Integer, Edge<DV,DE>> edges;
 	
-	public Vertex() {
+	public Vertex(DV data) {
+		super(data);
 		edges = new Hashtable<Integer, Edge<DV,DE>>();
 	}
  

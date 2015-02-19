@@ -32,16 +32,16 @@ public class App {
 		gh2.put("age", 28);
 		gh2.put("income", 24.7);
 		
-		Vertex<GHT, GHT> v = new Vertex<GHT, GHT>();
+		Vertex<GHT, GHT> v = new Vertex<GHT, GHT>(new GHT());
 		v.setData(gh);
 		
-		Edge<GHT, GHT> e = new Edge<GHT, GHT>();
-		Edge<GHT, GHT> e2 = new Edge<GHT, GHT>();
+		Edge<GHT, GHT> e = new Edge<GHT, GHT>(new GHT());
+		Edge<GHT, GHT> e2 = new Edge<GHT, GHT>(new GHT());
 		v.addEdge(e);
 		v.addEdge(e2);
 		
 		Graph<GHT, GHT> g = new Graph<GHT, GHT>();
-		Vertex<GHT, GHT> v2 = new Vertex<GHT, GHT>();
+		Vertex<GHT, GHT> v2 = new Vertex<GHT, GHT>(new GHT());
 		g.addVertex(v);
 		g.addVertex(v2);
 		e.setTarget(v2);
@@ -52,28 +52,29 @@ public class App {
 		
 	}
 	
+	@Deprecated
 	public static void testJsonFormatter() {
 		
-		System.out.println("Hello world.");
-		
-		Graph<GHT, GHT> g = App.getExampleGraph();
-		
-		FileSystemHandler.getInstance().write(JsonFormatter.getInstance().getJsonString(g), 
-				App.FULL_FILE_PATH);
-		
-		String readString = FileSystemHandler.getInstance().read(
-				App.FULL_FILE_PATH);
-		
-		System.out.println(readString);
-		
-		Graph<GHT, GHT> parsed = JsonFormatter.getInstance().parseJsonString(readString);
-		
-		System.out.println("+++++++++++++");
-
-		FileSystemHandler.getInstance().write(JsonFormatter.getInstance().getJsonString(parsed), 
-				App.FULL_FILE_PATH);
-				
-		System.out.println(JsonFormatter.getInstance().getJsonString(parsed));
+//		System.out.println("Hello world.");
+//		
+//		Graph<GHT, GHT> g = App.getExampleGraph();
+//		
+//		FileSystemHandler.getInstance().write(JsonFormatter.getInstance().getJsonString(g), 
+//				App.FULL_FILE_PATH);
+//		
+//		String readString = FileSystemHandler.getInstance().read(
+//				App.FULL_FILE_PATH);
+//		
+//		System.out.println(readString);
+//		
+//		Graph<GHT, GHT> parsed = JsonFormatter.getInstance().parseJsonString(readString);
+//		
+//		System.out.println("+++++++++++++");
+//
+//		FileSystemHandler.getInstance().write(JsonFormatter.getInstance().getJsonString(parsed), 
+//				App.FULL_FILE_PATH);
+//				
+//		System.out.println(JsonFormatter.getInstance().getJsonString(parsed));
 		
 	}
 

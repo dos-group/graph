@@ -5,6 +5,11 @@ package graphr.graph;
 
 public class Edge<DV extends GraphData, DE extends GraphData> extends GraphElement<DE> {
 
+	public Edge(DE data) {
+		super(data);
+	}
+
+
 	protected Vertex<DV, DE> target;
 
 	public Vertex<DV, DE> getTarget() {
@@ -19,6 +24,7 @@ public class Edge<DV extends GraphData, DE extends GraphData> extends GraphEleme
 		return "(" + getId() + "," + (data != null ? data.toString() : "null") + ","
 				+ (target != null ? target.getId() : "null") + ")";
 	}
+	
 
 	/**
 	 * Part of the visitor design pattern -accept method.

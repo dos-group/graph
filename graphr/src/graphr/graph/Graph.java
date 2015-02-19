@@ -6,7 +6,7 @@ package graphr.graph;
 import java.util.Collection;
 import java.util.Hashtable;
 
-public class Graph<DV extends GraphData, DE extends GraphData> extends GraphElement<DV> {
+public class Graph<DV extends GraphData, DE extends GraphData> {
 	
 	Hashtable<Integer, Vertex<DV,DE>> vertices;
 	
@@ -41,7 +41,6 @@ public class Graph<DV extends GraphData, DE extends GraphData> extends GraphElem
 	 * <br>
 	 * Main entry method for the entire graph. 
 	 */
-	@Override
 	public void accept(GraphElementVisitor visitor) {
 		visitor.before();
 		visitor.visit(this);

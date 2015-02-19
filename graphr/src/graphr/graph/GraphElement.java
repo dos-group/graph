@@ -9,9 +9,10 @@ public abstract class GraphElement<D extends Serializable> {
 	protected int id;
 	protected D data;
 	
-	public GraphElement() {
+	public GraphElement(D data) {
 		id = GraphElement.nextIdToIssue;
 		GraphElement.nextIdToIssue ++;
+		this.data = data;
 	}
 	
 	public long getId() {
