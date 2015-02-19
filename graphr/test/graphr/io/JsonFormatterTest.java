@@ -7,10 +7,14 @@ import graphr.graph.Edge;
 import graphr.graph.Graph;
 import graphr.graph.Vertex;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.json.JSONObject;
 import org.junit.Test;
 
 public class JsonFormatterTest {
 	
+	private static Logger log = LogManager.getLogger(); 
 
 	/**
 	 * Tests whether both serialization and deserialization works correctly with the {@link JsonFormatter} class. 
@@ -38,8 +42,38 @@ public class JsonFormatterTest {
 		graphSource.accept(jsonVisitor);		
 		String graphSerialized = jsonVisitor.getJsonString();
 		
-		Graph<GHT, GHT> graphProcessed = JsonFormatter.getInstance().parseJsonString(graphSerialized);		
-		checkGraphs(graphSource, graphProcessed);		
+		log.debug("---- Serialized graph:   " + graphSerialized);
+		
+
+		
+		Graph<GHT, GHT> graphDeserialized = jsonVisitor.parseJsonString(graphSerialized);	
+		
+		// Now let's reserialize the graph
+		
+		JsonVisitor<GHT, GHT> jsonVisitorRe = new JsonVisitor<GHT, GHT>();
+		graphDeserialized.accept(jsonVisitorRe);
+		String graphSerializedRe = jsonVisitorRe.getJsonString();
+		log.debug("---- Graph reserialized: " + graphSerializedRe);
+		log.debug("---- SameString: " + graphSerializedRe.equals(graphSerialized));
+		
+		
+		checkGraphs(graphSource, graphDeserialized);	
+		
+		// Assuming:
+		// https://github.com/douglascrockford/JSON-java
+		
+//		JSONObject jo = new JSONObject(graphSerialized);
+//		log.debug("---- json object: " + jo.toString());
+		
+//		// Third check
+//		
+//		JsonVisitor<GHT, GHT> jsonVisitor2 = new JsonVisitor<GHT, GHT>();
+//		graphProcessed.accept(jsonVisitor2);
+//		String graphSerialized2 = jsonVisitor2.getJsonString();
+//		log.debug("---- Serialized graph2: " + graphSerialized2);
+		
+		
+	
 	}
 
 	

@@ -11,6 +11,15 @@ public class PrimData implements JsonReadableWritable {
 	
 	//-- Constructors
 	
+	public PrimData(Object o) {
+		if ((o instanceof Integer) || (o instanceof Double) || (o instanceof Boolean)
+			|| (o instanceof String) || (o == null)) {	
+			this.o = o;
+		} else {
+			throw new UnsupportedOperationException("Object type unsupoorted by PrimData.");
+		}
+	}
+	
 	public PrimData(String abbrev, String someString) {
 		setFromSomeString(abbrev, someString);
 	}
@@ -79,6 +88,10 @@ public class PrimData implements JsonReadableWritable {
 	
 	public String s() {
 		return (String) o;
+	}
+	
+	public Object o() {
+		return o;
 	}
 
 	public String toString() {

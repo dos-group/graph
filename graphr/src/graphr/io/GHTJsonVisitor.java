@@ -17,8 +17,9 @@ public class GHTJsonVisitor implements GraphDataVisitor {
 	@Override
 	public Serializable visit(GraphData data) {
 		
-		if(data == null)
+		if (data == null) {
 			return "null";
+		}
 		
 		GHT ght = (GHT)data;
 		

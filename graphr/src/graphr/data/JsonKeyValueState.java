@@ -19,6 +19,10 @@ public class JsonKeyValueState {
 		String s = "{";
 		
 		int remainingKeys = t.size();
+		
+		if (remainingKeys == 0) {
+			return "null";
+		}
 	
 		for (String k : t.keySet()) {
 			

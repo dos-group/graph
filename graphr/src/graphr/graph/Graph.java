@@ -27,6 +27,10 @@ public class Graph<DV extends GraphData, DE extends GraphData> extends GraphElem
 		return vertices.get(new Integer(id));
 	}
 	
+	public Hashtable<Integer, Vertex<DV,DE>> getVerticesAsHashtable() {
+		return vertices;
+	}
+	
 	public Collection<Vertex<DV,DE>> getVertices() {
 		return vertices.values();
 	}

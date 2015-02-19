@@ -17,7 +17,6 @@ import org.apache.logging.log4j.Logger;
 public class App {
 	
 	private static Logger log = LogManager.getLogger(); 
-
 	
 	private static final String FULL_FILE_PATH 
 		= "ouputFile.txt";
@@ -52,9 +51,9 @@ public class App {
 		return g;
 		
 	}
-
-	public static void main(String[] args) {
-			
+	
+	public static void testJsonFormatter() {
+		
 		System.out.println("Hello world.");
 		
 		Graph<GHT, GHT> g = App.getExampleGraph();
@@ -75,7 +74,12 @@ public class App {
 				App.FULL_FILE_PATH);
 				
 		System.out.println(JsonFormatter.getInstance().getJsonString(parsed));
+		
+	}
 
+	public static void main(String[] args) {
+			
+		testJsonFormatter();
 		
 	}
 
