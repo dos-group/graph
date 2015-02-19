@@ -8,18 +8,16 @@ import graphr.data.GHT;
 import graphr.graph.Edge;
 import graphr.graph.Graph;
 import graphr.graph.Vertex;
-import graphr.io.FileSystemHandler;
-import graphr.io.JsonFormatter;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+//import org.apache.logging.log4j.LogManager;
+//import org.apache.logging.log4j.Logger;
 
 public class App {
 	
-	private static Logger log = LogManager.getLogger(); 
-	
-	private static final String FULL_FILE_PATH 
-		= "ouputFile.txt";
+//	private static Logger log = LogManager.getLogger(); 
+//	
+//	private static final String FULL_FILE_PATH 
+//		= "ouputFile.txt";
 	
 	public static Graph<GHT, GHT> getExampleGraph() {
 		
