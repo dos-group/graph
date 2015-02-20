@@ -7,6 +7,3 @@
 5. Implement new algo
 6. Implement reference algo
 7. Implement some kick ass visualizatin that uses the above-mentioned filters
-
-
-
