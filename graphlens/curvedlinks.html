@@ -20,7 +20,14 @@
 var width = 960,
     height = 500;
 
-var color = d3.scale.category20();
+function color(d) {
+	
+	switch(d) {
+		case 1: return '#33cc33'; 
+		case 2: return '#ff0066'; 
+		default: return '#3399ff';
+	}	
+}
 
 var force = d3.layout.force()
     .linkDistance(10)
@@ -72,7 +79,7 @@ function dblclick(d) {
     .enter().append("circle")
       .attr("class", "node")
       .attr("r", 5)
-      .style("fill", function(d) { return color(d.group); })
+      .style("fill", function(d){return color(d.group)})
 	  .on("dblclick", dblclick)
       .call(force.drag);
 
