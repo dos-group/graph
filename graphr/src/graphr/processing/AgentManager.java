@@ -8,8 +8,6 @@ import graphr.graph.Vertex;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Manages simulations of agents.
@@ -28,9 +26,20 @@ public class AgentManager implements ProcessingFacade {
 	Agent currentlyExecutedAgent;
 	
 		
-	public AgentManager(Graph<?,?> graph) {
+	public AgentManager(Graph<?,?> graph, AgentPopulator pop) {
+		
+		// Basic init stuff
 		schedule = new Hashtable<Integer, ArrayList<Agent>>();
 		this.graph = graph;
+		
+		// Getting population for initial schedule
+		for(Vertex<?,?> v : graph.getVertices()) {
+			ArrayList<Agent> al = pop.getPopulation(v.getId());
+			if (al != null) {
+				schedule.put(new Integer(v.getId()), al);
+			}
+		}
+		
 	}
 	
 	/**

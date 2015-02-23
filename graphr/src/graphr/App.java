@@ -4,11 +4,13 @@ package graphr;
 //
 //import com.json.parsers.JsonParserFactory;
 
+import graphr.algorithms.ShortestPathAgentPopulator;
 import graphr.data.GHT;
 import graphr.graph.Edge;
 import graphr.graph.Graph;
 import graphr.graph.Vertex;
 import graphr.io.FileSystemHandler;
+import graphr.processing.AgentManager;
 
 //import org.apache.logging.log4j.LogManager;
 //import org.apache.logging.log4j.Logger;
@@ -78,7 +80,8 @@ public class App {
 
 	public static void main(String[] args) {
 			
-		
+		Graph<?,?> g = App.getExampleGraph();
+		AgentManager m = new AgentManager(g, new ShortestPathAgentPopulator());
 		
 	}
 

@@ -1,5 +1,7 @@
 package graphr.algorithms;
 
+import java.util.ArrayList;
+
 import graphr.processing.Agent;
 import graphr.processing.ProcessingFacade;
 

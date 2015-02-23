@@ -1,5 +1,7 @@
 package graphr.processing;
 
+import java.util.ArrayList;
+
 
 /**
  * Parent class for all graph's agents. User is expected to extend this class and implemented given methods.
