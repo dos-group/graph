@@ -40,7 +40,7 @@ public class AgentManager implements ProcessingFacade {
 		for(Integer vertexId : schedule.keySet()) {
 			ArrayList<Agent> agents = schedule.get(vertexId);
 			for(Agent agent : agents) {	
-				agent.step();	
+				agent.runStep();	
 			}	
 		}
 			

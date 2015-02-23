@@ -17,19 +17,19 @@ public abstract class Agent {
 	/**
 	 * Called before simulation starts to do some initialization. Here comes user's code.
 	 */
-	public abstract void before();
+	public abstract void runBefore();
 	
 	/**
 	 * Called after simulation stops to do some clean up. Here comes user's code.
 	 */
-	public abstract void after();
+	public abstract void runAfter();
 
 	/**
 	 * Perform computation on given vertex and decide where to move in the next step
 	 * @param vertex On which vertex to perform computation
 	 * @return null if agent halts otherwise where to move next
 	 */
-	public abstract void step();
+	public abstract void runStep();
 	
 
 
