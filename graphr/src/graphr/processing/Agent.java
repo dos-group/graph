@@ -1,6 +1,5 @@
 package graphr.processing;
 
-import graphr.graph.Vertex;
 
 /**
  * Parent class for all graph's agents. User is expected to extend this class and implemented given methods.
@@ -8,21 +7,23 @@ import graphr.graph.Vertex;
  */
 public abstract class Agent {
 
-	ProcessingFacade facade;
+	protected ProcessingFacade facade;
 	
 	public Agent(ProcessingFacade facade) {
 		this.facade = facade;
 	}
 	
+	public abstract Agent getCopy();
+	
 	/**
 	 * Called before simulation starts to do some initialization. Here comes user's code.
 	 */
-	public abstract void runBefore();
+	public void runBefore(){}
 	
 	/**
 	 * Called after simulation stops to do some clean up. Here comes user's code.
 	 */
-	public abstract void runAfter();
+	public void runAfter(){}
 
 	/**
 	 * Perform computation on given vertex and decide where to move in the next step
@@ -31,6 +32,4 @@ public abstract class Agent {
 	 */
 	public abstract void runStep();
 	
-
-
 }

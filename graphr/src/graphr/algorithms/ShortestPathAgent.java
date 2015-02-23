@@ -4,22 +4,21 @@ import graphr.processing.Agent;
 import graphr.processing.ProcessingFacade;
 
 public class ShortestPathAgent extends Agent {
+	
+	int sourceId;
+	int hops;
 
-	public ShortestPathAgent(ProcessingFacade facade) {
+	public ShortestPathAgent(ProcessingFacade facade, int sourceId) {
 		super(facade);
+		this.sourceId = sourceId;
 	}
-
-	@Override
-	public void runBefore() {
-	}
-
-	@Override
-	public void runAfter() {
+	
+	public ShortestPathAgent getCopy() {
+		return new ShortestPathAgent(facade, sourceId);
 	}
 
 	@Override
 	public void runStep() {
-		// TODO Auto-generated method stub
 		
 	}
 

@@ -1,5 +1,8 @@
 package graphr.processing;
 
+import graphr.data.GHT;
+import graphr.data.PrimData;
+import graphr.graph.Edge;
 import graphr.graph.Graph;
 import graphr.graph.Vertex;
 
@@ -22,6 +25,7 @@ public class AgentManager implements ProcessingFacade {
 
 	int localVertexId;
 	Hashtable<Integer, ArrayList<Agent>> newSchedule;
+	Agent currentlyExecutedAgent;
 	
 		
 	public AgentManager(Graph<?,?> graph) {
@@ -40,10 +44,14 @@ public class AgentManager implements ProcessingFacade {
 		for(Integer vertexId : schedule.keySet()) {
 			ArrayList<Agent> agents = schedule.get(vertexId);
 			for(Agent agent : agents) {	
+				currentlyExecutedAgent = agent;
 				agent.runStep();	
 			}	
 		}
-			
+		
+		localVertexId = -1;
+		currentlyExecutedAgent = null;
+		
 		schedule = newSchedule;
 	}
 
@@ -68,8 +76,29 @@ public class AgentManager implements ProcessingFacade {
 	//-- implements ProcessingFacade
 
 	@Override
-	public Vertex<?, ?> getLocalVertex() {
-		return graph.getVertex(localVertexId);
+	public PrimData getLocalValue(String key) {
+		GHT data = (GHT) graph.getVertex(localVertexId).getData();
+		return data.getTable().get(key);
+	}
+
+	@Override
+	public void setLocalValue(String key, PrimData value) {
+		GHT data = (GHT) graph.getVertex(localVertexId).getData();
+		data.getTable().put(key,(PrimData) value);
+	}
+
+	@Override
+	public void broadcast() {
+		Vertex<?,?> vertex = graph.getVertex(localVertexId);
+		for(Edge<?, ?> e : vertex.getEdges()) {
+			Integer nextHopId = new Integer(e.getTarget().getId());
+			ArrayList<Agent> al = newSchedule.get(nextHopId);
+			if (al == null) {
+				al = new ArrayList<Agent>();
+				newSchedule.put(nextHopId, al);
+			}
+			al.add(currentlyExecutedAgent.getCopy());
+		}
 	}
 
 }

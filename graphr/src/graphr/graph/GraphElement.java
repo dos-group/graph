@@ -15,7 +15,7 @@ public abstract class GraphElement<D extends Serializable> {
 		this.data = data;
 	}
 	
-	public long getId() {
+	public int getId() {
 		return id;
 	}
 
