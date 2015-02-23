@@ -10,6 +10,7 @@
 .link {
   fill: none;
   stroke: #bbb;
+  stroke-width: 1.5px;
 }
 
 </style>
@@ -18,7 +19,13 @@
 <script>
 
 var width = 960,
-    height = 500;
+    height = 500,
+      markerWidth = 6,
+        markerHeight = 6,
+        cRadius = 30, // play with the cRadius value
+        refX = cRadius + (markerWidth * 2),
+        refY = -Math.sqrt(cRadius),
+        drSub = cRadius + refY;
 
 function color(d) {
 	
@@ -36,7 +43,11 @@ var force = d3.layout.force()
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
-    .attr("height", height);
+    .attr("height", height)
+	 .attr("refX", refX)
+	 .attr("refY", refY)
+	         .attr("markerWidth", markerWidth)
+			 .attr("markerHeight", markerHeight);
 
 d3.json("miserables.json", function(error, graph) {
   var nodes = graph.nodes.slice(),
@@ -87,10 +98,11 @@ function dblclick(d) {
       .text(function(d) { return d.name; });
 
   force.on("tick", function() {
+	
     link.attr("d", function(d) {
       return "M" + d[0].x + "," + d[0].y
-          + "S" + d[1].x + "," + d[1].y
-          + " " + d[2].x + "," + d[2].y;
+          + "A" + d[1].x + "," + d[1].y
+          + " 0 0,1 " + d[2].x + "," + d[2].y;
     });
     node.attr("transform", function(d) {
       return "translate(" + d.x + "," + d.y + ")";
