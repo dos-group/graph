@@ -8,6 +8,7 @@ import graphr.data.GHT;
 import graphr.graph.Edge;
 import graphr.graph.Graph;
 import graphr.graph.Vertex;
+import graphr.io.FileSystemHandler;
 
 //import org.apache.logging.log4j.LogManager;
 //import org.apache.logging.log4j.Logger;
@@ -50,13 +51,12 @@ public class App {
 		
 	}
 	
-	@Deprecated
-	public static void testJsonFormatter() {
+	public static void doSomeReadWriteTests() {
 		
 //		System.out.println("Hello world.");
 //		
 //		Graph<GHT, GHT> g = App.getExampleGraph();
-//		
+		
 //		FileSystemHandler.getInstance().write(JsonFormatter.getInstance().getJsonString(g), 
 //				App.FULL_FILE_PATH);
 //		
@@ -78,7 +78,7 @@ public class App {
 
 	public static void main(String[] args) {
 			
-		testJsonFormatter();
+		
 		
 	}
 

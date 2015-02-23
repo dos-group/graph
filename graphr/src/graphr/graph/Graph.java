@@ -52,22 +52,4 @@ public class Graph<DV extends GraphData, DE extends GraphData> {
 		visitor.after();
 	}
 
-	
-//	public String getAsJson() {
-//	
-//	JsonKeyValueState j = new JsonKeyValueState();
-//	j.add("type", "Graph");
-//	
-//	JsonArrayState verticesForJson = new JsonArrayState();
-//	
-//	for (Vertex<DV,DE> v : vertices.values()) {
-//		verticesForJson.add(v.getAsJson());
-//	}
-//	
-//	j.add("vertices",verticesForJson.getAsJson());
-//
-//	return j.getAsJson();
-//	
-//}
-
 }

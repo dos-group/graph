@@ -1,6 +1,5 @@
-package graphr.simulation;
+package graphr.processing;
 
-import graphr.graph.Graph;
 import graphr.graph.Vertex;
 
 /**
@@ -9,13 +8,10 @@ import graphr.graph.Vertex;
  */
 public abstract class Agent {
 
-	Graph<?,?> graph;
-	AgentManager manager;
+	ProcessingFacade facade;
 	
-
-	public Agent(AgentManager manager, Graph<?,?> graph) {
-		this.manager = manager;
-		this.graph = graph;
+	public Agent(ProcessingFacade facade) {
+		this.facade = facade;
 	}
 	
 	/**
@@ -33,7 +29,8 @@ public abstract class Agent {
 	 * @param vertex On which vertex to perform computation
 	 * @return null if agent halts otherwise where to move next
 	 */
-	public abstract Vertex<?,?> step(Vertex<?,?> vertex);
+	public abstract void step();
 	
+
 
 }
