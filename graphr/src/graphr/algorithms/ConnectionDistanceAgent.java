@@ -2,11 +2,16 @@ package graphr.algorithms;
 
 import java.util.ArrayList;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import graphr.data.PrimData;
 import graphr.processing.Agent;
 import graphr.processing.VertexProcessingFacade;
 
 public class ConnectionDistanceAgent extends Agent {
+	
+	private static Logger log = LogManager.getLogger(); 
 	
 	int sourceId;
 	int distance;
@@ -27,11 +32,13 @@ public class ConnectionDistanceAgent extends Agent {
 
 	@Override
 	public void runStep() {
+		log.debug("vid: " + v.getId());
 		if ((sourceId == v.getId()) && (v.getValue("distance") == null)){
 			modifyDistanceAndBroadcast(0);
 		} else {
 			PrimData distance = v.getValue("distance");
-			if ((distance != null) && (distance.i() < this.distance)) {
+			log.debug("distance: " + (distance == null ? "null" : distance.i()));
+			if ((distance == null) || (distance.i() < this.distance)) {
 				modifyDistanceAndBroadcast(this.distance);
 			}
 		}
