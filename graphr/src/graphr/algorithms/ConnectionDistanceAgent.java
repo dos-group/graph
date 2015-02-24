@@ -14,14 +14,15 @@ public class ConnectionDistanceAgent extends Agent {
 
 	//-- Implementations of abstract stuff
 	
-	public ConnectionDistanceAgent(VertexProcessingFacade facade, int sourceId, int maxDistance) {
-		super(facade);
+	public ConnectionDistanceAgent(int sourceId, int maxDistance) {
 		this.sourceId = sourceId;
 		this.maxDistance = maxDistance;
 	}
 	
 	public ConnectionDistanceAgent getCopy() {
-		return new ConnectionDistanceAgent(v, sourceId, maxDistance);
+		ConnectionDistanceAgent a = new ConnectionDistanceAgent(sourceId, maxDistance);
+		a.v = v;
+		return a;
 	}
 
 	@Override

@@ -11,8 +11,8 @@ public abstract class Agent {
 
 	protected VertexProcessingFacade v;
 	
-	public Agent(VertexProcessingFacade facade) {
-		v = facade;
+	public void setVertexProcessingFacade(VertexProcessingFacade v) {
+		this.v = v;
 	}
 	
 	public abstract Agent getCopy();

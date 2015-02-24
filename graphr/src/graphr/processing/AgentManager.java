@@ -51,9 +51,11 @@ public class AgentManager implements VertexProcessingFacade {
 		newSchedule = new Hashtable<Integer, ArrayList<Agent>>();
 		
 		for(Integer vertexId : schedule.keySet()) {
+			localVertexId = vertexId.intValue();
 			ArrayList<Agent> agents = schedule.get(vertexId);
 			for(Agent agent : agents) {	
 				currentlyExecutedAgent = agent;
+				agent.setVertexProcessingFacade(this);
 				agent.runStep();	
 			}	
 		}

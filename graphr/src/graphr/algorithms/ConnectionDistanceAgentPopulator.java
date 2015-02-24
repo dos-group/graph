@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import graphr.processing.Agent;
 import graphr.processing.AgentPopulator;
+import graphr.processing.VertexProcessingFacade;
 
 public class ConnectionDistanceAgentPopulator extends AgentPopulator {
 	
@@ -18,7 +19,7 @@ public class ConnectionDistanceAgentPopulator extends AgentPopulator {
 	public ArrayList<Agent> getPopulation(int vertexId) {
 		
 		if (vertexId == queriedVertexId) {
-			ConnectionDistanceAgent a = new ConnectionDistanceAgent(null, vertexId, maxDistance);
+			ConnectionDistanceAgent a = new ConnectionDistanceAgent(vertexId, maxDistance);
 			ArrayList<Agent> list = new ArrayList<Agent>();
 			list.add(a);
 			return list;
