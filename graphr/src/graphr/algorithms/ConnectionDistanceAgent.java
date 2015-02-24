@@ -37,9 +37,9 @@ public class ConnectionDistanceAgent extends Agent {
 		if ((sourceId == v.getId()) && (v.getValue("distance") == null)){
 			modifyDistanceAndBroadcast(0);
 		} else {
-			PrimData distance = v.getValue("distance");
-			log.debug("distance: " + (distance == null ? "null" : distance.i()));
-			if ((distance == null) || (distance.i() < this.distance)) {
+			PrimData vDistance = v.getValue("distance");
+			log.debug("distance: " + (vDistance == null ? "null" : vDistance.i()));
+			if ((vDistance == null) || (vDistance.i() > this.distance)) {
 				modifyDistanceAndBroadcast(this.distance);
 			}
 		}
@@ -49,7 +49,7 @@ public class ConnectionDistanceAgent extends Agent {
 	
 	public void modifyDistanceAndBroadcast(int distance) {
 		v.setValue("distance", new PrimData(distance));
-		this.distance ++;
+		this.distance = distance + 1;
 		v.broadcast();
 	}
 
