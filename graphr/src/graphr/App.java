@@ -28,10 +28,12 @@ public class App {
 	public static Graph<GHT, GHT> getExampleGraph() {
 		
 		GHT gh = new GHT();
+		gh.put("label", "v1");
 		gh.put("name", "Anna");
 		gh.put("age", 24);
 		
 		GHT gh2 = new GHT();
+		gh2.put("label", "v2");
 		gh2.put("name", "Martin");
 		gh2.put("age", 28);
 		gh2.put("income", 24.7);
@@ -51,6 +53,38 @@ public class App {
 		e.setTarget(v2);
 		e2.setTarget(v);
 		v2.setData(gh2);
+		
+		// Now the graph is getting more complex
+		
+		GHT gh3 = new GHT();
+		gh3.put("label", "v3");
+		Vertex<GHT, GHT> v3 = new Vertex<GHT, GHT>(gh3);
+		
+		GHT gh4 = new GHT();
+		gh4.put("label", "v4");
+		Vertex<GHT, GHT> v4 = new Vertex<GHT, GHT>(gh4);
+		
+		GHT gh5 = new GHT();
+		gh5.put("label", "v5");
+		Vertex<GHT, GHT> v5 = new Vertex<GHT, GHT>(gh5);
+		
+		g.addVertex(v3);
+		g.addVertex(v4);
+		g.addVertex(v5);
+		
+		Edge<GHT, GHT> e24 = new Edge<GHT, GHT>(new GHT());
+		e24.setTarget(v4);
+		Edge<GHT, GHT> e34 = new Edge<GHT, GHT>(new GHT());
+		e34.setTarget(v4);
+		Edge<GHT, GHT> e35 = new Edge<GHT, GHT>(new GHT());
+		e35.setTarget(v5);
+		Edge<GHT, GHT> e45 = new Edge<GHT, GHT>(new GHT());
+		e45.setTarget(v5);
+		
+		v2.addEdge(e24);
+		v3.addEdge(e34);
+		v3.addEdge(e35);
+		v4.addEdge(e45);
 		
 		return g;
 		
