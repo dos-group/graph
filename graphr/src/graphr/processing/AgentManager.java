@@ -16,7 +16,7 @@ import java.util.Hashtable;
  * Should be Vertex driven, i.e. run only such vertices that have some agents waiting there to run. 
  * In other words, make it "vertex driven".
  */
-public class AgentManager implements ProcessingFacade {
+public class AgentManager implements VertexProcessingFacade {
 
 	Hashtable<Integer, ArrayList<Agent>> schedule;
 	Graph<?,?> graph;
@@ -85,15 +85,19 @@ public class AgentManager implements ProcessingFacade {
 	//-- implements ProcessingFacade
 
 	@Override
-	public PrimData getLocalValue(String key) {
+	public PrimData getValue(String key) {
 		GHT data = (GHT) graph.getVertex(localVertexId).getData();
 		return data.getTable().get(key);
 	}
 
 	@Override
-	public void setLocalValue(String key, PrimData value) {
+	public void setValue(String key, PrimData value) {
 		GHT data = (GHT) graph.getVertex(localVertexId).getData();
 		data.getTable().put(key,(PrimData) value);
+	}
+	
+	public int getId() {
+		return localVertexId;
 	}
 
 	@Override

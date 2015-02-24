@@ -3,13 +3,14 @@ package graphr.processing;
 import graphr.data.PrimData;
 import graphr.graph.Vertex;
 
-public interface ProcessingFacade {
+public interface VertexProcessingFacade {
 	
 	//-- Getting and setting local values
 	
-	public PrimData getLocalValue(String key);
-	public void setLocalValue(String key, PrimData value);
-	
+	public PrimData getValue(String key);
+	public void setValue(String key, PrimData value);
+	public int getId();
+
 	//-- Agent replication
 	
 	public void broadcast();

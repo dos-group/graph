@@ -9,10 +9,10 @@ import java.util.ArrayList;
  */
 public abstract class Agent {
 
-	protected ProcessingFacade facade;
+	protected VertexProcessingFacade v;
 	
-	public Agent(ProcessingFacade facade) {
-		this.facade = facade;
+	public Agent(VertexProcessingFacade facade) {
+		v = facade;
 	}
 	
 	public abstract Agent getCopy();
