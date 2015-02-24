@@ -12,7 +12,7 @@ public class ConnectionDistanceAgentPopulator extends AgentPopulator {
 	public ArrayList<Agent> getPopulation(int vertexId) {
 		
 		if (!initialAgentGenerated) {
-			ConnectionDistanceAgent a = new ConnectionDistanceAgent(null, vertexId);
+			ConnectionDistanceAgent a = new ConnectionDistanceAgent(null, vertexId, 100);
 			initialAgentGenerated = true;
 			ArrayList<Agent> list = new ArrayList<Agent>();
 			list.add(a);
