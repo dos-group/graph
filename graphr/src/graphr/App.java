@@ -4,21 +4,24 @@ package graphr;
 //
 //import com.json.parsers.JsonParserFactory;
 
+
 import graphr.algorithms.ConnectionDistanceAgentPopulator;
 import graphr.data.GHT;
 import graphr.graph.Edge;
 import graphr.graph.Graph;
 import graphr.graph.Vertex;
 import graphr.io.FileSystemHandler;
+import graphr.io.JsonVisitor;
 import graphr.processing.AgentManager;
+import graphr.processing.AgentPopulator;
 
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class App {
 	
-//	private static Logger log = LogManager.getLogger(); 
-//	
+	private static Logger log = LogManager.getLogger(); 
+	
 //	private static final String FULL_FILE_PATH 
 //		= "ouputFile.txt";
 	
@@ -78,11 +81,29 @@ public class App {
 		
 	}
 
+	public static String graphToString(Graph<GHT, GHT> g) {
+		JsonVisitor<GHT, GHT> jsonVisitor = new JsonVisitor<GHT, GHT>();		
+		g.accept(jsonVisitor);		
+		String graphSerialized = jsonVisitor.getJsonString();
+		return graphSerialized;
+	}
+
 	public static void main(String[] args) {
-			
-		Graph<?,?> g = App.getExampleGraph();
-		AgentManager m = new AgentManager(g, new ConnectionDistanceAgentPopulator());
 		
+		// Input
+		
+		Graph<GHT,GHT> g = App.getExampleGraph();
+		log.debug("Before" + App.graphToString(g));
+		
+		// Do processing
+		
+		AgentPopulator p = new ConnectionDistanceAgentPopulator(0, 5);
+		AgentManager m = new AgentManager(g, p);
+		m.runProcessing(10);
+		
+		// Output
+		
+		log.debug("After" + App.graphToString(g));
 	}
 
 }
