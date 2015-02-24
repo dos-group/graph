@@ -26,6 +26,7 @@ public class ConnectionDistanceAgent extends Agent {
 	
 	public ConnectionDistanceAgent getCopy() {
 		ConnectionDistanceAgent a = new ConnectionDistanceAgent(sourceId, maxDistance);
+		a.distance = distance;
 		a.v = v;
 		return a;
 	}
