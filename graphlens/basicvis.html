@@ -21,12 +21,13 @@
 }
 
 circle {
-  fill: #087ee0;
+  fill: #55aef9;
   stroke: #000000;
   stroke-width: 1.5px;
 }
 
 text {
+  font-color: #2497f7;
   font: 10px sans-serif;
   pointer-events: none;
   text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
@@ -38,7 +39,7 @@ text {
 <script>
 
 // http://blog.thomsonreuters.com/index.php/mobile-patent-suits-graphic-of-the-day/
-d3.json("basicvis.json", function(error, data) {
+d3.json("basicvis_live.json", function(error, data) {
   links = data;
   update(links);
 });
@@ -60,8 +61,8 @@ var force = d3.layout.force()
     .nodes(d3.values(nodes))
     .links(links)
     .size([width, height])
-    .linkDistance(60)
-    .charge(-300)
+    .linkDistance(120)
+    .charge(-600)
     .on("tick", tick)
     .start();
 

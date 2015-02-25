@@ -28,12 +28,12 @@ public class App {
 	public static Graph<GHT, GHT> getExampleGraph() {
 		
 		GHT gh = new GHT();
-		gh.put("label", "v1");
+		gh.put("label", "Anna");
 		gh.put("name", "Anna");
 		gh.put("age", 24);
 		
 		GHT gh2 = new GHT();
-		gh2.put("label", "v2");
+		gh2.put("label", "Frank");
 		gh2.put("name", "Martin");
 		gh2.put("age", 28);
 		gh2.put("income", 24.7);
@@ -57,15 +57,15 @@ public class App {
 		// Now the graph is getting more complex
 		
 		GHT gh3 = new GHT();
-		gh3.put("label", "v3");
+		gh3.put("label", "Josh");
 		Vertex<GHT, GHT> v3 = new Vertex<GHT, GHT>(gh3);
 		
 		GHT gh4 = new GHT();
-		gh4.put("label", "v4");
+		gh4.put("label", "Nilay");
 		Vertex<GHT, GHT> v4 = new Vertex<GHT, GHT>(gh4);
 		
 		GHT gh5 = new GHT();
-		gh5.put("label", "v5");
+		gh5.put("label", "Lisa");
 		Vertex<GHT, GHT> v5 = new Vertex<GHT, GHT>(gh5);
 		
 		g.addVertex(v3);

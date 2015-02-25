@@ -46,3 +46,5 @@ graphr/external/org/json/Property.java
 graphr/external/org/json/XMLTokener.java
 
 graphr/ouputFile.txt
+
+graphlens/basicvis_live.json

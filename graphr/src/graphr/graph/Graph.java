@@ -6,6 +6,7 @@ package graphr.graph;
 import graphr.data.GHT;
 import graphr.data.JsonArrayState;
 import graphr.data.JsonKeyValueState;
+import graphr.io.FileSystemHandler;
 
 import java.util.Collection;
 import java.util.Hashtable;
@@ -77,7 +78,8 @@ public class Graph<DV extends GraphData, DE extends GraphData> {
 			}
 		}
 		
-		System.out.println(jsonEdges.getAsJson());
+		FileSystemHandler.getInstance().write(jsonEdges.getAsJson(), 
+			"/Users/pjanacik/Github/graph/graphlens/basicvis_live.json");
 	}
 
 }
