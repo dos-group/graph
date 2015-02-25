@@ -74,6 +74,8 @@ public class App {
 		
 		Edge<GHT, GHT> e24 = new Edge<GHT, GHT>(new GHT());
 		e24.setTarget(v4);
+		Edge<GHT, GHT> e23 = new Edge<GHT, GHT>(new GHT());
+		e23.setTarget(v3);
 		Edge<GHT, GHT> e34 = new Edge<GHT, GHT>(new GHT());
 		e34.setTarget(v4);
 		Edge<GHT, GHT> e35 = new Edge<GHT, GHT>(new GHT());
@@ -82,6 +84,7 @@ public class App {
 		e45.setTarget(v5);
 		
 		v2.addEdge(e24);
+		v2.addEdge(e23);
 		v3.addEdge(e34);
 		v3.addEdge(e35);
 		v4.addEdge(e45);
@@ -138,6 +141,8 @@ public class App {
 		// Output
 		
 		log.debug("After" + App.graphToString(g));
+		
+		g.runQuickAndDirtyVisitor();
 	}
 
 }

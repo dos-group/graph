@@ -34,6 +34,7 @@ public class ConnectionDistanceAgent extends Agent {
 	@Override
 	public void runStep() {
 		log.debug("vid: " + v.getId());
+		
 		if ((sourceId == v.getId()) && (v.getValue("distance") == null)){
 			modifyDistanceAndBroadcast(0);
 		} else {
@@ -41,7 +42,7 @@ public class ConnectionDistanceAgent extends Agent {
 			log.debug("distance: " + (vDistance == null ? "null" : vDistance.i()));
 			if ((vDistance == null) || (vDistance.i() > this.distance)) {
 				modifyDistanceAndBroadcast(this.distance);
-			}
+			} 
 		}
 	}
 	
