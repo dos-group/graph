@@ -117,7 +117,11 @@ var circle = svg.append("g").selectAll("circle")
     .data(force.nodes())
   .enter().append("circle")
     .attr("r", 6)
+	.on("dblclick", dblclick)
     .call(force.drag);
+	
+var drag = force.drag()
+.on("dragstart", dragstart);
 
 var text = svg.append("g").selectAll("text")
     .data(force.nodes())
@@ -142,6 +146,15 @@ function linkArc(d) {
 
 function transform(d) {
   return "translate(" + d.x + "," + d.y + ")";
+}
+
+function dragstart(d) {
+  d3.select(this).classed(d.fixed = true);
+}
+
+function dblclick(d) {
+//	d3.select(this).classed("fixed", d.fixed = false);
+  d3.select(this).classed(d.fixed = false);
 }
 
 </script>
