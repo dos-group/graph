@@ -3,6 +3,10 @@ package graphr.graph;
 //import graphr.data.JsonArrayState;
 //import graphr.data.JsonKeyValueState;
 
+import graphr.data.GHT;
+import graphr.data.JsonArrayState;
+import graphr.data.JsonKeyValueState;
+
 import java.util.Collection;
 import java.util.Hashtable;
 
@@ -50,6 +54,30 @@ public class Graph<DV extends GraphData, DE extends GraphData> {
 		}
 	
 		visitor.after();
+	}
+	
+	
+	public void runQuickAndDirtyVisitor() {
+		
+		JsonArrayState jsonEdges = new JsonArrayState();
+		
+		for (Vertex<DV, DE> v : vertices.values()) {
+			for (Edge<DV, DE> e: v.edges.values()) {
+				JsonKeyValueState jsonEdge = new JsonKeyValueState();
+				Vertex<DV, DE> vTarget = e.getTarget();
+				
+				GHT sGHT = (GHT) v.getData();
+				jsonEdge.add("source", sGHT.getTable().get("vislabel").s());
+				
+				GHT tGHT = (GHT) vTarget.getData();
+				jsonEdge.add("target", tGHT.getTable().get("vislabel").s());
+				
+				jsonEdge.add("type", "suit");
+				jsonEdges.add(jsonEdge.getAsJson());
+			}
+		}
+		
+		System.out.println(jsonEdges.getAsJson());
 	}
 
 }

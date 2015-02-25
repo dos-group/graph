@@ -49,8 +49,13 @@ public class ConnectionDistanceAgent extends Agent {
 	
 	public void modifyDistanceAndBroadcast(int distance) {
 		v.setValue("distance", new PrimData(distance));
+		v.setValue("vislabel", new PrimData(getVisLabel()));
 		this.distance = distance + 1;
 		v.broadcast();
+	}
+	
+	public String getVisLabel() {
+		return v.getValue("label").s() + ": " + v.getValue("distance").i(); 
 	}
 
 }
