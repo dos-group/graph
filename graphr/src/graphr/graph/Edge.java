@@ -5,17 +5,26 @@ package graphr.graph;
 
 public class Edge<DV extends GraphData, DE extends GraphData> extends GraphElement<DE> {
 
+	protected Vertex<DV, DE> target;
+
 	public Edge(DE data) {
 		super(data);
 	}
 
-
-	protected Vertex<DV, DE> target;
-
+	public Edge(Vertex<DV, DE> target, DE data) {
+		super(data);
+		this.target = target;
+	}
+	
 	public Vertex<DV, DE> getTarget() {
 		return target;
 	}
 
+	public Integer getTargetId() {
+		return target.getId();
+	}
+
+	
 	public void setTarget(Vertex<DV, DE> target) {
 		this.target = target;
 	}

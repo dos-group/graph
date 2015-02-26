@@ -79,7 +79,7 @@ public class Graph<DV extends GraphData, DE extends GraphData> {
 		}
 		
 		FileSystemHandler.getInstance().write(jsonEdges.getAsJson(), 
-			"/Users/pjanacik/Github/graph/graphlens/basicvis_live.json");
+			"basicvis_live.json");
 	}
 
 }
