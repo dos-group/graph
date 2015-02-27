@@ -34,6 +34,12 @@ public class SnapImport {
 		
 		Graph<GHT, GHT> parsedGraph = si.parseEdgeFile(edgeFileFacebook);
 
+		SnapImportFeature sif =  si.new ImportFacebookFeature();		
+		if(!si.parseFeatures(parsedGraph, sif, featFileFacebook, featNamesFileFacebook)) {
+			log.error("Could not parse features");
+			return;
+		}
+		
 		JsonVisitor<GHT, GHT> jsonVisitor = new JsonVisitor<GHT, GHT>();		
 		parsedGraph.accept(jsonVisitor);		
 		String graphSerialized = jsonVisitor.getJsonString();
@@ -41,12 +47,6 @@ public class SnapImport {
 		log.debug("---- Imported and serialized graph:   " + graphSerialized);
 
 		Graph<GHT, GHT> graphDeserialized = jsonVisitor.parseJsonString(graphSerialized);
-
-		
-		if(!si.parseFeatures(parsedGraph, featFileFacebook, featNamesFileFacebook)) {
-			log.error("Could not parse features");
-			return;
-		}
 		
 		
 	}
@@ -152,7 +152,7 @@ public class SnapImport {
 	 * @param featureNamesFile File with definition of features
 	 * @return True if no error, otherwise false
 	 */
-	public boolean parseFeatures(Graph<GHT, GHT> graph, String featureFile, String featureNamesFile) {		
+	public boolean parseFeatures(Graph<GHT, GHT> graph, SnapImportFeature featureParser, String featureFile, String featureNamesFile) {		
 		log.entry();
 		
 		try (BufferedReader in = new BufferedReader(new FileReader(featureFile))) {
@@ -171,18 +171,21 @@ public class SnapImport {
 				
 				//log.debug("Feature names size: " + pfn.size() + ", parsed feature list: " + parsedLine.length);
 				
-				// get the vertex
-				Vertex<GHT, GHT> vertex = graph.getVertex( new Integer(parsedLine[0]) );
-				
+				// get the vertex -if there is no vertex it means it is not connected, we have to create a new one
+				Vertex<GHT, GHT> vertex = getVertex(graph, new Integer(parsedLine[0]) );						
+								
 				// check each feature flag whether set to 1 and then insert it
 				for(int featIndexFlag = 1; featIndexFlag < parsedLine.length; featIndexFlag++) {
 					Integer flag = new Integer(parsedLine[featIndexFlag]); 
 					if(flag == 1) {
-						String featValue = pfn.get(featIndexFlag - 1);
-						log.debug("Vertex " + parsedLine[0] + ": " + featValue);
+						String featDef = pfn.get(featIndexFlag - 1);						
 						// parse feature name and get value
 						
-						//vertex.getData().put(key, s);
+						String featName = featureParser.getFeatureName(featDef);
+						String featValue = featureParser.getFeatureValue(featDef);
+						log.debug("Vertex " + parsedLine[0] + ": " + featDef + ": \"" + featName + "\" -> \"" + featValue + "\"");
+												
+						vertex.getData().put(featName, featValue);
 					}
 				}
 				
@@ -231,6 +234,22 @@ public class SnapImport {
 		}
 		
 		return m;
+	}
+	
+	public class ImportFacebookFeature implements SnapImportFeature {
+
+		public ImportFacebookFeature() {}
+		
+		@Override
+		public String getFeatureName(String feature) {
+			return feature.substring(0, feature.lastIndexOf(";"));
+		}
+
+		@Override
+		public String getFeatureValue(String feature) {
+			return feature.substring( feature.lastIndexOf(";") + 1);
+		}
+		
 	}
 	
 }
