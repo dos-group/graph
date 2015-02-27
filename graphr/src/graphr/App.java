@@ -132,6 +132,11 @@ public class App {
 		Graph<GHT,GHT> g = App.getExampleGraph();
 		log.debug("Before" + App.graphToString(g));
 		
+		JsonVisitor<GHT, GHT> jsonVisitor = new JsonVisitor<GHT, GHT>();		
+		g.accept(jsonVisitor);		
+		String graphSerialized = jsonVisitor.getJsonString();
+		Graph<GHT, GHT> graphDeserialized = jsonVisitor.parseJsonString(graphSerialized);
+		
 		// Do processing
 		
 		AgentPopulator p = new ConnectionDistanceAgentPopulator(0, 5);
