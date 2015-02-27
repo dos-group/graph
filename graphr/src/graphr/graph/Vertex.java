@@ -10,22 +10,22 @@ import java.util.Hashtable;
 
 public class Vertex<DV extends GraphData,DE extends GraphData> extends GraphElement<DV> {
 	
-	Hashtable<Integer, Edge<DV,DE>> edges;
+	Hashtable<Long, Edge<DV,DE>> edges;
 	
 	public Vertex(DV data) {
 		super(data);
-		edges = new Hashtable<Integer, Edge<DV,DE>>();
+		edges = new Hashtable<Long, Edge<DV,DE>>();
 	}
  
 	public void addEdge(Edge<DV,DE> e) {
-		edges.put(new Integer(e.id), e);
+		edges.put(new Long(e.id), e);
 	}
 	
 	public Collection<Edge<DV, DE>> getEdges() {
 		return edges.values();
 	}
 
-	public Edge<DV, DE> getEdge(int id) {
+	public Edge<DV, DE> getEdge(long id) {
 		return edges.get(id);
 	}
 	

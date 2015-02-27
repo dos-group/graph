@@ -13,13 +13,13 @@ public class ConnectionDistanceAgent extends Agent {
 
 	private static Logger log = LogManager.getLogger();
 
-	int sourceId;
-	int distance;
-	int maxDistance;
+	long sourceId;
+	long distance;
+	long maxDistance;
 
 	// -- Implementations of abstract stuff
 
-	public ConnectionDistanceAgent(int sourceId, int maxDistance) {
+	public ConnectionDistanceAgent(long sourceId, long maxDistance) {
 		this.sourceId = sourceId;
 		this.maxDistance = maxDistance;
 	}
@@ -50,7 +50,7 @@ public class ConnectionDistanceAgent extends Agent {
 
 	// -- Elements of algorithm
 
-	public void modifyDistanceAndBroadcast(int distance) {
+	public void modifyDistanceAndBroadcast(long distance) {
 		v.setValue("distance", new PrimData(distance));
 		v.setValue("vislabel", new PrimData(getVisLabel()));
 		this.distance = distance + 1;

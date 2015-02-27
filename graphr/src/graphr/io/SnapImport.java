@@ -1,7 +1,11 @@
 package graphr.io;
 
+import graphr.data.GHT;
+import graphr.graph.Edge;
+import graphr.graph.Graph;
+import graphr.graph.Vertex;
+
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -9,11 +13,6 @@ import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import graphr.data.GHT;
-import graphr.graph.Edge;
-import graphr.graph.Graph;
-import graphr.graph.Vertex;
 
 /**
  * Class with methods that import graphs from SNAP ({@link http://snap.stanford.edu/data/}) into
@@ -29,24 +28,32 @@ public class SnapImport {
 		String featFileFacebook = "../data/facebook/0.feat";
 		String featNamesFileFacebook = "../data/facebook/0.featnames";
 		
-		String edgeFileGplus = "../data/gplus/100129275726588145876.edges"; 
+		String edgeFileGplus = "../data/gplus/100129275726588145876.edges";
 		
+		String edgeFileTwitter = "../data/twitter/100318079.edges";
+		String featFileTwitter = "../data/twitter/100318079.feat";
+		String featNamesFileTwitter = "../data/twitter/100318079.featnames";
+		 
+		String edgeFile = edgeFileTwitter;
+		String featFile = featFileTwitter;
+		String featNamesFile = featNamesFileTwitter;
 		
-		Graph<GHT, GHT> parsedGraph = si.parseEdgeFile(edgeFileFacebook);
+		Graph<GHT, GHT> parsedGraph = si.parseEdgeFile(edgeFile);
 
-		SnapImportFeature sif =  si.new ImportFacebookFeature();		
-		if(!si.parseFeatures(parsedGraph, sif, featFileFacebook, featNamesFileFacebook)) {
+		//SnapImportFeature sif =  si.new ImportFacebookFeature();		
+		SnapImportFeature sif =  si.new ImportTwitterFeature();
+		if(!si.parseFeatures(parsedGraph, sif, featFile, featNamesFile)) {
 			log.error("Could not parse features");
 			return;
 		}
-		
-		JsonVisitor<GHT, GHT> jsonVisitor = new JsonVisitor<GHT, GHT>();		
-		parsedGraph.accept(jsonVisitor);		
-		String graphSerialized = jsonVisitor.getJsonString();
-		
-		log.debug("---- Imported and serialized graph:   " + graphSerialized);
-
-		Graph<GHT, GHT> graphDeserialized = jsonVisitor.parseJsonString(graphSerialized);
+//		
+//		JsonVisitor<GHT, GHT> jsonVisitor = new JsonVisitor<GHT, GHT>();		
+//		parsedGraph.accept(jsonVisitor);		
+//		String graphSerialized = jsonVisitor.getJsonString();
+//		
+//		log.debug("---- Imported and serialized graph:   " + graphSerialized);
+//
+//		Graph<GHT, GHT> graphDeserialized = jsonVisitor.parseJsonString(graphSerialized);
 		
 		
 	}
@@ -84,11 +91,11 @@ public class SnapImport {
 				}
 				
 				// get source vertex object (if does not exist, create it)
-				Integer srcVertexId = new Integer(pa[0]);
+				Long srcVertexId = new Long(pa[0]);
 				Vertex<GHT, GHT> srcVertex = getVertex(parsedGraph, srcVertexId); 
 										
 				// get destination vertex object (if does not exist, create it)
-				Integer dstVertexId = new Integer(pa[1]);				
+				Long dstVertexId = new Long(pa[1]);				
 				Vertex<GHT, GHT> dstVertex = getVertex(parsedGraph, dstVertexId);
 				
 				// check if there is already such edge, if not then create a new one
@@ -134,7 +141,7 @@ public class SnapImport {
 	 * @param vertexId ID of the vertex to be searched
 	 * @return Found or new vertex object
 	 */
-	Vertex<GHT,GHT> getVertex(Graph<GHT, GHT> graph, Integer vertexId) {
+	Vertex<GHT,GHT> getVertex(Graph<GHT, GHT> graph, Long vertexId) {
 		Vertex<GHT, GHT> vertex = graph.getVertex(vertexId);
 		if(vertex == null) {
 			vertex = new Vertex<GHT, GHT>(new GHT());
@@ -172,7 +179,7 @@ public class SnapImport {
 				//log.debug("Feature names size: " + pfn.size() + ", parsed feature list: " + parsedLine.length);
 				
 				// get the vertex -if there is no vertex it means it is not connected, we have to create a new one
-				Vertex<GHT, GHT> vertex = getVertex(graph, new Integer(parsedLine[0]) );						
+				Vertex<GHT, GHT> vertex = getVertex(graph, new Long(parsedLine[0]) );						
 								
 				// check each feature flag whether set to 1 and then insert it
 				for(int featIndexFlag = 1; featIndexFlag < parsedLine.length; featIndexFlag++) {
@@ -236,10 +243,15 @@ public class SnapImport {
 		return m;
 	}
 	
+	/**
+	 * Implements parsing of feature names for Facebook, example of the line of feature name format:
+	 * <pre>
+	 * 206 work;start_date;anonymized feature 160 
+	 * </pre>
+	 * That stands for feature name <i>work;start_date</i> and value <i>anonymized feature 160</i>  
+	 */
 	public class ImportFacebookFeature implements SnapImportFeature {
 
-		public ImportFacebookFeature() {}
-		
 		@Override
 		public String getFeatureName(String feature) {
 			return feature.substring(0, feature.lastIndexOf(";"));
@@ -251,5 +263,32 @@ public class SnapImport {
 		}
 		
 	}
-	
+
+	/**
+	 * Implements parsing of feature names for Twitter. <b>There are only feature names but not values!</b> For instance:
+	 * <pre>
+	 * 81 #TVZAlbuns
+	 * </pre>
+	 * That stands for feature name <i>#TVZAlbuns</i> and no value.  
+	 */
+	public class ImportTwitterFeature implements SnapImportFeature {
+
+		/**
+		 * Twitters feature has only name but not value
+		 */
+		@Override
+		public String getFeatureName(String feature) {
+			return feature;
+		}
+
+		/**
+		 * There is no value in twitter's feature 
+		 */
+		@Override
+		public String getFeatureValue(String feature) {
+			return "";
+		}
+		
+	}
+
 }

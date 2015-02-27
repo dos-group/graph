@@ -12,7 +12,7 @@ public class PrimData implements JsonReadableWritable {
 	//-- Constructors
 	
 	public PrimData(Object o) {
-		if ((o instanceof Integer) || (o instanceof Double) || (o instanceof Boolean)
+		if ((o instanceof Integer) || (o instanceof Long) || (o instanceof Double) || (o instanceof Boolean)
 			|| (o instanceof String) || (o == null)) {	
 			this.o = o;
 		} else {
@@ -23,8 +23,12 @@ public class PrimData implements JsonReadableWritable {
 	public PrimData(String abbrev, String someString) {
 		setFromSomeString(abbrev, someString);
 	}
-	
+
 	public PrimData(int i) {
+		set(i);
+	}
+	
+	public PrimData(long i) {
 		set(i);
 	}
 	
@@ -41,6 +45,10 @@ public class PrimData implements JsonReadableWritable {
 	}
 	
 	// -- Setters
+
+	public void set(long i) {
+		o = new Long(i);
+	}
 	
 	public void set(int i) {
 		o = new Integer(i);
@@ -65,6 +73,7 @@ public class PrimData implements JsonReadableWritable {
 	public void setFromSomeString(String abbrev, String s) {
 		switch (abbrev){
 		case "i": set(new Integer(s)); break;
+		case "l": set(new Long(s)); break;
 		case "d": set(new Double(s)); break;
 		case "b": set(new Boolean(s)); break;
 		default: set(s);
@@ -75,7 +84,11 @@ public class PrimData implements JsonReadableWritable {
 	//-- Getters
 	
 	public int i() {
-		return ((Integer) o).intValue();
+		return ((Long) o).intValue();
+	}
+
+	public long l() {
+		return ((Long) o).longValue();
 	}
 	
 	public double d() {
@@ -98,6 +111,10 @@ public class PrimData implements JsonReadableWritable {
 		
 		if (o instanceof Integer) {
 			return ((Integer) o).toString();  
+		}
+
+		if (o instanceof Long) {
+			return ((Long) o).toString();  
 		}
 		
 		if (o instanceof Double) {
@@ -130,6 +147,9 @@ public class PrimData implements JsonReadableWritable {
 			return "i";  
 		}
 
+		if (o instanceof Long) {
+			return "l";  
+		}
 		
 		if (o instanceof Double) {
 			return "d"; 

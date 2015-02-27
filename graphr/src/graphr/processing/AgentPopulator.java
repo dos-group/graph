@@ -4,6 +4,6 @@ import java.util.ArrayList;
 
 public abstract class AgentPopulator {
 	
-	public abstract ArrayList<Agent> getPopulation(int vertexId);
+	public abstract ArrayList<Agent> getPopulation(long vertexId);
 
 }

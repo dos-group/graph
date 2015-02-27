@@ -13,14 +13,14 @@ import java.util.Hashtable;
 
 public class Graph<DV extends GraphData, DE extends GraphData> {
 	
-	Hashtable<Integer, Vertex<DV,DE>> vertices;
+	Hashtable<Long, Vertex<DV,DE>> vertices;
 	
 	public Graph() {
-		vertices = new Hashtable<Integer,Vertex<DV,DE>>();
+		vertices = new Hashtable<Long,Vertex<DV,DE>>();
 	}
 	
 	public void addVertex(Vertex<DV,DE> v) {
-		vertices.put(new Integer(v.id), v);
+		vertices.put(new Long(v.id), v);
 	}
 	
 	/**
@@ -28,11 +28,11 @@ public class Graph<DV extends GraphData, DE extends GraphData> {
 	 * @param id Identifier of vertex
 	 * @return Vertex with given ID, if does not exist then null
 	 */
-	public Vertex<DV,DE> getVertex(int id) {		
-		return vertices.get(new Integer(id));
+	public Vertex<DV,DE> getVertex(long id) {		
+		return vertices.get(new Long(id));
 	}
 	
-	public Hashtable<Integer, Vertex<DV,DE>> getVerticesAsHashtable() {
+	public Hashtable<Long, Vertex<DV,DE>> getVerticesAsHashtable() {
 		return vertices;
 	}
 	

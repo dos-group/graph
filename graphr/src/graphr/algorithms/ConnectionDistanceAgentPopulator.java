@@ -8,15 +8,15 @@ import graphr.processing.VertexProcessingFacade;
 
 public class ConnectionDistanceAgentPopulator extends AgentPopulator {
 	
-	private int queriedVertexId;
-	private int maxDistance;
+	private long queriedVertexId;
+	private long maxDistance;
 	
-	public ConnectionDistanceAgentPopulator(int queriedVertexId, int maxDistance) {
+	public ConnectionDistanceAgentPopulator(long queriedVertexId, long maxDistance) {
 		this.queriedVertexId = queriedVertexId;
 		this.maxDistance = maxDistance;
 	}
 
-	public ArrayList<Agent> getPopulation(int vertexId) {
+	public ArrayList<Agent> getPopulation(long vertexId) {
 		
 		if (vertexId == queriedVertexId) {
 			ConnectionDistanceAgent a = new ConnectionDistanceAgent(vertexId, maxDistance);

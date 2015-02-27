@@ -9,7 +9,7 @@ public interface VertexProcessingFacade {
 	
 	public PrimData getValue(String key);
 	public void setValue(String key, PrimData value);
-	public int getId();
+	public long getId();
 
 	//-- Agent replication
 	

@@ -20,7 +20,7 @@ public class Edge<DV extends GraphData, DE extends GraphData> extends GraphEleme
 		return target;
 	}
 
-	public Integer getTargetId() {
+	public Long getTargetId() {
 		return target.getId();
 	}
 

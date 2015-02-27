@@ -6,7 +6,7 @@ public abstract class GraphElement<D extends Serializable> {
 
 	private static int nextIdToIssue = 0;
 	
-	protected int id;
+	protected long id;
 	protected D data;
 	
 	public GraphElement(D data) {
@@ -15,11 +15,11 @@ public abstract class GraphElement<D extends Serializable> {
 		this.data = data;
 	}
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	

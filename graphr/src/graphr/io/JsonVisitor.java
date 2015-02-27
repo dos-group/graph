@@ -73,7 +73,7 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements
 		JsonKeyValueState vertexProp = new JsonKeyValueState();
 
 		vertexProp.add("type", "Vertex");
-		vertexProp.add("id", new Integer((int) vertex.getId()).toString());
+		vertexProp.add("id", new Long(vertex.getId()).toString());
 		vertexProp.add("data", vertex.getData() != null ? vertex.getData()
 				.accept(dataVisitor).toString() : "null");
 
@@ -82,11 +82,11 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements
 		for (Edge<?, ?> e : vertex.getEdges()) {
 			JsonKeyValueState edgeProp = new JsonKeyValueState();
 			edgeProp.add("type", "Edge");
-			edgeProp.add("id", new Integer((int) e.getId()).toString());
+			edgeProp.add("id", new Long(e.getId()).toString());
 			edgeProp.add("data", (e.getData() == null ? "null" : e.getData()
 					.accept(dataVisitor).toString()));
 			edgeProp.add("target", (e.getTarget() == null ? "null"
-					: new Integer((int) e.getTarget().getId()).toString()));
+					: new Long( e.getTarget().getId()).toString()));
 			edgesForJson.add(edgeProp.getAsJson());
 		}
 		vertexProp.add("edges", edgesForJson.getAsJson());
@@ -144,7 +144,7 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements
 
 		// Fix edge targets
 
-		Hashtable<Integer, Vertex<GHT, GHT>> vTable = parsedGraph
+		Hashtable<Long, Vertex<GHT, GHT>> vTable = parsedGraph
 				.getVerticesAsHashtable();
 		for (Vertex<GHT, GHT> v : vTable.values()) {
 			for (Edge<GHT, GHT> e : v.getEdges()) {
@@ -171,7 +171,7 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements
 		// Data directly attached to vertex
 
 		Vertex<GHT, GHT> v = new Vertex<GHT, GHT>(new GHT());
-		v.setId(jo.getInt("id"));
+		v.setId(jo.getLong("id"));
 		
 		Object o = jo.get("data");
 		if (o instanceof JSONObject) {
@@ -201,7 +201,7 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements
 	public Edge<GHT, GHT> jSonObjectToEdge(JSONObject jo) {
 
 		Edge<GHT, GHT> e = new Edge<GHT, GHT>(new GHT());
-		e.setId(jo.getInt("id"));
+		e.setId(jo.getLong("id"));
 
 		Object o = jo.get("data");
 		if (o instanceof JSONObject) {
@@ -211,12 +211,15 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements
 			e.setData(new GHT());
 		}
 
-		Object ot = jo.get("target");
-		if (ot instanceof Integer) {
-			Integer targetInt = (Integer) ot;
-			e.getData().put(JsonVisitor.EDGE_TARGET_KEY, new PrimData(targetInt));
-		}
+//		Object ot = jo.get("target");
+//		if (ot instanceof Long) {
+//			Long targetLong = (Long) ot;
+//			e.getData().put(JsonVisitor.EDGE_TARGET_KEY, new PrimData(targetLong));
+//		}
 
+		Long targetLong = jo.getLong("target");
+		e.getData().put(JsonVisitor.EDGE_TARGET_KEY, new PrimData(targetLong));
+		
 		return e;
 	}
 

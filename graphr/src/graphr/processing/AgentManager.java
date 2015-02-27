@@ -18,25 +18,25 @@ import java.util.Hashtable;
  */
 public class AgentManager implements VertexProcessingFacade {
 
-	Hashtable<Integer, ArrayList<Agent>> schedule;
+	Hashtable<Long, ArrayList<Agent>> schedule;
 	Graph<?,?> graph;
 
-	int localVertexId;
-	Hashtable<Integer, ArrayList<Agent>> newSchedule;
+	long localVertexId;
+	Hashtable<Long, ArrayList<Agent>> newSchedule;
 	Agent currentlyExecutedAgent;
 	
 		
 	public AgentManager(Graph<?,?> graph, AgentPopulator pop) {
 		
 		// Basic init stuff
-		schedule = new Hashtable<Integer, ArrayList<Agent>>();
+		schedule = new Hashtable<Long, ArrayList<Agent>>();
 		this.graph = graph;
 		
 		// Getting population for initial schedule
 		for(Vertex<?,?> v : graph.getVertices()) {
 			ArrayList<Agent> al = pop.getPopulation(v.getId());
 			if (al != null) {
-				schedule.put(new Integer(v.getId()), al);
+				schedule.put(new Long(v.getId()), al);
 			}
 		}
 		
@@ -48,10 +48,10 @@ public class AgentManager implements VertexProcessingFacade {
 	 */
 	public void runBulkStep() {
 		
-		newSchedule = new Hashtable<Integer, ArrayList<Agent>>();
+		newSchedule = new Hashtable<Long, ArrayList<Agent>>();
 		
-		for(Integer vertexId : schedule.keySet()) {
-			localVertexId = vertexId.intValue();
+		for(Long vertexId : schedule.keySet()) {
+			localVertexId = vertexId;
 			ArrayList<Agent> agents = schedule.get(vertexId);
 			for(Agent agent : agents) {	
 				currentlyExecutedAgent = agent;
@@ -98,7 +98,7 @@ public class AgentManager implements VertexProcessingFacade {
 		data.getTable().put(key,(PrimData) value);
 	}
 	
-	public int getId() {
+	public long getId() {
 		return localVertexId;
 	}
 
@@ -106,7 +106,7 @@ public class AgentManager implements VertexProcessingFacade {
 	public void broadcast() {
 		Vertex<?,?> vertex = graph.getVertex(localVertexId);
 		for(Edge<?, ?> e : vertex.getEdges()) {
-			Integer nextHopId = new Integer(e.getTarget().getId());
+			Long nextHopId = new Long(e.getTarget().getId());
 			ArrayList<Agent> al = newSchedule.get(nextHopId);
 			if (al == null) {
 				al = new ArrayList<Agent>();
