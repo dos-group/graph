@@ -137,14 +137,19 @@ public class JsonFormatterTest {
 		v.addEdge(e);
 		v.addEdge(e2);
 		
-		Graph<GHT, GHT> g = new Graph<GHT, GHT>();
 		Vertex<GHT, GHT> v2 = new Vertex<GHT, GHT>(new GHT());
-		g.addVertex(v);
-		g.addVertex(v2);
 		e.setTarget(v2);
 		e2.setTarget(v);
 		v2.setData(gh2);
+
+		// vertex with empty data
+		Vertex<GHT, GHT> v3 = new Vertex<GHT, GHT>(new GHT());		
 		
+		Graph<GHT, GHT> g = new Graph<GHT, GHT>();
+		g.addVertex(v);
+		g.addVertex(v2);
+		g.addVertex(v3);
+
 		return g;
 		
 	}

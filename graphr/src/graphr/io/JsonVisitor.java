@@ -172,8 +172,16 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements
 
 		Vertex<GHT, GHT> v = new Vertex<GHT, GHT>(new GHT());
 		v.setId(jo.getInt("id"));
-		v.setData(jSonObjectToGHT(jo.getJSONObject("data")));
+		
+		Object o = jo.get("data");
+		if (o instanceof JSONObject) {
+			JSONObject dataO = (JSONObject) o;
+			v.setData(jSonObjectToGHT(dataO));
+		} else {
+			v.setData(new GHT());
+		}
 
+		
 		// Edges
 
 		Object edges = jo.get("edges");
