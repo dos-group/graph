@@ -6,6 +6,7 @@ package graphr.graph;
 import graphr.data.GHT;
 import graphr.data.JsonArrayState;
 import graphr.data.JsonKeyValueState;
+import graphr.data.PrimData;
 import graphr.io.FileSystemHandler;
 
 import java.util.Collection;
@@ -68,10 +69,12 @@ public class Graph<DV extends GraphData, DE extends GraphData> {
 				Vertex<DV, DE> vTarget = e.getTarget();
 				
 				GHT sGHT = (GHT) v.getData();
-				jsonEdge.add("source", sGHT.getTable().get("vislabel").s());
+				PrimData o = sGHT.getTable().get("vislabel");
+				jsonEdge.add("source", o != null ? o.s() : "null");
 				
 				GHT tGHT = (GHT) vTarget.getData();
-				jsonEdge.add("target", tGHT.getTable().get("vislabel").s());
+				o = sGHT.getTable().get("vislabel");
+				jsonEdge.add("target", o != null ? o.s() : "null");
 				
 				jsonEdge.add("type", "suit");
 				jsonEdges.add(jsonEdge.getAsJson());
