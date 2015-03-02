@@ -11,6 +11,7 @@ import graphr.graph.Edge;
 import graphr.graph.Graph;
 import graphr.graph.Vertex;
 import graphr.io.FileSystemHandler;
+import graphr.io.JsonFormatter;
 import graphr.io.JsonVisitor;
 import graphr.processing.AgentManager;
 import graphr.processing.AgentPopulator;
@@ -124,18 +125,24 @@ public class App {
 		String graphSerialized = jsonVisitor.getJsonString();
 		return graphSerialized;
 	}
+	
+	public static String getGPlusGraphFromFS() {
+		System.out.println("Hello world.");
+	
+		
+		String readString = FileSystemHandler.getInstance().read(
+				"/Users/pjanacik/Desktop/out.json");
+		return readString;
+	}
 
 	public static void main(String[] args) {
 		
 		// Input
 		
-		Graph<GHT,GHT> g = App.getExampleGraph();
-		log.debug("Before" + App.graphToJsonString(g));
+		String gplusGraphString = App.getGPlusGraphFromFS();
 		
 		JsonVisitor<GHT, GHT> jsonVisitor = new JsonVisitor<GHT, GHT>();		
-		g.accept(jsonVisitor);		
-		String graphSerialized = jsonVisitor.getJsonString();
-		Graph<GHT, GHT> graphDeserialized = jsonVisitor.parseJsonString(graphSerialized);
+		Graph<GHT, GHT> g = jsonVisitor.parseJsonString(gplusGraphString);
 		
 		// Do processing
 		
@@ -145,9 +152,12 @@ public class App {
 		
 		// Output
 		
-		log.debug("After" + App.graphToJsonString(g));
+//		log.debug("Startin stuff " + App.graphToJsonString(g));
 		
+		log.debug("Startin stuff");
 		g.runQuickAndDirtyVisitor();
+		
+		log.debug("Sould be done right now.");
 	}
 
 }

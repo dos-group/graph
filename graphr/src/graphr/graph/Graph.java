@@ -12,7 +12,12 @@ import graphr.io.FileSystemHandler;
 import java.util.Collection;
 import java.util.Hashtable;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Graph<DV extends GraphData, DE extends GraphData> {
+	
+	private static Logger log = LogManager.getLogger(); 
 	
 	Hashtable<Long, Vertex<DV,DE>> vertices;
 	
@@ -61,28 +66,40 @@ public class Graph<DV extends GraphData, DE extends GraphData> {
 	
 	public void runQuickAndDirtyVisitor() {
 		
+		log.debug("At beginning of json visitor ");
+		
 		JsonArrayState jsonEdges = new JsonArrayState();
 		
+		long iteration = 0;
+		log.debug("Starting at: " + iteration);
+		
 		for (Vertex<DV, DE> v : vertices.values()) {
+			log.debug("loaded vertices");
 			for (Edge<DV, DE> e: v.edges.values()) {
+				iteration ++;
+				log.debug("it " + iteration);
+				
 				JsonKeyValueState jsonEdge = new JsonKeyValueState();
 				Vertex<DV, DE> vTarget = e.getTarget();
 				
 				GHT sGHT = (GHT) v.getData();
-				PrimData o = sGHT.getTable().get("vislabel");
-				jsonEdge.add("source", o != null ? o.s() : "null");
+				PrimData os = sGHT.getTable().get("vislabel");
 				
 				GHT tGHT = (GHT) vTarget.getData();
-				o = sGHT.getTable().get("vislabel");
-				jsonEdge.add("target", o != null ? o.s() : "null");
+				PrimData ot = tGHT.getTable().get("vislabel");
 				
-				jsonEdge.add("type", "suit");
-				jsonEdges.add(jsonEdge.getAsJson());
+				if (!((ot == null) && (os == null))) {
+					jsonEdge.add("source", os != null ? os.s() : "null");
+					jsonEdge.add("target", ot != null ? ot.s() : "null");
+				
+					jsonEdge.add("type", "suit");
+					jsonEdges.add(jsonEdge.getAsJson());
+				}
 			}
 		}
 		
 		FileSystemHandler.getInstance().write(jsonEdges.getAsJson(), 
-			"basicvis_live.json");
+			"/Users/pjanacik/Github/graph/graphlens/basicvis_live.json");
 	}
 
 }
