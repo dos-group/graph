@@ -1,9 +1,13 @@
 package graphr.io;
 
+import graphr.App;
+import graphr.algorithms.ConnectionDistanceAgentPopulator;
 import graphr.data.GHT;
 import graphr.graph.Edge;
 import graphr.graph.Graph;
 import graphr.graph.Vertex;
+import graphr.processing.AgentManager;
+import graphr.processing.AgentPopulator;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -29,35 +33,72 @@ public class SnapImport {
 		String featNamesFileFacebook = "../data/facebook/0.featnames";
 		
 		String edgeFileGplus = "../data/gplus/100129275726588145876.edges";
+		String featFileGplus = "../data/gplus/100129275726588145876.feat";
+		String featNamesFileGplus = "../data/gplus/100129275726588145876.featnames";
 		
 		String edgeFileTwitter = "../data/twitter/100318079.edges";
 		String featFileTwitter = "../data/twitter/100318079.feat";
 		String featNamesFileTwitter = "../data/twitter/100318079.featnames";
 		 
-		String edgeFile = edgeFileTwitter;
-		String featFile = featFileTwitter;
-		String featNamesFile = featNamesFileTwitter;
+		String exportFile = "out.json";
 		
-		Graph<GHT, GHT> parsedGraph = si.parseEdgeFile(edgeFile);
+		String edgeFile = edgeFileGplus;
+		String featFile = featFileGplus;
+		String featNamesFile = featNamesFileGplus;
+		
+		SnapImportIdMapper idMapper =  si.new ImportIdGplus();		
+		Graph<GHT, GHT> parsedGraph = si.parseEdgeFile(edgeFile, idMapper);
+		if(parsedGraph == null) {
+			log.error("Could not parse edge file");
+			return;
+		}
 
-		//SnapImportFeature sif =  si.new ImportFacebookFeature();		
-		SnapImportFeature sif =  si.new ImportTwitterFeature();
-		if(!si.parseFeatures(parsedGraph, sif, featFile, featNamesFile)) {
+		SnapImportFeature sif =  si.new ImportGplusFeature();		
+//		SnapImportFeature sif =  si.new ImportTwitterFeature();
+		if(!si.parseFeatures(parsedGraph, sif, idMapper, featFile, featNamesFile)) {
 			log.error("Could not parse features");
 			return;
 		}
-//		
-//		JsonVisitor<GHT, GHT> jsonVisitor = new JsonVisitor<GHT, GHT>();		
-//		parsedGraph.accept(jsonVisitor);		
-//		String graphSerialized = jsonVisitor.getJsonString();
-//		
-//		log.debug("---- Imported and serialized graph:   " + graphSerialized);
-//
-//		Graph<GHT, GHT> graphDeserialized = jsonVisitor.parseJsonString(graphSerialized);
+		
+		AgentPopulator p = new ConnectionDistanceAgentPopulator(0, 5);
+		AgentManager m = new AgentManager(parsedGraph, p);
+		m.runProcessing(10);
+		
+		// Output
+		
+		FileSystemHandler.getInstance().write(App.graphToJsonString(parsedGraph), exportFile);
+		
+		log.debug("Saved");
+		
+		JsonVisitor<GHT, GHT> jsonVisitor = new JsonVisitor<GHT, GHT>();
+		Graph<GHT, GHT> graphDeserialized = jsonVisitor.parseJsonString( FileSystemHandler.getInstance().read(exportFile) );
+		log.debug("Read");
 		
 		
 	}
 
+	/**
+	 * All-in-one method to completely parse graphs including features
+	 * @param edgeFile Path to file containing edges
+	 * @param featName Path to file containing map of vertex to feature ID
+	 * @param featNamesFile Path to file containing map of feature ID to its value
+	 * @param featureParser Reference to object providing correct parsing of features into keyname-value pair
+	 * @param SnapImportIdMapper Reference to service providing mapping of raw form IDs (string) to our internal id data type (long) 
+	 * @return Fully initialized graph
+	 */
+	public Graph<GHT, GHT> parseAll(String edgeFile, String featName, 
+			String featNamesFile, SnapImportFeature featureParser, SnapImportIdMapper idMapper) {
+		
+		Graph<GHT, GHT> parsedGraph = parseEdgeFile(edgeFile, idMapper);
+		
+		if(parsedGraph != null && featName != null && featNamesFile != null) {			
+			if(!parseFeatures(parsedGraph, featureParser, idMapper, featName, featNamesFile)) {
+				return null;
+			}			
+		}
+				
+		return parsedGraph;
+	}
 	
 	/**
 	 * Parses given edge file but does not fill features. Data are left empty.
@@ -65,7 +106,7 @@ public class SnapImport {
 	 * @param directed Are edges directed or not?
 	 * @return Graph that represent 
 	 */
-	public Graph<GHT, GHT> parseEdgeFile(String edgeFile) {
+	public Graph<GHT, GHT> parseEdgeFile(String edgeFile, SnapImportIdMapper idMapper) {
 		
 		log.entry();
 		
@@ -91,11 +132,11 @@ public class SnapImport {
 				}
 				
 				// get source vertex object (if does not exist, create it)
-				Long srcVertexId = new Long(pa[0]);
+				Long srcVertexId = idMapper.getId(pa[0]);
 				Vertex<GHT, GHT> srcVertex = getVertex(parsedGraph, srcVertexId); 
 										
 				// get destination vertex object (if does not exist, create it)
-				Long dstVertexId = new Long(pa[1]);				
+				Long dstVertexId = idMapper.getId(pa[1]);				
 				Vertex<GHT, GHT> dstVertex = getVertex(parsedGraph, dstVertexId);
 				
 				// check if there is already such edge, if not then create a new one
@@ -159,7 +200,8 @@ public class SnapImport {
 	 * @param featureNamesFile File with definition of features
 	 * @return True if no error, otherwise false
 	 */
-	public boolean parseFeatures(Graph<GHT, GHT> graph, SnapImportFeature featureParser, String featureFile, String featureNamesFile) {		
+	public boolean parseFeatures(Graph<GHT, GHT> graph, SnapImportFeature featureParser, SnapImportIdMapper idMapper, 
+			String featureFile, String featureNamesFile) {		
 		log.entry();
 		
 		try (BufferedReader in = new BufferedReader(new FileReader(featureFile))) {
@@ -179,7 +221,7 @@ public class SnapImport {
 				//log.debug("Feature names size: " + pfn.size() + ", parsed feature list: " + parsedLine.length);
 				
 				// get the vertex -if there is no vertex it means it is not connected, we have to create a new one
-				Vertex<GHT, GHT> vertex = getVertex(graph, new Long(parsedLine[0]) );						
+				Vertex<GHT, GHT> vertex = getVertex(graph, idMapper.getId(parsedLine[0]) );						
 								
 				// check each feature flag whether set to 1 and then insert it
 				for(int featIndexFlag = 1; featIndexFlag < parsedLine.length; featIndexFlag++) {
@@ -244,6 +286,23 @@ public class SnapImport {
 	}
 	
 	/**
+	 * Parses Gplus files. We have to do it separately because Googles's IDs are 21 char long array. We have to
+	 * convert it to the regular ID's. 
+	 * @param edgeFile
+	 * @param featFile
+	 * @param featNamesFile
+	 * @return
+	 */
+	public Graph<GHT, GHT> parseGplusFiles(String edgeFile, String featFile, String featNamesFile) {
+		log.entry();		
+		Graph<GHT, GHT> parsedGraph = new Graph<GHT, GHT>();
+		
+
+		return parsedGraph;
+	}
+	
+	
+	/**
 	 * Implements parsing of feature names for Facebook, example of the line of feature name format:
 	 * <pre>
 	 * 206 work;start_date;anonymized feature 160 
@@ -291,4 +350,65 @@ public class SnapImport {
 		
 	}
 
+	
+	/**
+	 * Implements parsing of feature names for Google Plus, example of the line of feature name format:
+	 * <pre>
+	 * 1303 university:University of Toledo
+	 * </pre>
+	 * That stands for feature name <i>work;start_date</i> and value <i>anonymized feature 160</i>  
+	 */
+	public class ImportGplusFeature implements SnapImportFeature {
+
+		@Override
+		public String getFeatureName(String feature) {
+			return feature.substring(0, feature.lastIndexOf(":"));
+		}
+
+		@Override
+		public String getFeatureValue(String feature) {
+			return feature.substring( feature.lastIndexOf(":") + 1);
+		}
+		
+	}
+	
+	
+	/**
+	 * Makes direct mapping of given ID as string into Long class
+	 */
+	public class ImportIdNoConversion implements SnapImportIdMapper {
+
+		@Override
+		public Long getId(String rawId) {
+			return new Long(rawId);
+		}
+		
+	}
+	
+	/**
+	 * Provides mapping from Google Plus (21 CHAR) to our long data type 
+	 */
+	public class ImportIdGplus implements SnapImportIdMapper {
+
+		Map<String, Long> idMap = null;
+		long idCounter = 0L; 
+		
+		@Override
+		public Long getId(String rawId) {
+			
+			if(idMap == null) {
+				idMap = new HashMap<String, Long>();
+			}
+			
+			Long id = idMap.get(rawId.trim());
+			if(id == null) {
+				id = ++idCounter;
+				idMap.put(rawId.trim(), id);
+			}
+			
+			return id;
+		}
+		
+	}
+	
 }

@@ -118,7 +118,7 @@ public class App {
 		
 	}
 
-	public static String graphToString(Graph<GHT, GHT> g) {
+	public static String graphToJsonString(Graph<GHT, GHT> g) {
 		JsonVisitor<GHT, GHT> jsonVisitor = new JsonVisitor<GHT, GHT>();		
 		g.accept(jsonVisitor);		
 		String graphSerialized = jsonVisitor.getJsonString();
@@ -130,7 +130,7 @@ public class App {
 		// Input
 		
 		Graph<GHT,GHT> g = App.getExampleGraph();
-		log.debug("Before" + App.graphToString(g));
+		log.debug("Before" + App.graphToJsonString(g));
 		
 		JsonVisitor<GHT, GHT> jsonVisitor = new JsonVisitor<GHT, GHT>();		
 		g.accept(jsonVisitor);		
@@ -145,7 +145,7 @@ public class App {
 		
 		// Output
 		
-		log.debug("After" + App.graphToString(g));
+		log.debug("After" + App.graphToJsonString(g));
 		
 		g.runQuickAndDirtyVisitor();
 	}
