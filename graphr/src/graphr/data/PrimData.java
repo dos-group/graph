@@ -100,7 +100,7 @@ public class PrimData implements JsonReadableWritable {
 	}
 	
 	public String s() {
-		return (String) o;
+		return o.toString();
 	}
 	
 	public Object o() {
