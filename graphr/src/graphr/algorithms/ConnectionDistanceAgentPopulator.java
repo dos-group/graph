@@ -1,10 +1,9 @@
 package graphr.algorithms;
 
-import java.util.ArrayList;
-
 import graphr.processing.Agent;
 import graphr.processing.AgentPopulator;
-import graphr.processing.VertexProcessingFacade;
+
+import java.util.ArrayList;
 
 public class ConnectionDistanceAgentPopulator extends AgentPopulator {
 	
@@ -17,15 +16,25 @@ public class ConnectionDistanceAgentPopulator extends AgentPopulator {
 	}
 
 	public ArrayList<Agent> getPopulation(long vertexId) {
-		
 		if (vertexId == queriedVertexId) {
-			ConnectionDistanceAgent a = new ConnectionDistanceAgent(vertexId, maxDistance);
+			Agent a = createAgent(vertexId, maxDistance);
 			ArrayList<Agent> list = new ArrayList<Agent>();
 			list.add(a);
 			return list;
 		} else {
 			return null;
 		}
+	}
+
+	/**
+	 * @param vertexId
+	 *            The searched vertex id
+	 * @param distance
+	 *            The maximum distance
+	 * @return a agent used to get the population
+	 */
+	protected Agent createAgent(final long vertexId, final long distance) {
+		return new ConnectionDistanceAgent(vertexId, distance);
 	}
 
 }
