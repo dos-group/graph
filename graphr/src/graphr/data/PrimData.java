@@ -84,7 +84,7 @@ public class PrimData implements JsonReadableWritable {
 	//-- Getters
 	
 	public int i() {
-		return ((Long) o).intValue();
+		return ((Integer) o).intValue();
 	}
 
 	public long l() {
