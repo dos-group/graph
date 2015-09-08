@@ -1,11 +1,14 @@
 package graphr.graph;
 
+import graphr.data.GHT;
+
 //import graphr.data.JsonKeyValueState;
 
 
 public class Edge<DV extends GraphData, DE extends GraphData> extends GraphElement<DE> {
 
 	protected Vertex<DV, DE> target;
+	private Vertex<GHT, GHT> source;
 
 	public Edge(DE data) {
 		super(data);
@@ -43,6 +46,14 @@ public class Edge<DV extends GraphData, DE extends GraphData> extends GraphEleme
 	@Override
 	public void accept(GraphElementVisitor visitor) {
 		visitor.visit(this);
+	}
+
+	public void setSource(Vertex<GHT, GHT> source) {
+		this.source = source;
+	}
+
+	public Vertex<GHT, GHT> getSource() {
+		return source;
 	}
 
 //	public String getAsJson() {
