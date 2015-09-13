@@ -40,8 +40,7 @@ import org.json.JSONObject;
  * }
  * </pre>
  *
- *		Assuming:
- *    	https://github.com/douglascrockford/JSON-java
+ * Assuming: https://github.com/douglascrockford/JSON-java
  *
  *
  *
@@ -86,8 +85,8 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements
 			edgeProp.add("id", new Long(e.getId()).toString());
 			edgeProp.add("data", (e.getData() == null ? "null" : e.getData()
 					.accept(dataVisitor).toString()));
-			edgeProp.add("target", (e.getTarget() == null ? "null"
-					: new Long( e.getTarget().getId()).toString()));
+			edgeProp.add("target", (e.getTarget() == null ? "null" : new Long(e
+					.getTarget().getId()).toString()));
 			edgesForJson.add(edgeProp.getAsJson());
 		}
 		vertexProp.add("edges", edgesForJson.getAsJson());
@@ -151,13 +150,19 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements
 			Iterator<Edge<GHT, GHT>> edges = v.getEdges().iterator();
 			while (edges.hasNext()) {
 				Edge<GHT, GHT> edge = edges.next();
-				Hashtable<String, PrimData> edgeData = edge.getData().getTable();
+				Hashtable<String, PrimData> edgeData = edge.getData()
+						.getTable();
 				if (edgeData.containsKey(JsonVisitor.EDGE_TARGET_KEY)) {
 					PrimData target = (PrimData) edgeData
 							.get(JsonVisitor.EDGE_TARGET_KEY);
 					Vertex<GHT, GHT> targetVertex = vTable.get(target.o());
 					edge.setTarget(targetVertex);
 					edgeData.remove(JsonVisitor.EDGE_TARGET_KEY);
+
+					// Add missing incoming edge to vertex
+					if (!targetVertex.getEdges().contains(edge)) {
+						targetVertex.addEdge(edge);
+					}
 				}
 				if (edgeData.containsKey(JsonVisitor.EDGE_SOURCE_KEY)) {
 					PrimData source = (PrimData) edgeData
@@ -186,7 +191,7 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements
 		Vertex<GHT, GHT> v = new Vertex<GHT, GHT>(new GHT());
 		long vertexId = jo.getLong("id");
 		v.setId(vertexId);
-		
+
 		Object o = jo.get("data");
 		if (o instanceof JSONObject) {
 			JSONObject dataO = (JSONObject) o;
@@ -195,7 +200,6 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements
 			v.setData(new GHT());
 		}
 
-		
 		// Edges
 
 		Object edges = jo.get("edges");
@@ -226,9 +230,11 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements
 		}
 
 		Long targetLong = jo.getLong("target");
-		edge.getData().put(JsonVisitor.EDGE_TARGET_KEY, new PrimData(targetLong));
-		edge.getData().put(JsonVisitor.EDGE_SOURCE_KEY, new PrimData(sourceLong));
-		
+		edge.getData().put(JsonVisitor.EDGE_TARGET_KEY,
+				new PrimData(targetLong));
+		edge.getData().put(JsonVisitor.EDGE_SOURCE_KEY,
+				new PrimData(sourceLong));
+
 		return edge;
 	}
 
