@@ -53,8 +53,27 @@ public class Vertex<DV extends GraphData, DE extends GraphData> extends
 		List<Edge<DV, DE>> outgoingEdges = new ArrayList<Edge<DV, DE>>();
 
 		for (Edge<DV, DE> e : coll) {
-			if (e.getSource().equals(this)) {
+			if (e.getSource() == null) {
+				// this is a workaround for two issues that would cause a
+				// NullPointerException:
+				//
+				// getEdges() is called by JsonVisitor.visit() and if the source
+				// vertex of the edges were not set correctly when creating a
+				// graph, getSource() will be null.
+				// 
+				// getEdges() is called by JsonVisitor.parseJsonString() right
+				// before the edges are fixed and the source vertex is set, so
+				// getSource() cannot be anything else than null for the unfixed
+				// edges.
+				//
+				// we need to assume at that this edge has not been fixed yet at
+				// this point
+
 				outgoingEdges.add(e);
+			} else {
+				if (e.getSource().equals(this)) {
+					outgoingEdges.add(e);
+				}
 			}
 		}
 
