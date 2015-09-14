@@ -10,9 +10,12 @@ import graphr.graph.GraphData;
 import graphr.graph.GraphDataVisitor;
 import graphr.graph.GraphElementVisitor;
 import graphr.graph.Vertex;
+import graphr.graph.Edge.Direction;
 
+import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
@@ -147,7 +150,8 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements
 		Hashtable<Long, Vertex<GHT, GHT>> vTable = parsedGraph
 				.getVerticesAsHashtable();
 		for (Vertex<GHT, GHT> v : vTable.values()) {
-			Iterator<Edge<GHT, GHT>> edges = v.getEdges().iterator();
+			Iterator<Edge<GHT, GHT>> edges = v.getEdges(Direction.BOTH)
+					.iterator();
 			while (edges.hasNext()) {
 				Edge<GHT, GHT> edge = edges.next();
 				Hashtable<String, PrimData> edgeData = edge.getData()
@@ -160,7 +164,7 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements
 					edgeData.remove(JsonVisitor.EDGE_TARGET_KEY);
 
 					// Add missing incoming edge to vertex
-					if (!targetVertex.getEdges().contains(edge)) {
+					if (!targetVertex.getEdges(Direction.BOTH).contains(edge)) {
 						targetVertex.addEdge(edge);
 					}
 				}
