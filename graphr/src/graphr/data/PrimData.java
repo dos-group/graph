@@ -131,7 +131,22 @@ public class PrimData implements JsonReadableWritable {
 	}
 
 	public double d() {
-		return ((Double) o).doubleValue();
+		if (o instanceof Integer) {
+			return ((Integer) o).doubleValue();
+		}
+		if (o instanceof Long) {
+			return ((Long) o).doubleValue();
+		}
+		if (o instanceof Double) {
+			return ((Double) o).doubleValue();
+		}
+		if (o instanceof String) {
+			return Double.parseDouble((String) o);
+		}
+		if (o instanceof Boolean) {
+			return (((Boolean) o) == true) ? 1L : 0L;
+		}
+		throw new IllegalStateException("Wrapped object type is invalid.");
 	}
 
 	public boolean b() {

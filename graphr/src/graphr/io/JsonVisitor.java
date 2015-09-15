@@ -5,17 +5,15 @@ import graphr.data.JsonArrayState;
 import graphr.data.JsonKeyValueState;
 import graphr.data.PrimData;
 import graphr.graph.Edge;
+import graphr.graph.Edge.Direction;
 import graphr.graph.Graph;
 import graphr.graph.GraphData;
 import graphr.graph.GraphDataVisitor;
 import graphr.graph.GraphElementVisitor;
 import graphr.graph.Vertex;
-import graphr.graph.Edge.Direction;
 
-import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
@@ -164,7 +162,9 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements
 					edgeData.remove(JsonVisitor.EDGE_TARGET_KEY);
 
 					// Add missing incoming edge to vertex
-					if (!targetVertex.getEdges(Direction.BOTH).contains(edge)) {
+					if (targetVertex != null
+							&& !targetVertex.getEdges(Direction.BOTH).contains(
+									edge)) {
 						targetVertex.addEdge(edge);
 					}
 				}
