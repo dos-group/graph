@@ -46,8 +46,7 @@ import org.json.JSONObject;
  *
  *
  */
-public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements
-		GraphElementVisitor {
+public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements GraphElementVisitor {
 	private static Logger log = LogManager.getLogger();
 	private static final String EDGE_TARGET_KEY = "JSonVisitor_Edge_target";
 	private static final String EDGE_SOURCE_KEY = "JSonVisitor_Edge_source";
@@ -75,8 +74,7 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements
 
 		vertexProp.add("type", "Vertex");
 		vertexProp.add("id", new Long(vertex.getId()).toString());
-		vertexProp.add("data", vertex.getData() != null ? vertex.getData()
-				.accept(dataVisitor).toString() : "null");
+		vertexProp.add("data", vertex.getData() != null ? vertex.getData().accept(dataVisitor).toString() : "null");
 
 		// get JSON array for edges
 		JsonArrayState edgesForJson = new JsonArrayState();
@@ -84,10 +82,8 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements
 			JsonKeyValueState edgeProp = new JsonKeyValueState();
 			edgeProp.add("type", "Edge");
 			edgeProp.add("id", new Long(e.getId()).toString());
-			edgeProp.add("data", (e.getData() == null ? "null" : e.getData()
-					.accept(dataVisitor).toString()));
-			edgeProp.add("target", (e.getTarget() == null ? "null" : new Long(e
-					.getTarget().getId()).toString()));
+			edgeProp.add("data", (e.getData() == null ? "null" : e.getData().accept(dataVisitor).toString()));
+			edgeProp.add("target", (e.getTarget() == null ? "null" : new Long(e.getTarget().getId()).toString()));
 			edgesForJson.add(edgeProp.getAsJson());
 		}
 		vertexProp.add("edges", edgesForJson.getAsJson());
@@ -145,32 +141,28 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements
 
 		// Fix edge targets
 
-		Hashtable<Long, Vertex<GHT, GHT>> vTable = parsedGraph
-				.getVerticesAsHashtable();
+		Hashtable<Long, Vertex<GHT, GHT>> vTable = parsedGraph.getVerticesAsHashtable();
 		for (Vertex<GHT, GHT> v : vTable.values()) {
-			Iterator<Edge<GHT, GHT>> edges = v.getEdges(Direction.BOTH)
-					.iterator();
+			Iterator<Edge<GHT, GHT>> edges = v.getEdges(Direction.BOTH).iterator();
 			while (edges.hasNext()) {
 				Edge<GHT, GHT> edge = edges.next();
-				Hashtable<String, PrimData> edgeData = edge.getData()
-						.getTable();
+				Hashtable<String, PrimData> edgeData = edge.getData().getTable();
 				if (edgeData.containsKey(JsonVisitor.EDGE_TARGET_KEY)) {
-					PrimData target = (PrimData) edgeData
-							.get(JsonVisitor.EDGE_TARGET_KEY);
+					PrimData target = (PrimData) edgeData.get(JsonVisitor.EDGE_TARGET_KEY);
 					Vertex<GHT, GHT> targetVertex = vTable.get(target.o());
-					edge.setTarget(targetVertex);
-					edgeData.remove(JsonVisitor.EDGE_TARGET_KEY);
+					if (targetVertex != null) {
+						edge.setTarget(targetVertex);
+						edgeData.remove(JsonVisitor.EDGE_TARGET_KEY);
 
-					// Add missing incoming edge to vertex
-					if (targetVertex != null
-							&& !targetVertex.getEdges(Direction.BOTH).contains(
-									edge)) {
-						targetVertex.addEdge(edge);
+						// Add missing incoming edge to vertex
+						if (targetVertex.getEdges(Direction.BOTH) == null
+								|| !targetVertex.getEdges(Direction.BOTH).contains(edge)) {
+							targetVertex.addEdge(edge);
+						}
 					}
 				}
 				if (edgeData.containsKey(JsonVisitor.EDGE_SOURCE_KEY)) {
-					PrimData source = (PrimData) edgeData
-							.get(JsonVisitor.EDGE_SOURCE_KEY);
+					PrimData source = (PrimData) edgeData.get(JsonVisitor.EDGE_SOURCE_KEY);
 					Vertex<GHT, GHT> sourceVertex = vTable.get(source.o());
 					edge.setSource(sourceVertex);
 					edgeData.remove(JsonVisitor.EDGE_SOURCE_KEY);
@@ -234,10 +226,8 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements
 		}
 
 		Long targetLong = jo.getLong("target");
-		edge.getData().put(JsonVisitor.EDGE_TARGET_KEY,
-				new PrimData(targetLong));
-		edge.getData().put(JsonVisitor.EDGE_SOURCE_KEY,
-				new PrimData(sourceLong));
+		edge.getData().put(JsonVisitor.EDGE_TARGET_KEY, new PrimData(targetLong));
+		edge.getData().put(JsonVisitor.EDGE_SOURCE_KEY, new PrimData(sourceLong));
 
 		return edge;
 	}
