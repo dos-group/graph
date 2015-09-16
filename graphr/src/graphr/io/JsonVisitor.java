@@ -79,12 +79,15 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements 
 		// get JSON array for edges
 		JsonArrayState edgesForJson = new JsonArrayState();
 		for (Edge<?, ?> e : vertex.getEdges()) {
+                    //create only outgoing edges
+                    if(e.getSource().getId() == vertex.getId()){
 			JsonKeyValueState edgeProp = new JsonKeyValueState();
 			edgeProp.add("type", "Edge");
 			edgeProp.add("id", new Long(e.getId()).toString());
 			edgeProp.add("data", (e.getData() == null ? "null" : e.getData().accept(dataVisitor).toString()));
 			edgeProp.add("target", (e.getTarget() == null ? "null" : new Long(e.getTarget().getId()).toString()));
 			edgesForJson.add(edgeProp.getAsJson());
+                    }
 		}
 		vertexProp.add("edges", edgesForJson.getAsJson());
 
