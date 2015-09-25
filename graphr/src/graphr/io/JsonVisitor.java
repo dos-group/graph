@@ -122,8 +122,24 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements 
 	 * @return Initialized graph
 	 */
 	public Graph<GHT, GHT> parseJsonString(String readString) {
-
+		
 		JSONObject jo = new JSONObject(readString);
+		return parseJsonObject(jo);
+	}
+
+	/**
+	 * Experimental method to parse graph in JSON. Initialization of edges is
+	 * done in two steps. Firstly they are created during parsing a vertex but
+	 * their target vertex is set to null. Once all vertices are parsed, proper
+	 * references to target vertex (of the edge) is set. We use help structure
+	 * that is map of edge to id of the vertex. Assuming:
+	 * https://github.com/douglascrockford/JSON-java
+	 * 
+	 * @param jo
+	 *            JSONObject to be parsed
+	 * @return Initialized graph
+	 */
+	public Graph<GHT, GHT> parseJsonObject(JSONObject jo) {
 
 		// Init
 
