@@ -12,6 +12,7 @@ import graphr.graph.GraphDataVisitor;
 import graphr.graph.GraphElementVisitor;
 import graphr.graph.Vertex;
 
+import java.io.InputStream;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
@@ -19,7 +20,9 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 /**
  * Attempt to create a visitor pattern for graph serialization. <br>
@@ -126,6 +129,16 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements 
 		JSONObject jo = new JSONObject(readString);
 		return parseJsonObject(jo);
 	}
+	
+	public Graph<GHT, GHT> parseJsonStream(final InputStream stream) throws IllegalArgumentException {
+		try {
+			JSONTokener tokener = new JSONTokener(stream);
+			JSONObject js = new JSONObject(tokener);
+			return parseJsonObject(js);
+		} catch (JSONException e) {
+			throw new IllegalArgumentException(e);
+		}
+	}
 
 	/**
 	 * Experimental method to parse graph in JSON. Initialization of edges is
@@ -139,7 +152,7 @@ public class JsonVisitor<DV extends GraphData, DE extends GraphData> implements 
 	 *            JSONObject to be parsed
 	 * @return Initialized graph
 	 */
-	public Graph<GHT, GHT> parseJsonObject(JSONObject jo) {
+	private Graph<GHT, GHT> parseJsonObject(JSONObject jo) {
 
 		// Init
 
