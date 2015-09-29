@@ -61,8 +61,9 @@ public class Vertex<DV extends GraphData, DE extends GraphData> extends
 		if (direction.equals(Direction.OUTGOING)) {
 			return outgoingEdges;
 		} else if (direction.equals(Direction.INCOMING)) {
-			coll.removeAll(outgoingEdges);
-			return coll;
+                        Collection<Edge<DV, DE>> incommingEdges = new ArrayList<Edge<DV,DE>>(coll);
+                        incommingEdges.removeAll(outgoingEdges);
+			return incommingEdges;
 		}
 
 		log.error("Unknown Direction " + direction);
