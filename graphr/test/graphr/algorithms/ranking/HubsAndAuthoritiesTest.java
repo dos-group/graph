@@ -4,6 +4,12 @@ import graphr.data.GHT;
 import graphr.graph.Edge;
 import graphr.graph.Graph;
 import graphr.graph.Vertex;
+import graphr.io.FileSystemHandler;
+import graphr.io.JsonVisitor;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import org.junit.Test;
 
@@ -13,15 +19,29 @@ import org.junit.Test;
  */
 public class HubsAndAuthoritiesTest {
 
-    @Test
+//    @Test
     public void testHubsAndAuthoritiesAlgorithm() {
-        Graph<GHT, GHT> graph = createSampleGraph();
+        String path = System.getProperty("user.home") + "/Desktop/" + "1443607358734wholeGraph_normalgraphWordnet.json";
+        Graph<GHT, GHT> graph = loadGraph(path);
+//        Graph<GHT, GHT> graph = createSampleGraph();
         int maxNumberOfIterations = 20;
 
         Map<Vertex<GHT, GHT>, Double> rankingValues = HubsAndAuthorities.calculateHubsAndAuthorities(graph, maxNumberOfIterations);
-        for (Vertex<GHT, GHT> keyV : rankingValues.keySet()) {
-            System.out.println(keyV.getData().getTable().get("value") + " " + rankingValues.get(keyV));
+//        for (Vertex<GHT, GHT> keyV : rankingValues.keySet()) {
+//            System.out.println(keyV.getData().getTable().get("value") + " " + rankingValues.get(keyV));
+//        }
+
+        List<Map.Entry<Vertex<GHT, GHT>, Double>> sortedMap = sortMap(rankingValues);
+        for (Map.Entry<Vertex<GHT, GHT>, Double> entry : sortedMap) {
+            System.out.println(entry.getValue() + " " + entry.getKey().getData().getTable().get("value"));
         }
+    }
+
+    private Graph<GHT, GHT> loadGraph(String path) {
+        String graphAsJsonString = FileSystemHandler.getInstance().read(path);
+        JsonVisitor<GHT, GHT> jsonVisitor = new JsonVisitor<GHT, GHT>();
+        Graph<GHT, GHT> graph = jsonVisitor.parseJsonString(graphAsJsonString);
+        return graph;
     }
 
     private Graph<GHT, GHT> createSampleGraph() {
@@ -71,5 +91,31 @@ public class HubsAndAuthoritiesTest {
         graph.addVertex(pageD);
 
         return graph;
+    }
+
+    private List<Map.Entry<Vertex<GHT, GHT>, Double>> sortMap(
+            Map<Vertex<GHT, GHT>, Double> ranking) {
+        List<Map.Entry<Vertex<GHT, GHT>, Double>> sortetList = new ArrayList<Map.Entry<Vertex<GHT, GHT>, Double>>(
+                ranking.entrySet());
+
+        Collections.sort(sortetList,
+                new Comparator<Map.Entry<Vertex<GHT, GHT>, Double>>() {
+
+                    @Override
+                    public int compare(
+                            Map.Entry<Vertex<GHT, GHT>, Double> entry1,
+                            Map.Entry<Vertex<GHT, GHT>, Double> entry2) {
+                                if (entry1.getValue() >= entry2.getValue()) {
+                                    return 1;
+                                } else if(entry1.getValue() < entry2.getValue()){
+                                    return -1;
+                                } else {
+                                    return 0;
+                                }
+                            }
+                });
+        Collections.reverse(sortetList);
+
+        return sortetList;
     }
 }
