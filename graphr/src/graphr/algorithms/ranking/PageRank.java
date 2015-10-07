@@ -28,6 +28,9 @@ public class PageRank {
                 //calculate new pagerank value for vertex p
                 double neighbourSum = 0.0;
                 for (Edge<GHT, GHT> incommingEdge : p.getEdges(Edge.Direction.INCOMING)) {
+                    if(!pageRank.containsKey(incommingEdge.getSource())){
+                        pageRank.put(incommingEdge.getSource(), 1.0);
+                    }
                     double numberOfOutgoingEdges = (double) incommingEdge.getSource().getEdges(Edge.Direction.OUTGOING).size();
                     double pageRankOfNeighbour = pageRank.get(incommingEdge.getSource());
                     neighbourSum += (pageRankOfNeighbour / numberOfOutgoingEdges);

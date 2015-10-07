@@ -28,6 +28,9 @@ public class HubsAndAuthorities {
             for (Vertex<GHT, GHT> p : graph.getVertices()) {
                 double newAuthValue = 0.0;
                 for (Edge<GHT, GHT> incommingEdge : p.getEdges(Edge.Direction.INCOMING)) {
+                    if(!hub.containsKey(incommingEdge.getSource())){
+                        hub.put(incommingEdge.getSource(), 1.0);
+                    }
                     newAuthValue += hub.get(incommingEdge.getSource());
                 }
                 auth.put(p, newAuthValue);
@@ -36,6 +39,9 @@ public class HubsAndAuthorities {
             for (Vertex<GHT, GHT> p : graph.getVertices()) {
                 double newHubValue = 0.0;
                 for (Edge<GHT, GHT> outgoingEdge : p.getEdges(Edge.Direction.OUTGOING)) {
+                    if(!auth.containsKey(outgoingEdge.getTarget())){
+                        auth.put(outgoingEdge.getTarget(), 1.0);
+                    }
                     newHubValue += auth.get(outgoingEdge.getTarget());
                 }
                 hub.put(p, newHubValue);
