@@ -5,6 +5,7 @@ import graphr.data.PrimData;
 import graphr.graph.Edge;
 import graphr.graph.Graph;
 import graphr.graph.Vertex;
+import graphr.graph.Edge.Direction;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -19,50 +20,55 @@ import java.util.Hashtable;
 public class AgentManager implements VertexProcessingFacade {
 
 	Hashtable<Long, ArrayList<Agent>> schedule;
-	Graph<?,?> graph;
+	Graph<?, ?> graph;
+	private Direction direction;
 
 	long localVertexId;
 	Hashtable<Long, ArrayList<Agent>> newSchedule;
 	Agent currentlyExecutedAgent;
-	
-		
-	public AgentManager(Graph<?,?> graph, AgentPopulator pop) {
-		
+
+	public AgentManager(Graph<?, ?> graph, AgentPopulator pop) {
+		this(graph, pop, Direction.OUTGOING);
+	}
+
+	public AgentManager(Graph<?,?> graph, AgentPopulator pop, Direction direction) {
+
 		// Basic init stuff
 		schedule = new Hashtable<Long, ArrayList<Agent>>();
 		this.graph = graph;
-		
+		this.direction = direction;
+
 		// Getting population for initial schedule
-		for(Vertex<?,?> v : graph.getVertices()) {
+		for (Vertex<?, ?> v : graph.getVertices()) {
 			ArrayList<Agent> al = pop.getPopulation(v.getId());
 			if (al != null) {
 				schedule.put(new Long(v.getId()), al);
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * Perform bulk step, i.e. for every vertex that has some waiting agents -run them as they "arrived".
 	 * @return True if at least one agent executed otherwise false.
 	 */
 	public void runBulkStep() {
-		
+
 		newSchedule = new Hashtable<Long, ArrayList<Agent>>();
-		
-		for(Long vertexId : schedule.keySet()) {
+
+		for (Long vertexId : schedule.keySet()) {
 			localVertexId = vertexId;
 			ArrayList<Agent> agents = schedule.get(vertexId);
-			for(Agent agent : agents) {	
+			for (Agent agent : agents) {
 				currentlyExecutedAgent = agent;
 				agent.setVertexProcessingFacade(this);
-				agent.runStep();	
-			}	
+				agent.runStep();
+			}
 		}
-		
+
 		localVertexId = -1;
 		currentlyExecutedAgent = null;
-		
+
 		schedule = newSchedule;
 	}
 
@@ -73,18 +79,17 @@ public class AgentManager implements VertexProcessingFacade {
 	 */
 	public long runProcessing(long numberOfBulkSteps) {
 		long currentStep = 0;
-		
+
 		while ((currentStep < numberOfBulkSteps) && 
 				( !((currentStep > 0) && (schedule.size() == 0)) )) {
 			runBulkStep();
-			currentStep ++;
+			currentStep++;
 		}
-		
+
 		return numberOfBulkSteps - currentStep;
 	}
 
-	
-	//-- implements ProcessingFacade
+	// -- implements ProcessingFacade
 
 	@Override
 	public PrimData getValue(String key) {
@@ -95,25 +100,35 @@ public class AgentManager implements VertexProcessingFacade {
 	@Override
 	public void setValue(String key, PrimData value) {
 		GHT data = (GHT) graph.getVertex(localVertexId).getData();
-		data.getTable().put(key,(PrimData) value);
+		data.getTable().put(key, (PrimData) value);
 	}
-	
+
 	public long getId() {
 		return localVertexId;
 	}
 
 	@Override
 	public void broadcast() {
-		Vertex<?,?> vertex = graph.getVertex(localVertexId);
-		for(Edge<?, ?> e : vertex.getEdges()) {
-			Long nextHopId = new Long(e.getTarget().getId());
-			ArrayList<Agent> al = newSchedule.get(nextHopId);
-			if (al == null) {
-				al = new ArrayList<Agent>();
-				newSchedule.put(nextHopId, al);
+		Vertex<?, ?> vertex = graph.getVertex(localVertexId);
+		if (direction == Direction.OUTGOING || direction == Direction.BOTH) {
+			for (Edge<?, ?> e : vertex.getEdges(Direction.OUTGOING)) {
+				addAgent(new Long(e.getTarget().getId()));
 			}
-			al.add(currentlyExecutedAgent.getCopy());
 		}
+		if (direction == Direction.INCOMING || direction == Direction.BOTH) {
+			for (Edge<?, ?> e : vertex.getEdges(Direction.INCOMING)) {
+				addAgent(new Long(e.getSource().getId()));
+			}
+		}
+	}
+
+	private void addAgent(final Long nextHopId) {
+		ArrayList<Agent> agentsList = newSchedule.get(nextHopId);
+		if (agentsList == null) {
+			agentsList = new ArrayList<Agent>();
+			newSchedule.put(nextHopId, agentsList);
+		}
+		agentsList.add(currentlyExecutedAgent.getCopy());
 	}
 
 }
