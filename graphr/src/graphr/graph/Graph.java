@@ -9,6 +9,9 @@ import graphr.data.JsonKeyValueState;
 import graphr.data.PrimData;
 import graphr.io.FileSystemHandler;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Hashtable;
 
@@ -100,6 +103,126 @@ public class Graph<DV extends GraphData, DE extends GraphData> {
 		
 		FileSystemHandler.getInstance().write(jsonEdges.getAsJson(), 
 			"/Users/pjanacik/Github/graph/graphlens/basicvis_live.json");
+	}
+	
+	
+	public void createJsonString(String filename){
+		log.debug("At beginning of createJsonString() ");
+		
+		try {
+	        File file;
+	        FileWriter writer;
+	        file = new File(filename);
+            writer = new FileWriter(file);
+	
+            writer.write("{\n"
+            		+ "\t\"vertices\":[\n");
+            
+            int aktvertex = 0;
+            int maxverteces = vertices.values().size() ;
+			for (Vertex<DV, DE> v : vertices.values()) {
+				aktvertex++;
+				//ausgabe soweit wie es geht
+				writer.write("\t\t{\n"
+						+ "\t\t\t\"type\":\"Vertex\",\n"
+						+ "\t\t\t\"id\":" + v.getId() + ",\n"
+						+ "\t\t\t\"data\":{\n");
+
+				//Daten wieder mit laufnummer
+				GHT data = (GHT) v.getData();
+				int aktVertexData = 0;
+				int maxVertexData = data.getTable().keySet().size();
+				for(String dataKey : data.getTable().keySet()){
+					aktVertexData++;
+					if (aktVertexData<maxVertexData){//es gibt noch mindestens ein weiteres Datum - daher mit komma
+						writer.write("\t\t\t\t\"" + dataKey + "\":\"" + data.getTable().get(dataKey) + "\",\n");
+					}else{
+						writer.write("\t\t\t\t\"" + dataKey + "\":\"" + data.getTable().get(dataKey) + "\"\n");						
+					}					
+				}
+				
+				//Zwischenlayout
+				writer.write("\t\t\t},\n"
+						+"\t\t\t\"edges\":[\n");
+				//edges wieder mit laufnummer
+				int aktedge = 0;
+				int maxedge = v.getEdges().size();
+				for(Edge e : v.getEdges()){
+					aktedge++;
+					writer.write("\t\t\t\t{\n"
+							+ "\t\t\t\t\t\"id\":" + e.getId() + ",\n"
+							+ "\t\t\t\t\t\"type\":\"Edge\",\n"
+							+ "\t\t\t\t\t\"target\":" + e.getTargetId() + ",\n"
+							+ "\t\t\t\t\t\"data\":{\n");
+					//edgedaten wieder mit laufnummer
+					GHT edgeData = (GHT) e.getData();
+					int aktEdgeData = 0;
+					int maxEdgeData = edgeData.getTable().keySet().size();
+					for(String edgeDataKey : edgeData.getTable().keySet()){
+						aktEdgeData++;
+						if(aktEdgeData < maxEdgeData){ //es gibt noch mindestens ein weiteres Datum - daher mit komma
+							writer.write("\t\t\t\t\t\t\"" + edgeDataKey + "\":\"" + edgeData.getTable().get(edgeDataKey) + "\",\n");
+						}else{
+							writer.write("\t\t\t\t\t\t\"" + edgeDataKey + "\":\"" + edgeData.getTable().get(edgeDataKey) + "\"\n");
+						}
+					}
+					
+					writer.write("\t\t\t\t\t}\n");
+					if(aktedge<maxedge){ //es gibt noch mindestens eine weitere Edge - daher mit komma
+						writer.write("\t\t\t\t},\n");
+					}else{
+						writer.write("\t\t\t\t}\n");						
+					}
+				}
+				writer.write("\t\t\t]\n");
+				if (aktvertex< maxverteces){//Es gibt noch mindestens einen weiteren - daher mit komma
+					writer.write("\t\t},\n");
+				}else{
+					writer.write("\t\t}\n");					
+				}
+			}
+				//Vertexende
+				
+				
+				/*
+				GHT data = (GHT) v.getData();
+					writer.write(System.getProperty("line.separator")+
+							"Vertex " + v.id + "#############################################################"+
+							System.getProperty("line.separator"));
+					for(String string : data.getTable().keySet()){
+						if(string.contains("in_")){
+							System.out.println(string + ":"+ data.getTable().get(string));			
+							writer.write(string + ":"+ data.getTable().get(string));
+						}
+					}
+					for(String string : data.getTable().keySet()){
+						if(string.contains("out_")){
+							System.out.println(string + ":"+ data.getTable().get(string));	
+							writer.write(string + ":"+ data.getTable().get(string));		
+						}
+					}
+				}
+		*/
+				 /*
+				for (Edge<DV, DE> e: v.edges.values()) {
+					System.out.println("Edge " + e.id);
+	
+					GHT edgeData = (GHT) e.getData();
+					System.out.println("edge:::" + edgeData.getTable().get("startzeit"));
+				}
+				*/
+			writer.write("\t],\n"
+					+ "\t\"type\":\"Graph\"\n"
+					+ "}");
+			
+	        writer.flush();
+		    writer.close();
+	
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		log.debug("Finished createJsonString() ");		
 	}
 
 }

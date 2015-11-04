@@ -156,7 +156,7 @@ public class App {
 		System.out.println("Hello world.");
 
 		String readString = FileSystemHandler.getInstance().read(
-				"/Users/pjanacik/Desktop/out.json");
+				"target/jsonMitEinerNextEdge.json");
 		return readString;
 	}
 
@@ -180,7 +180,7 @@ public class App {
 		// log.debug("Startin stuff " + App.graphToJsonString(g));
 
 		log.debug("Startin stuff");
-		g.runQuickAndDirtyVisitor();
+		g.createJsonString("target/ausgabe.json");
 
 		log.debug("Sould be done right now.");
 	}
