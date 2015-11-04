@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import graphr.data.PrimData;
+import graphr.graph.Edge;
 import graphr.processing.Agent;
 import graphr.processing.VertexProcessingFacade;
 
@@ -78,6 +79,12 @@ public class ConnectionDistanceAgent extends Agent {
 		}
 
 		return v.getValue("label").s() + cs;
+	}
+
+	@Override
+	public void setUsedEdge(Edge e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

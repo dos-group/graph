@@ -2,6 +2,8 @@ package graphr.processing;
 
 import java.util.ArrayList;
 
+import graphr.graph.Edge;
+
 
 /**
  * Parent class for all graph's agents. User is expected to extend this class and implemented given methods.
@@ -16,6 +18,8 @@ public abstract class Agent {
 	}
 	
 	public abstract Agent getCopy();
+	
+	public abstract void setUsedEdge(Edge e);
 	
 	/**
 	 * Called before simulation starts to do some initialization. Here comes user's code.
