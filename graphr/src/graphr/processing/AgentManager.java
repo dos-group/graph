@@ -112,23 +112,25 @@ public class AgentManager implements VertexProcessingFacade {
 		Vertex<?, ?> vertex = graph.getVertex(localVertexId);
 		if (direction == Direction.OUTGOING || direction == Direction.BOTH) {
 			for (Edge<?, ?> e : vertex.getEdges(Direction.OUTGOING)) {
-				addAgent(new Long(e.getTarget().getId()));
+				addAgent(new Long(e.getTarget().getId()), e);
 			}
 		}
 		if (direction == Direction.INCOMING || direction == Direction.BOTH) {
 			for (Edge<?, ?> e : vertex.getEdges(Direction.INCOMING)) {
-				addAgent(new Long(e.getSource().getId()));
+				addAgent(new Long(e.getSource().getId()), e);
 			}
 		}
 	}
 
-	private void addAgent(final Long nextHopId) {
+	private void addAgent(final Long nextHopId, Edge e) {
 		ArrayList<Agent> agentsList = newSchedule.get(nextHopId);
 		if (agentsList == null) {
 			agentsList = new ArrayList<Agent>();
 			newSchedule.put(nextHopId, agentsList);
 		}
-		agentsList.add(currentlyExecutedAgent.getCopy());
+		Agent newAgent = currentlyExecutedAgent.getCopy();
+		newAgent.setUsedEdge(e);
+		agentsList.add(newAgent);
 	}
 
 }

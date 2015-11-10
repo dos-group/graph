@@ -106,6 +106,47 @@ public class Graph<DV extends GraphData, DE extends GraphData> {
 	}
 	
 	
+	public void deleteVerticesWithoutVisibility(){
+
+		Hashtable<Long, Vertex<DV,DE>> delitable = new Hashtable<>();
+		for (Vertex<DV, DE> v : vertices.values()) {
+			GHT data = (GHT) v.getData();
+			if(data.getTable().get("visible")==null|| data.getTable().get("visible").b()==false){
+				//System.out.println("der Knoten " + v.id + " ist nicht sichtbar!");
+				delitable.put(v.id, v);
+			}else{
+				//System.out.println("der Knoten " + v.id + " ist sichtbar!");
+			}
+		}
+		
+
+		for (Vertex<DV, DE> v : delitable.values()) {
+			vertices.remove(v.getId());
+		}
+	}
+
+	public void deleteEdgesWithoutVisibility(){//DOES NOT WORK
+
+		for (Vertex<DV, DE> v : vertices.values()) {
+			Hashtable<Long, Edge<DV,DE>> delitable = new Hashtable<>();
+
+			for (Edge<DV, DE> e : v.getEdges()){
+				GHT data = (GHT) e.getData();
+				if(data.getTable().get("visible")==null|| data.getTable().get("visible").b()==false){
+					delitable.put(e.id,e);
+				}else{
+				}
+			}
+			
+
+			for (Edge<DV, DE> e : delitable.values()) {
+				v.getEdges().remove(e);
+			}			
+			
+		}
+	}
+	
+	
 	public void createJsonString(String filename){
 		log.debug("At beginning of createJsonString() ");
 		
