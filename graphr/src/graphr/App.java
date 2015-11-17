@@ -5,14 +5,22 @@ package graphr;
 //import com.json.parsers.JsonParserFactory;
 
 import graphr.algorithms.ConnectionDistanceAgentPopulator;
+import graphr.algorithms.DirectedSpreadingAgentPopulator;
+import graphr.algorithms.RatingWithDirectedUserDepandantSpreadingAgentPopulator;
+import graphr.algorithms.RestrictedUserSpreadingAgentPopulator;
+import graphr.algorithms.UserDepandantDirectedSpreadingAgentPopulator;
 import graphr.data.GHT;
+import graphr.data.PrimData;
 import graphr.graph.Edge;
 import graphr.graph.Graph;
 import graphr.graph.Vertex;
+import graphr.graph.Edge.Direction;
 import graphr.io.FileSystemHandler;
 import graphr.io.JsonVisitor;
 import graphr.processing.AgentManager;
 import graphr.processing.AgentPopulator;
+
+import java.util.Hashtable;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -156,7 +164,9 @@ public class App {
 		System.out.println("Hello world.");
 
 		String readString = FileSystemHandler.getInstance().read(
-				"target/jsonMitEinerNextEdge.json");
+//				"target/jsonMitEinerNextEdge.json");
+				"target/neuestes.json");
+//				"target/angereichertMitRatingInfos.json");
 		return readString;
 	}
 
@@ -171,15 +181,42 @@ public class App {
 
 		// Do processing
 
-		AgentPopulator p = new ConnectionDistanceAgentPopulator(0, 5);
-		AgentManager m = new AgentManager(g, p);
-		m.runProcessing(10);
-
+		log.debug("run algorithms");
+		AgentPopulator p;
+		AgentManager m;
+		
+		/*
+		Hashtable<Long, String> erlaubteUser = new Hashtable<>();
+		
+		erlaubteUser.put((long)1, "1");		
+		erlaubteUser.put((long)90, "90");
+		erlaubteUser.put((long)10, "10");		
+		erlaubteUser.put((long)13, "13");
+		erlaubteUser.put((long)16, "16");
+		erlaubteUser.put((long)59, "59");
+		erlaubteUser.put((long)62, "62");
+		erlaubteUser.put((long)87, "87");
+		
+		p = new RestrictedUserSpreadingAgentPopulator(33, 3, erlaubteUser, true);
+		m = new AgentManager(g, p, Direction.BOTH);
+		m = new AgentManager(g, p, Direction.INCOMING);
+		m.runProcessing(3);
+		*/
+		p = new DirectedSpreadingAgentPopulator(33,2,true);
+		m = new AgentManager(g, p, Direction.BOTH);
+		m = new AgentManager(g, p, Direction.INCOMING);
+		m.runProcessing(3);
+		
+		
+		//Nur bei gerateten sinnvoll
+		//g.handleRating(2.5);
 		// Output
 
 		// log.debug("Startin stuff " + App.graphToJsonString(g));
 
 		log.debug("Startin stuff");
+		g.deleteVerticesWithoutRightProterty("visible" , new PrimData(true));
+		g.deleteEdgesWithoutRightProterty("visible" , new PrimData(true));
 		g.createJsonString("target/ausgabe.json");
 
 		log.debug("Sould be done right now.");

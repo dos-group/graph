@@ -106,41 +106,38 @@ public class Graph<DV extends GraphData, DE extends GraphData> {
 	}
 	
 	
-	public void deleteVerticesWithoutVisibility(){
+	public void deleteVerticesWithoutRightProterty(String attribute, PrimData value){
 
 		Hashtable<Long, Vertex<DV,DE>> delitable = new Hashtable<>();
 		for (Vertex<DV, DE> v : vertices.values()) {
 			GHT data = (GHT) v.getData();
-			if(data.getTable().get("visible")==null|| data.getTable().get("visible").b()==false){
-				//System.out.println("der Knoten " + v.id + " ist nicht sichtbar!");
+			if(data.getTable().get(attribute)==null|| !data.getTable().get(attribute).getAsJson().equals(value.getAsJson())){
 				delitable.put(v.id, v);
 			}else{
-				//System.out.println("der Knoten " + v.id + " ist sichtbar!");
 			}
 		}
-		
 
 		for (Vertex<DV, DE> v : delitable.values()) {
 			vertices.remove(v.getId());
 		}
 	}
+	
 
-	public void deleteEdgesWithoutVisibility(){//DOES NOT WORK
-
+	public void deleteEdgesWithoutRightProterty(String attribute, PrimData value){
+		
 		for (Vertex<DV, DE> v : vertices.values()) {
 			Hashtable<Long, Edge<DV,DE>> delitable = new Hashtable<>();
 
 			for (Edge<DV, DE> e : v.getEdges()){
 				GHT data = (GHT) e.getData();
-				if(data.getTable().get("visible")==null|| data.getTable().get("visible").b()==false){
+				if(data.getTable().get(attribute)==null|| !data.getTable().get(attribute).getAsJson().equals(value.getAsJson())){
 					delitable.put(e.id,e);
 				}else{
 				}
 			}
 			
-
 			for (Edge<DV, DE> e : delitable.values()) {
-				v.getEdges().remove(e);
+				v.removeEdgeOnBothSides(e);
 			}			
 			
 		}
@@ -149,7 +146,7 @@ public class Graph<DV extends GraphData, DE extends GraphData> {
 	
 	public void createJsonString(String filename){
 		log.debug("At beginning of createJsonString() ");
-		
+
 		try {
 	        File file;
 	        FileWriter writer;
@@ -159,10 +156,13 @@ public class Graph<DV extends GraphData, DE extends GraphData> {
             writer.write("{\n"
             		+ "\t\"vertices\":[\n");
             
-            int aktvertex = 0;
-            int maxverteces = vertices.values().size() ;
+            boolean firstvertex=true;
 			for (Vertex<DV, DE> v : vertices.values()) {
-				aktvertex++;
+				if(firstvertex){
+					firstvertex = false;
+				}else{
+					writer.write("\t\t,\n");
+				}
 				//ausgabe soweit wie es geht
 				writer.write("\t\t{\n"
 						+ "\t\t\t\"type\":\"Vertex\",\n"
@@ -170,26 +170,30 @@ public class Graph<DV extends GraphData, DE extends GraphData> {
 						+ "\t\t\t\"data\":{\n");
 
 				//Daten wieder mit laufnummer
-				GHT data = (GHT) v.getData();
-				int aktVertexData = 0;
-				int maxVertexData = data.getTable().keySet().size();
-				for(String dataKey : data.getTable().keySet()){
-					aktVertexData++;
-					if (aktVertexData<maxVertexData){//es gibt noch mindestens ein weiteres Datum - daher mit komma
-						writer.write("\t\t\t\t\"" + dataKey + "\":\"" + data.getTable().get(dataKey) + "\",\n");
+				GHT vertexData = (GHT) v.getData();
+				
+				boolean firstVertexData = true;
+				for(String dataKey : vertexData.getTable().keySet()){
+					if(firstVertexData){
+						firstVertexData = false;
 					}else{
-						writer.write("\t\t\t\t\"" + dataKey + "\":\"" + data.getTable().get(dataKey) + "\"\n");						
-					}					
+						writer.write(",\n");
+					}
+					writer.write("\t\t\t\t\"" + dataKey + "\":\"" + vertexData.getTable().get(dataKey) + "\"");
 				}
+				writer.write("\n");
 				
 				//Zwischenlayout
 				writer.write("\t\t\t},\n"
 						+"\t\t\t\"edges\":[\n");
 				//edges wieder mit laufnummer
-				int aktedge = 0;
-				int maxedge = v.getEdges().size();
+				boolean firstEdge = true;
 				for(Edge e : v.getEdges()){
-					aktedge++;
+					if(firstEdge){
+						firstEdge=false;
+					}else{
+						writer.write("\t\t\t\t,\n");						
+					}
 					writer.write("\t\t\t\t{\n"
 							+ "\t\t\t\t\t\"id\":" + e.getId() + ",\n"
 							+ "\t\t\t\t\t\"type\":\"Edge\",\n"
@@ -197,61 +201,27 @@ public class Graph<DV extends GraphData, DE extends GraphData> {
 							+ "\t\t\t\t\t\"data\":{\n");
 					//edgedaten wieder mit laufnummer
 					GHT edgeData = (GHT) e.getData();
-					int aktEdgeData = 0;
-					int maxEdgeData = edgeData.getTable().keySet().size();
+					boolean firstEdgeData = true;
 					for(String edgeDataKey : edgeData.getTable().keySet()){
-						aktEdgeData++;
-						if(aktEdgeData < maxEdgeData){ //es gibt noch mindestens ein weiteres Datum - daher mit komma
-							writer.write("\t\t\t\t\t\t\"" + edgeDataKey + "\":\"" + edgeData.getTable().get(edgeDataKey) + "\",\n");
+						if(firstEdgeData){
+							firstEdgeData = false;
 						}else{
-							writer.write("\t\t\t\t\t\t\"" + edgeDataKey + "\":\"" + edgeData.getTable().get(edgeDataKey) + "\"\n");
+							writer.write(",\n");
 						}
+						writer.write("\t\t\t\t\t\t\"" + edgeDataKey + "\":\"" + edgeData.getTable().get(edgeDataKey) + "\"");
 					}
+					writer.write("\n");
 					
 					writer.write("\t\t\t\t\t}\n");
-					if(aktedge<maxedge){ //es gibt noch mindestens eine weitere Edge - daher mit komma
-						writer.write("\t\t\t\t},\n");
-					}else{
-						writer.write("\t\t\t\t}\n");						
-					}
+					writer.write("\t\t\t\t}\n");						
+					
 				}
-				writer.write("\t\t\t]\n");
-				if (aktvertex< maxverteces){//Es gibt noch mindestens einen weiteren - daher mit komma
-					writer.write("\t\t},\n");
-				}else{
-					writer.write("\t\t}\n");					
-				}
-			}
 				//Vertexende
+				writer.write("\t\t\t]\n");
+				writer.write("\t\t}\n");								
+			}
 				
 				
-				/*
-				GHT data = (GHT) v.getData();
-					writer.write(System.getProperty("line.separator")+
-							"Vertex " + v.id + "#############################################################"+
-							System.getProperty("line.separator"));
-					for(String string : data.getTable().keySet()){
-						if(string.contains("in_")){
-							System.out.println(string + ":"+ data.getTable().get(string));			
-							writer.write(string + ":"+ data.getTable().get(string));
-						}
-					}
-					for(String string : data.getTable().keySet()){
-						if(string.contains("out_")){
-							System.out.println(string + ":"+ data.getTable().get(string));	
-							writer.write(string + ":"+ data.getTable().get(string));		
-						}
-					}
-				}
-		*/
-				 /*
-				for (Edge<DV, DE> e: v.edges.values()) {
-					System.out.println("Edge " + e.id);
-	
-					GHT edgeData = (GHT) e.getData();
-					System.out.println("edge:::" + edgeData.getTable().get("startzeit"));
-				}
-				*/
 			writer.write("\t],\n"
 					+ "\t\"type\":\"Graph\"\n"
 					+ "}");
@@ -265,5 +235,4 @@ public class Graph<DV extends GraphData, DE extends GraphData> {
 		}
 		log.debug("Finished createJsonString() ");		
 	}
-
 }

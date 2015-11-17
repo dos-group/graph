@@ -28,7 +28,12 @@ public class Vertex<DV extends GraphData, DE extends GraphData> extends
 	public void addEdge(Edge<DV, DE> e) {
 		edges.put(new Long(e.id), e);
 	}
-
+	
+	public void removeEdgeOnBothSides(Edge<DV, DE> e){
+		e.getTarget().edges.remove(e.getId());	
+		e.getSource().edges.remove(e.getId());
+	}
+	
 	/**
 	 * Returns outgoing edges.
 	 * 
