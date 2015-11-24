@@ -1,14 +1,11 @@
 package graphr;
 
+import graphr.algorithms.RatingAgentPopulator;
+
 //import java.util.HashMap;
 //
 //import com.json.parsers.JsonParserFactory;
 
-import graphr.algorithms.ConnectionDistanceAgentPopulator;
-import graphr.algorithms.DirectedSpreadingAgentPopulator;
-import graphr.algorithms.RatingWithDirectedUserDepandantSpreadingAgentPopulator;
-import graphr.algorithms.RestrictedUserSpreadingAgentPopulator;
-import graphr.algorithms.UserDepandantDirectedSpreadingAgentPopulator;
 import graphr.data.GHT;
 import graphr.data.PrimData;
 import graphr.graph.Edge;
@@ -19,8 +16,6 @@ import graphr.io.FileSystemHandler;
 import graphr.io.JsonVisitor;
 import graphr.processing.AgentManager;
 import graphr.processing.AgentPopulator;
-
-import java.util.Hashtable;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -164,9 +159,9 @@ public class App {
 		System.out.println("Hello world.");
 
 		String readString = FileSystemHandler.getInstance().read(
-//				"target/jsonMitEinerNextEdge.json");
-				"target/neuestes.json");
-//				"target/angereichertMitRatingInfos.json");
+//				"target/movieLen100k.json");
+//				"target/AlleBelegungenNurBestandenePruefungen.json");
+				"target/BelegungenNurBestandeneMitStartUndEndzeiten.json");
 		return readString;
 	}
 
@@ -185,27 +180,12 @@ public class App {
 		AgentPopulator p;
 		AgentManager m;
 		
-		/*
-		Hashtable<Long, String> erlaubteUser = new Hashtable<>();
-		
-		erlaubteUser.put((long)1, "1");		
-		erlaubteUser.put((long)90, "90");
-		erlaubteUser.put((long)10, "10");		
-		erlaubteUser.put((long)13, "13");
-		erlaubteUser.put((long)16, "16");
-		erlaubteUser.put((long)59, "59");
-		erlaubteUser.put((long)62, "62");
-		erlaubteUser.put((long)87, "87");
-		
-		p = new RestrictedUserSpreadingAgentPopulator(33, 3, erlaubteUser, true);
+		//p = new UserDepandantDirectedSpreadingAgentPopulator(775, 500, true,  "userID");
+		//p = new ModuleAddTimedistanceAgentPopulator(30133, 500, true,  "user");
+		p = new RatingAgentPopulator(30133, 500, true, "user");
 		m = new AgentManager(g, p, Direction.BOTH);
-		m = new AgentManager(g, p, Direction.INCOMING);
-		m.runProcessing(3);
-		*/
-		p = new DirectedSpreadingAgentPopulator(33,2,true);
-		m = new AgentManager(g, p, Direction.BOTH);
-		m = new AgentManager(g, p, Direction.INCOMING);
-		m.runProcessing(3);
+		m.runProcessing(500);
+		
 		
 		
 		//Nur bei gerateten sinnvoll

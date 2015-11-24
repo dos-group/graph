@@ -13,19 +13,31 @@ public class DirectedSpreadingAgentPopulator extends AgentPopulator {
 	protected boolean startEverywhere = false;
 	boolean settingVisibility = false;
 
-	public DirectedSpreadingAgentPopulator(long maxDistance){
-		this.maxDistance = maxDistance;
+	public DirectedSpreadingAgentPopulator(Long maxDistance){
+		if(maxDistance!=null){
+			this.maxDistance = maxDistance;
+		}
 		this.startEverywhere = true;
 	}
-	public DirectedSpreadingAgentPopulator(long queriedVertexId, long maxDistance) {
-		this.queriedVertexId = queriedVertexId;
-		this.maxDistance = maxDistance;
+	public DirectedSpreadingAgentPopulator(Long queriedVertexId, Long maxDistance) {
+		if(queriedVertexId!=null){
+			this.queriedVertexId = queriedVertexId;
+		}
+		if(maxDistance!=null){
+			this.maxDistance = maxDistance;
+		}
 	}
 
-	public DirectedSpreadingAgentPopulator(long queriedVertexId, long maxDistance, boolean settingVisibility) {
-		this.settingVisibility = settingVisibility;
-		this.queriedVertexId = queriedVertexId;
-		this.maxDistance = maxDistance;
+	public DirectedSpreadingAgentPopulator(Long queriedVertexId, Long maxDistance, Boolean settingVisibility) {
+		if(queriedVertexId!=null){
+			this.queriedVertexId = queriedVertexId;
+		}
+		if(maxDistance!=null){
+			this.maxDistance = maxDistance;
+		}
+		if(settingVisibility!=null){
+			this.settingVisibility = settingVisibility;
+		}
 	}
 
 	public ArrayList<Agent> getPopulation(long vertexId) {
