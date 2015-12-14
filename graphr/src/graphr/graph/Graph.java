@@ -122,6 +122,14 @@ public class Graph<DV extends GraphData, DE extends GraphData> {
 		}
 	}
 	
+	public void deletePropertyFromVertices(String propertyname){
+		for (Vertex<DV, DE> v : vertices.values()) {
+			GHT data = (GHT) v.getData();
+			if(data.getTable().get(propertyname)!=null){
+				data.getTable().remove(propertyname);
+			}
+		}
+	}
 
 	public void deleteEdgesWithoutRightProterty(String attribute, PrimData value){
 		
@@ -140,6 +148,17 @@ public class Graph<DV extends GraphData, DE extends GraphData> {
 				v.removeEdgeOnBothSides(e);
 			}			
 			
+		}
+	}
+	
+	public void deletePropertyFromEdges(String propertyname){
+		for (Vertex<DV, DE> v : vertices.values()) {
+			for (Edge<DV, DE> e : v.getEdges()){
+				GHT data = (GHT) e.getData();
+				if(data.getTable().get(propertyname)!=null){
+					data.getTable().remove(propertyname);
+				}
+			}			
 		}
 	}
 	
@@ -179,7 +198,26 @@ public class Graph<DV extends GraphData, DE extends GraphData> {
 					}else{
 						writer.write(",\n");
 					}
-					writer.write("\t\t\t\t\"" + dataKey + "\":\"" + vertexData.getTable().get(dataKey) + "\"");
+
+					if(!vertexData.getTable().get(dataKey).getDataAbbrev().equals("Ht")){
+						//Normalfall
+						writer.write("\t\t\t\t\"" + dataKey + "\":\"" + vertexData.getTable().get(dataKey) + "\"");							
+					}else{
+						//Das Objekt ist wie ein Dataobjekt geschachtelt.
+						writer.write("\t\t\t\t\"" + dataKey + "\":{\n");
+
+						boolean firstVertexDataData = true;
+						Hashtable<String, PrimData> vertexDataData = (Hashtable<String, PrimData>) vertexData.getTable().get(dataKey).o();
+						for(String vertexDataDatakey : vertexDataData.keySet()){
+							if(firstVertexDataData){
+								firstVertexDataData=false;
+							}else{
+								writer.write(",\n");							
+							}
+							writer.write("\t\t\t\t\t\""+vertexDataDatakey + "\":\"" + vertexDataData.get(vertexDataDatakey) + "\"");
+						}
+						writer.write("\t\t\t\t}");
+					}
 				}
 				writer.write("\n");
 				
@@ -208,7 +246,7 @@ public class Graph<DV extends GraphData, DE extends GraphData> {
 						}else{
 							writer.write(",\n");
 						}
-						writer.write("\t\t\t\t\t\t\"" + edgeDataKey + "\":\"" + edgeData.getTable().get(edgeDataKey) + "\"");
+						writer.write("\t\t\t\t\t\t\"" + edgeDataKey + "\":\"" + edgeData.getTable().get(edgeDataKey) + "\"");							
 					}
 					writer.write("\n");
 					

@@ -15,6 +15,7 @@ public class DirectedSpreadingAgent extends Agent{
 	long maxDistance;
 	boolean setVisible;
 	Direction direction = Direction.BOTH;
+	boolean fistStepDone = false;
 	
 
 	
@@ -77,6 +78,9 @@ public class DirectedSpreadingAgent extends Agent{
 					}else{
 						this.direction = Direction.OUTGOING;					
 					}
+				}
+				if(!fistStepDone){
+					fistStepDone=true;
 					modifyAfterFirstStep();
 				}
 								

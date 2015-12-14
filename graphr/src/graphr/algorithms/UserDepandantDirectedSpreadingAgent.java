@@ -69,8 +69,10 @@ public class UserDepandantDirectedSpreadingAgent extends DirectedSpreadingAgent{
 	@Override
 	protected void modifyAfterFirstStep(){
 
-		GHT edgeData = (GHT) usedEdge.getData();
-		userID = edgeData.getTable().get(userIdKey).toString();
+		if(userID==null){
+			GHT edgeData = (GHT) usedEdge.getData();
+			userID = edgeData.getTable().get(userIdKey).toString();
+		}
 		super.modifyAfterFirstStep();
 	}
 	

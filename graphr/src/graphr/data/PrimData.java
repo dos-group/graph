@@ -3,6 +3,8 @@ package graphr.data;
 import graphr.graph.GraphDataVisitor;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Hashtable;
 
 public class PrimData implements JsonReadableWritable {
 	private static final long serialVersionUID = -2410903391512626771L;
@@ -13,7 +15,7 @@ public class PrimData implements JsonReadableWritable {
 
 	public PrimData(Object o) {
 		if ((o instanceof Integer) || (o instanceof Long) || (o instanceof Double) || (o instanceof Boolean)
-				|| (o instanceof String) || (o == null)) {
+				|| (o instanceof String) || (o == null) || (o instanceof Hashtable<?, ?>) || (o instanceof HashSet<?>)) {
 			this.o = o;
 		} else {
 			throw new UnsupportedOperationException("Object type unsupoorted by PrimData. " + o.toString());
@@ -215,6 +217,12 @@ public class PrimData implements JsonReadableWritable {
 
 		if (o instanceof String) {
 			return "S";
+		}
+		if (o instanceof Hashtable<?, ?>){
+			return "Ht";
+		}
+		if(o instanceof HashSet<?>){
+			return "Hs";
 		}
 
 		throw new IllegalArgumentException("Examined object type invalid.");
