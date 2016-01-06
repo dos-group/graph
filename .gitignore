@@ -48,3 +48,15 @@ graphr/external/org/json/XMLTokener.java
 graphr/ouputFile.txt
 
 graphlens/basicvis_live.json
+
+*.pbxproj
+
+*.xcworkspacedata
+
+*.xcuserstate
+
+*.xcbkptlist
+
+*.xcscheme
+
+*.plist
