@@ -80,7 +80,7 @@ public class AgentManager implements VertexProcessingFacade {
 	public long runProcessing(long numberOfBulkSteps) {
 		long currentStep = 0;
 
-		while ((currentStep < numberOfBulkSteps) && 
+		while ((currentStep <= numberOfBulkSteps) && 
 				( !((currentStep > 0) && (schedule.size() == 0)) )) {
 			runBulkStep();
 			currentStep++;
