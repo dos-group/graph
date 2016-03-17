@@ -13,6 +13,10 @@ public class JsonArrayState {
 	public void add(String s) {
 		a.add(s);
 	}
+	
+	public int size() {
+		return a.size();
+	}
 
 	public String getAsJson() {
 		

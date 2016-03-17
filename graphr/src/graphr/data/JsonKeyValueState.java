@@ -17,6 +17,10 @@ public class JsonKeyValueState {
 	public void add(String key, String value) {
 		t.put(key, value);
 	}
+	
+	public String get(String key) {
+		return t.get(key);
+	}
 
 	public String getAsJson() {
 
