@@ -1,7 +1,5 @@
 package graphr.processing;
 
-import java.util.ArrayList;
-
 import graphr.graph.Edge;
 
 
@@ -19,7 +17,7 @@ public abstract class Agent {
 	
 	public abstract Agent getCopy();
 	
-	public abstract void setUsedEdge(Edge e);
+	public abstract void setUsedEdge(Edge<?, ?> e);
 	
 	/**
 	 * Called before simulation starts to do some initialization. Here comes user's code.

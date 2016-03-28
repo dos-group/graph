@@ -122,7 +122,7 @@ public class AgentManager implements VertexProcessingFacade {
 		}
 	}
 
-	private void addAgent(final Long nextHopId, Edge e) {
+	private void addAgent(final Long nextHopId, Edge<?, ?> e) {
 		ArrayList<Agent> agentsList = newSchedule.get(nextHopId);
 		if (agentsList == null) {
 			agentsList = new ArrayList<Agent>();
