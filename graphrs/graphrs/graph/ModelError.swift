@@ -9,7 +9,6 @@
 import Foundation
 
 enum ModelError: ErrorType {
-    
     case EdgeDirectionNotProvided
-    
+    case EdgeDirectionUnspecified
 }

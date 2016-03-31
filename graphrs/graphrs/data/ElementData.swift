@@ -8,10 +8,7 @@
 
 import Foundation
 
-class ElementData {
-    
-    func updateData(key: String, value: PrimitiveData) {
-        
-    }
-    
+protocol ElementData {
+    func updateData(key: String, value: PrimitiveData)
+    func toString() -> String
 }
