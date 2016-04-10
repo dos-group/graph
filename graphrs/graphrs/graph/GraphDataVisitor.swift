@@ -7,5 +7,5 @@
 //
 
 protocol GraphDataVisitor {
-    func visit(data: GraphData) -> AnyObject
+    func visit(data: GraphData) -> String?
 }

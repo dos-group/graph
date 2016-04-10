@@ -6,10 +6,10 @@
 //  Copyright © 2015 CITBDA. All rights reserved.
 //
 
-class Vertex: GraphElement {
+public class Vertex: GraphElement {
     private var edges = [UInt64: Edge]()
     
-    func addEdge(e: Edge) {
+    public func addEdge(e: Edge) {
         edges[e.id] = e
     }
     
@@ -23,7 +23,7 @@ class Vertex: GraphElement {
      *
      * @return
      */
-    func getEdges() -> [Edge]? {
+    public func getEdges() -> [Edge]? {
         return getEdges(Direction.Forward)
     }
     
@@ -33,7 +33,7 @@ class Vertex: GraphElement {
      * @param direction
      * @return
      */
-    func getEdges(direction: Direction) -> [Edge]? {
+    public func getEdges(direction: Direction) -> [Edge]? {
         let edgeCollection = Array(edges.values)
         
         if (direction == Direction.Undefined) {
@@ -61,11 +61,11 @@ class Vertex: GraphElement {
         return nil
     }
     
-    func getEdge(id: UInt64) -> Edge {
-        return edges[id]!
+    public func getEdge(id: UInt64) -> Edge? {
+        return edges[id]
     }
     
-    func toString() -> String {
+    public func toString() -> String {
         return "Vertex (id=\(id))"
     }
     
@@ -77,7 +77,7 @@ class Vertex: GraphElement {
     }
 }
 
-func ==(lhs: Vertex, rhs: Vertex) -> Bool {
+public func ==(lhs: Vertex, rhs: Vertex) -> Bool {
     if (lhs.id == rhs.id && (lhs.data as! DictionaryElementData) == (rhs.data as! DictionaryElementData)) {
         return true
     }
@@ -85,6 +85,6 @@ func ==(lhs: Vertex, rhs: Vertex) -> Bool {
     return false
 }
 
-func !=(lhs: Vertex, rhs: Vertex) -> Bool {
+public func !=(lhs: Vertex, rhs: Vertex) -> Bool {
     return !(lhs == rhs)
 }

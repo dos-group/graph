@@ -6,7 +6,7 @@
 //  Copyright © 2015 CITBDA. All rights reserved.
 //
 
-class Edge: GraphElement, Equatable {
+public class Edge: GraphElement, Equatable {
     var sideA: Vertex
     var sideB: Vertex
     var direction: Direction
@@ -29,16 +29,28 @@ class Edge: GraphElement, Equatable {
         }
     }
     
+    public func getSource() -> Vertex {
+        return sideA
+    }
+    
+    public func getTarget() -> Vertex {
+        return sideB
+    }
+    
+    public func getDirection() -> Direction {
+        return direction
+    }
+    
     override func accept(visitor: GraphElementVisitor) {
         visitor.visit(self)
     }
     
-    func toString() -> String {
+    public func toString() -> String {
         return "Edge (id=\(id), data=\(data.toString()), src=\(sideA.id), target=\(sideB.id))"
     }
 }
 
-func ==(lhs: Edge, rhs: Edge) -> Bool {
+public func ==(lhs: Edge, rhs: Edge) -> Bool {
     if (lhs.sideA == rhs.sideA &&
         lhs.sideB == rhs.sideB &&
         lhs.direction == rhs.direction) {
@@ -46,4 +58,8 @@ func ==(lhs: Edge, rhs: Edge) -> Bool {
     }
     
     return false
+}
+
+public func !=(lhs: Edge, rhs: Edge) -> Bool {
+    return !(lhs == rhs)
 }

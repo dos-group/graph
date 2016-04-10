@@ -7,11 +7,11 @@
 //
 
 protocol JsonReadable: GraphData {
-    func getAsJson() -> String
+    func setFromJson(json: String)
 }
 
 protocol JsonWritable: GraphData {
-    func setFromJson()
+    func getAsJson() -> String
 }
 
 protocol JsonReadableWritable: JsonReadable, JsonWritable {}

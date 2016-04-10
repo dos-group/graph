@@ -12,5 +12,5 @@ protocol GraphData {
      * @param visitor Reference to a particular visitor
      * @return Object that is serializable
      */
-    func accept(visitor: GraphDataVisitor) -> AnyObject
+    func accept(visitor: GraphDataVisitor) -> String
 }

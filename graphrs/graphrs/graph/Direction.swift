@@ -6,7 +6,7 @@
 //  Copyright © 2015 CITBDA. All rights reserved.
 //
 
-enum Direction {
+public enum Direction {
     
     case Forward
     case Backward
