@@ -6,21 +6,27 @@
 //  Copyright © 2015 CITBDA. All rights reserved.
 //
 
-enum DictionaryElementDataConversionError: ErrorType {
+public enum DictionaryElementDataConversionError: ErrorType {
     case InvalidSourceStringFormat
     case InvalidNumberOfElementsInString
     case PossibleInvalidPrimitiveDataType
     case InvalidPrimitiveDataType
 }
 
-class DictionaryElementData: ElementData {
+public class DictionaryElementData: ElementData, GraphData {
     var d = [String: PrimitiveData]()
     
-    func updateData(key: String, value: PrimitiveData) {
+    init() {}
+    
+    public func getData(key: String) -> PrimitiveData? {
+        return d[key]
+    }
+    
+    public func updateData(key: String, value: PrimitiveData) {
         d[key] = value
     }
     
-    func removeData(key: String) {
+    public func removeData(key: String) {
         d[key] = nil
     }
     
@@ -54,16 +60,16 @@ class DictionaryElementData: ElementData {
             
             switch (strings[i + 1]) {
                 case "i":
-                    d[strings[i]] = PrimitiveData.I(Int(strings[i + 2])!)
+                    d[strings[i]] = PrimitiveData(i: Int(strings[i + 2])!)
                     break
                 case "d":
-                    d[strings[i]] = PrimitiveData.D(Double(strings[i + 2])!)
+                    d[strings[i]] = PrimitiveData(d: Double(strings[i + 2])!)
                     break
                 case "s":
-                    d[strings[i]] = PrimitiveData.S(strings[i + 2])
+                    d[strings[i]] = PrimitiveData(s: strings[i + 2])
                     break
                 case "b":
-                    d[strings[i]] = PrimitiveData.B(strings[i + 2].toBool()!)
+                    d[strings[i]] = PrimitiveData(b: strings[i + 2].toBool()!)
                     break
                 default:
                     throw DictionaryElementDataConversionError.InvalidPrimitiveDataType
@@ -91,11 +97,19 @@ class DictionaryElementData: ElementData {
     
     //-- Generic Converters
     func primitiveDataToString(key: String, d: PrimitiveData) -> String {
-        return "(\(key),\(d.getAbbrev()),\(d))"
+        do {
+            return "(\(key),\(try PrimitiveData.getDataAbbrev(d)),\(d.toString()))"
+        } catch {
+            return ""
+        }
+    }
+    
+    func accept(visitor: GraphDataVisitor) -> String {
+        return visitor.visit(self)!
     }
 }
 
-func ==(lhs: DictionaryElementData, rhs: DictionaryElementData) -> Bool {
+public func ==(lhs: DictionaryElementData, rhs: DictionaryElementData) -> Bool {
     guard lhs.d.count == rhs.d.count else {
         return false
     }
@@ -109,4 +123,8 @@ func ==(lhs: DictionaryElementData, rhs: DictionaryElementData) -> Bool {
     }
     
     return true
+}
+
+public func !=(lhs: DictionaryElementData, rhs: DictionaryElementData) -> Bool {
+    return !(lhs == rhs)
 }

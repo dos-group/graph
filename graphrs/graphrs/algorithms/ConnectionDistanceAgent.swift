@@ -33,11 +33,13 @@ class ConnectionDistanceAgent : Agent {
         if ((sourceId == v.getId()) && (v.getValue("distance") == nil)) {
             modifyDistanceAndBroadcast(0);
         } else {
-            let vDistance = (v.getValue("distance")!.toInt())
-            
-            if (vDistance > self.distance) {
-                modifyDistanceAndBroadcast(self.distance)
-            }
+            do {
+                let vDistance = try (v.getValue("distance")!.i())
+                
+                if (vDistance > self.distance) {
+                    modifyDistanceAndBroadcast(self.distance)
+                }
+            } catch {}
         }
     }
     
@@ -47,15 +49,19 @@ class ConnectionDistanceAgent : Agent {
     // -- Elements of algorithm
     
     func modifyDistanceAndBroadcast(distance: Int) {
-        v.setValue("distance", value: PrimitiveData.I(distance))
-        v.setValue("vislabel", value: PrimitiveData.S(getVisLabel()))
+        v.setValue("distance", value: PrimitiveData(i: distance))
+        v.setValue("vislabel", value: PrimitiveData(s: getVisLabel()))
         self.distance += 1
         v.broadcast()
     }
     
     func getVisLabel() -> String {
-        let d = v.getValue("distance")!.toInt()
+        var d = 0
         var cs = ""
+        
+        do {
+            d = try v.getValue("distance")!.i()
+        } catch {}
         
         switch (d) {
             case 0:

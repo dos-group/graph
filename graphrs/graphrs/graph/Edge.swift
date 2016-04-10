@@ -11,7 +11,7 @@ class Edge: GraphElement, Equatable {
     var sideB: Vertex
     var direction: Direction
     
-    init(sideA: Vertex, sideB: Vertex, direction: Direction, data: DictionaryElementData? = DictionaryElementData()) throws {
+    init(sideA: Vertex, sideB: Vertex, direction: Direction, data: DictionaryElementData?) throws {
         self.direction = direction
         
         if (direction == .Bi && sideA.id > sideB.id) {
@@ -22,7 +22,7 @@ class Edge: GraphElement, Equatable {
             self.sideB = sideB
         }
         
-        super.init(data: data!)
+        super.init(data: data ?? DictionaryElementData())
         
         if direction == .Undefined {
             throw ModelError.EdgeDirectionNotProvided

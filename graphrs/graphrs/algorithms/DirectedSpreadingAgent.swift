@@ -112,19 +112,19 @@ class DirectedSpreadingAgent: Agent {
     func modifyEdge() {
         if (setVisible) {
             let edgeData = usedEdge?.data as! DictionaryElementData
-            edgeData.updateData("visible", value: PrimitiveData.B(true))
+            edgeData.updateData("visible", value: PrimitiveData(b: true))
         }
     }
     
     func modifyVertex() {
         if (setVisible) {
-            v.setValue("visible", value: PrimitiveData.B(true))
+            v.setValue("visible", value: PrimitiveData(b: true))
         }
     }
     
     func modifyInSourceVertex(){
         if (setVisible) {
-            v.setValue("visible", value: PrimitiveData.B(true))
+            v.setValue("visible", value: PrimitiveData(b: true))
         }
     }
     
