@@ -36,7 +36,7 @@ class Vertex: GraphElement {
     func getEdges(direction: Direction) -> [Edge]? {
         let edgeCollection = Array(edges.values)
         
-        if (direction == Direction.Bi) {
+        if (direction == Direction.Undefined) {
             return edgeCollection
         }
         

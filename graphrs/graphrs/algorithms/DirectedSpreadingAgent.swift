@@ -14,7 +14,7 @@ class DirectedSpreadingAgent: Agent {
     var distance: Int = 0
     var maxDistance: Int = 0
     var setVisible: Bool = false
-    var direction = Direction.Bi
+    var direction = Direction.Undefined
     var fistStepDone: Bool = false
     
     init(sourceId: UInt64, maxDistance: Int, setVisible: Bool, vertexProcessingFacade: VertexProcessingFacade) {
@@ -72,7 +72,7 @@ class DirectedSpreadingAgent: Agent {
                 //Hier beginnt die wirkliche Bearbeitung
                 modifyEdge()
                 
-                if (self.direction == Direction.Bi) {
+                if (self.direction == Direction.Undefined) {
                     if (usedEdge!.sideB.id == sourceId) {
                         self.direction = Direction.Backward
                     } else {
