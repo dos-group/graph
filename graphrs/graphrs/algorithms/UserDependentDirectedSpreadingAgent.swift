@@ -6,8 +6,6 @@
 //  Copyright © 2016 CITBDA. All rights reserved.
 //
 
-import Foundation
-
 class UserDependentDirectedSpreadingAgent: DirectedSpreadingAgent {
     static var userIdKey: String = "userID"
     static var allreadyHandled: Set<String> = Set<String>()

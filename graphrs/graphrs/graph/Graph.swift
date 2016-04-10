@@ -6,8 +6,6 @@
 //  Copyright © 2015 CITBDA. All rights reserved.
 //
 
-import Foundation
-
 class Graph {
     
     private var model = GraphModel()

@@ -6,8 +6,6 @@
 //  Copyright © 2016 CITBDA. All rights reserved.
 //
 
-import Foundation
-
 class ConnectionDistanceAgentPopulator: AgentPopulator {
     var queriedVertexId: UInt64
     var maxDistance: Int

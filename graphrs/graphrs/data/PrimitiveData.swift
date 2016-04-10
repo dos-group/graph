@@ -6,7 +6,6 @@
 //  Copyright © 2015 CITBDA. All rights reserved.
 //
 
-import Foundation
 
 enum PrimitiveData: JsonReadable {
     

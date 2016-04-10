@@ -6,8 +6,6 @@
 //  Copyright © 2016 CITBDA. All rights reserved.
 //
 
-import Foundation
-
 class RatingAgentPopulator: UserDependentDirectedSpreadingAgentPopulator {
     override init(queriedVertexId: UInt64, maxDistance: Int, settingVisibility: Bool, userIDKey: String) {
         super.init(queriedVertexId: queriedVertexId, maxDistance: maxDistance, settingVisibility: settingVisibility, userIDKey: userIDKey)

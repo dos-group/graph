@@ -6,8 +6,6 @@
 //  Copyright © 2015 CITBDA. All rights reserved.
 //
 
-import Foundation
-
 protocol ElementData {
     func updateData(key: String, value: PrimitiveData)
     func toString() -> String

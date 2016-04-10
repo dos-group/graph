@@ -6,8 +6,6 @@
 //  Copyright © 2016 CITBDA. All rights reserved.
 //
 
-import Foundation
-
 class ConnectionDistanceAgent : Agent {
     var v: VertexProcessingFacade
     var sourceId: UInt64

@@ -6,8 +6,6 @@
 //  Copyright © 2016 CITBDA. All rights reserved.
 //
 
-import Foundation
-
 protocol AgentPopulator {
     func getPopulation(vertexId: UInt64, vertexProcessingFacade: VertexProcessingFacade) -> [Agent]?
 }

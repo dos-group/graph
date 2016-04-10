@@ -6,8 +6,6 @@
 //  Copyright © 2016 CITBDA. All rights reserved.
 //
 
-import Foundation
-
 protocol VertexProcessingFacade {
     //-- Getting and setting local values
     func getValue(key: String) -> PrimitiveData?

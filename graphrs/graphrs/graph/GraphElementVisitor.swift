@@ -6,8 +6,6 @@
 //  Copyright © 2016 CITBDA. All rights reserved.
 //
 
-import Foundation
-
 /**
  * Attempt to create a visitor pattern for graph serialization.
  * <br>
@@ -19,7 +17,6 @@ protocol GraphElementVisitor {
      * Called before graph, at the beginning
      */
     func before()
-    
     
     func visit(graph: Graph)
     func visit(edge: Edge)

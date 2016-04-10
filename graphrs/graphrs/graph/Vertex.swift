@@ -6,10 +6,7 @@
 //  Copyright © 2015 CITBDA. All rights reserved.
 //
 
-import Foundation
-
 class Vertex: GraphElement {
-    
     private var edges = [UInt64: Edge]()
     
     func addEdge(e: Edge) {

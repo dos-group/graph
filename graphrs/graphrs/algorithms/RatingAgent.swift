@@ -6,8 +6,6 @@
 //  Copyright © 2016 CITBDA. All rights reserved.
 //
 
-import Foundation
-
 class RatingAgent: UserDependentDirectedSpreadingAgent {
     var exampleAbsoluteTimedistance: Int = 0
     var timeOfSourcevertexVisiting: Int = 0

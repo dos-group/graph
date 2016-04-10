@@ -6,8 +6,6 @@
 //  Copyright © 2016 CITBDA. All rights reserved.
 //
 
-import Foundation
-
 extension String {
     func toBool() -> Bool? {
         let trueValues = ["true", "yes", "t", "y", "1"]

@@ -6,8 +6,6 @@
 //  Copyright © 2016 CITBDA. All rights reserved.
 //
 
-import Foundation
-
 /**
  * Parent class for all graph's agents. User is expected to extend this class and implemented given methods.
  */

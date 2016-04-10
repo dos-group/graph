@@ -6,8 +6,6 @@
 //  Copyright © 2016 CITBDA. All rights reserved.
 //
 
-import Foundation
-
 protocol GraphDataVisitor {
     func visit(data: GraphData) -> AnyObject
 }

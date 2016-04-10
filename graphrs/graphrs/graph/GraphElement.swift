@@ -6,8 +6,6 @@
 //  Copyright © 2015 CITBDA. All rights reserved.
 //
 
-import Foundation
-
 protocol GraphElementVisitorAcceptor {
     func accept(visitor: GraphElementVisitor)
 }

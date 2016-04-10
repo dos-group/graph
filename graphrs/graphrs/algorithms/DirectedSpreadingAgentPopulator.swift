@@ -6,8 +6,6 @@
 //  Copyright © 2016 CITBDA. All rights reserved.
 //
 
-import Foundation
-
 class DirectedSpreadingAgentPopulator: AgentPopulator {
     var queriedVertexId: UInt64 = 0
     var maxDistance: Int = 0

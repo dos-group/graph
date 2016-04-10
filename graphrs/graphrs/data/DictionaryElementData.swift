@@ -6,8 +6,6 @@
 //  Copyright © 2015 CITBDA. All rights reserved.
 //
 
-import Foundation
-
 enum DictionaryElementDataConversionError: ErrorType {
     case InvalidSourceStringFormat
     case InvalidNumberOfElementsInString

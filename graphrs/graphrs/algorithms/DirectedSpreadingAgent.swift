@@ -6,8 +6,6 @@
 //  Copyright © 2016 CITBDA. All rights reserved.
 //
 
-import Foundation
-
 class DirectedSpreadingAgent: Agent {
     var v: VertexProcessingFacade
     var usedEdge: Edge? = nil

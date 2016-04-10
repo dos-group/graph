@@ -6,8 +6,6 @@
 //  Copyright © 2016 CITBDA. All rights reserved.
 //
 
-import Foundation
-
 class UserDependentDirectedSpreadingAgentPopulator: DirectedSpreadingAgentPopulator {
     init(maxDistance: Int, userIDKey: String) {
         super.init(maxDistance: maxDistance)

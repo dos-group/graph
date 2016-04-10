@@ -6,8 +6,6 @@
 //  Copyright © 2016 CITBDA. All rights reserved.
 //
 
-import Foundation
-
 protocol GraphData {
     /**
      * Part of the visitor design pattern -all graph data must implement accept method
