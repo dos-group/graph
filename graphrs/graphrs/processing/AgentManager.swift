@@ -35,7 +35,7 @@ class AgentManager: VertexProcessingFacade {
         // Getting population for initial schedule
         for v in graph.getVertices() {
             let al = pop.getPopulation(v.id, vertexProcessingFacade: self)
-            if (al!.count > 0) {
+            if (al != nil && al!.count > 0) {
                 schedule[v.id] = al
             }
         }
@@ -83,12 +83,12 @@ class AgentManager: VertexProcessingFacade {
     // -- implements ProcessingFacade
     
     func getValue(key: String) -> PrimitiveData? {
-        let data: DictionaryElementData = graph.getVertex(localVertexId).data as! DictionaryElementData
+        let data: DictionaryElementData = graph.getVertex(localVertexId)!.data as! DictionaryElementData
         return data.d[key]
     }
     
     func setValue(key: String, value: PrimitiveData) {
-        let data: DictionaryElementData = graph.getVertex(localVertexId).data as! DictionaryElementData
+        let data: DictionaryElementData = graph.getVertex(localVertexId)!.data as! DictionaryElementData
         data.d[key] = value
     }
     
@@ -99,14 +99,14 @@ class AgentManager: VertexProcessingFacade {
     func broadcast() {
         let vertex = graph.getVertex(localVertexId)
         
-        if (direction == Direction.Forward || direction == Direction.Bi) {
-            for e in vertex.getEdges(Direction.Forward)! {
+        if (direction == Direction.Forward || direction == Direction.Undefined) {
+            for e in vertex!.getEdges(Direction.Forward)! {
                 addAgent(e.sideB.id, e: e)
             }
         }
         
-        if (direction == Direction.Backward || direction == Direction.Bi) {
-            for e in vertex.getEdges(Direction.Backward)! {
+        if (direction == Direction.Backward || direction == Direction.Undefined) {
+            for e in vertex!.getEdges(Direction.Backward)! {
                 addAgent(e.sideA.id, e: e)
             }
         }
