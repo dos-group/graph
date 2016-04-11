@@ -30,5 +30,9 @@ public class GraphElement: GraphElementVisitorAcceptor {
         return data as! DictionaryElementData
     }
     
+    public func getDataDict() -> [String : PrimitiveData] {
+        return (data as! DictionaryElementData).d
+    }
+    
     func accept(visitor: GraphElementVisitor) {}
 }
