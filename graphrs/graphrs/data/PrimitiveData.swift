@@ -154,8 +154,8 @@ public class PrimitiveData: JsonReadableWritable {
     public func s() throws -> String {
         try checkForUninitializedObject()
         
-        if let v = object! as? String {
-            return v
+        if let v: String? = String(object!) {
+            return v!
         } else {
             throw PrimitiveDataError.InvalidDataTypeConversionRequest
         }
@@ -166,7 +166,7 @@ public class PrimitiveData: JsonReadableWritable {
         return object!
     }
     
-    func toString() -> String {
+    public func toString() -> String {
         do {
             return try self.s()
         } catch {
