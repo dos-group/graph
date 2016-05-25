@@ -190,10 +190,6 @@ public class JsonVisitor: GraphElementVisitor {
                         }
                     }
                     
-                    if (edgeData.d[JsonVisitor.EDGE_SOURCE_KEY] == nil || edgeData.d[JsonVisitor.EDGE_TARGET_KEY] == nil) {
-                        v.1.removeEdgeOnBothSides(edge)
-                    }
-                    
                     edgeData.removeData(JsonVisitor.EDGE_SOURCE_KEY)
                     edgeData.removeData(JsonVisitor.EDGE_TARGET_KEY)
                 }
