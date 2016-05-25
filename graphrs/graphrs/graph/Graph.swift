@@ -89,8 +89,8 @@ public class Graph: GraphElementVisitorAcceptor {
         result.appendContentsOf(getEdges())
         result.appendContentsOf(getVertexEdges())
         
-        for i in 0 ..< result.count {
-            for var j in i ..< result.count {
+        for i in 0 ..< result.count - 1 {
+            for var j in i + 1 ..< result.count {
                 if result[i] == result[j] {
                     result.removeAtIndex(j)
                     j -= 1
