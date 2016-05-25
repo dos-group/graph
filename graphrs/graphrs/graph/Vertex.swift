@@ -65,6 +65,10 @@ public class Vertex: GraphElement, Hashable {
         return edges[id]
     }
     
+    public func getEdgeCount() -> Int {
+        return edges.count
+    }
+    
     public func toString() -> String {
         return "Vertex (id=\(id))"
     }
