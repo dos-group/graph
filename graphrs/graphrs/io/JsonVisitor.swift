@@ -245,7 +245,7 @@ public class JsonVisitor: GraphElementVisitor {
         let edge: Edge = try Edge(sideA: source, sideB: source, direction: .Forward, data: dictData)
         edge.id = eId
         
-        (edge.data as! DictionaryElementData).updateData(JsonVisitor.EDGE_SOURCE_KEY, value: PrimitiveData(l: eId))
+        (edge.data as! DictionaryElementData).updateData(JsonVisitor.EDGE_SOURCE_KEY, value: PrimitiveData(l: source.id))
         (edge.data as! DictionaryElementData).updateData(JsonVisitor.EDGE_TARGET_KEY, value: PrimitiveData(l: targetId))
         
         return edge
