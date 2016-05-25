@@ -6,7 +6,7 @@
 //  Copyright © 2015 CITBDA. All rights reserved.
 //
 
-public class Vertex: GraphElement {
+public class Vertex: GraphElement, Hashable {
     private var edges = [UInt64: Edge]()
     
     public func addEdge(e: Edge) {
@@ -74,6 +74,10 @@ public class Vertex: GraphElement {
      */
     override func accept(visitor: GraphElementVisitor) {
         visitor.visit(self)
+    }
+    
+    public var hashValue: Int {
+        return self.toString().hashValue
     }
 }
 
