@@ -14,31 +14,35 @@ public enum PrimitiveDataError: ErrorType {
 
 public class PrimitiveData: JsonReadableWritable {
     var object: AnyObject?
+    var type: String?
     
     init(o: AnyObject) throws {
-        let type = try PrimitiveData.getDataAbbrev(o)
-        
-        switch type {
-        case "b":
-            let b: Bool = o as! Bool
-            set(b)
+        switch o {
+        case is Int:
+            object = o
+            type = "i"
             break
-        case "i":
-            let i: Int = o as! Int
-            set(i)
+            
+        case is Double:
+            object = o
+            type = "d"
             break
-        case "l":
-            let l: UInt64 = o as! UInt64
-            set(l)
+            
+        case is UInt64:
+            object = o
+            type = "l"
             break
-        case "d":
-            let d: Double = o as! Double
-            set(d)
+            
+        case is String:
+            object = o
+            type = "s"
             break
-        case "s":
-            let s: String = o as! String
-            set(s)
+            
+        case is Bool:
+            object = o
+            type = "b"
             break
+            
         default:
             throw PrimitiveDataError.UnsupportedPrimitiveDataType
         }
@@ -69,45 +73,51 @@ public class PrimitiveData: JsonReadableWritable {
     }
     
     func set(i: Int) {
+        type = "i"
         object = i
     }
     
     func set(l: UInt64) {
+        type = "l"
         object = NSNumber(unsignedLongLong: l)
     }
     
     func set(d: Double) {
+        type = "d"
         object = d
     }
     
     func set(b: Bool) {
+        type = "b"
         object = b
     }
     
     func set(s: String) {
+        type = "s"
         object = s
     }
     
     func set(o: AnyObject) {
+        type = "o"
         object = o
     }
     
     func setFromSomeString(abbrev: String, s: String) {
         switch (abbrev) {
-            case "i":
-                set(Int(s)!)
-                break
-            case "l":
-                set(UInt64(s)!)
-                break
-            case "d":
-                set(Double(s)!)
-                break
-            case "b":
-                set(s.toBool()!)
-                break
-            default:
-                set(s)
+        case "i":
+            set(Int(s)!)
+            break
+        case "l":
+            set(UInt64(s)!)
+            break
+        case "d":
+            set(Double(s)!)
+            break
+        case "b":
+            set(s.toBool()!)
+            break
+        default:
+            set(s)
         }
     }
     
@@ -168,7 +178,7 @@ public class PrimitiveData: JsonReadableWritable {
     
     public func toString() -> String {
         do {
-            return try self.s()
+            return "[\(type!), \(try self.s())]"
         } catch {
             return ""
         }
@@ -180,18 +190,12 @@ public class PrimitiveData: JsonReadableWritable {
         }
     }
     
-    public func getDataAbbrev(o: AnyObject) throws -> String {
-        return try PrimitiveData.getDataAbbrev(self)
+    public func getDataAbbrev() -> String {
+        return type!
     }
     
-    public class func getDataAbbrev(o: AnyObject) throws -> String {
-        if (o is Int) { return "i" }
-        if (o is UInt64) { return "l" }
-        if (o is Double) { return "d" }
-        if (o is Bool) { return "b" }
-        if (o is String) { return "s" }
-        
-        throw PrimitiveDataError.UnsupportedPrimitiveDataType
+    public class func getDataAbbrev(primitiveData: PrimitiveData) -> String {
+        return primitiveData.getDataAbbrev()
     }
     
     func accept(visitor: GraphDataVisitor) -> String {
@@ -207,18 +211,25 @@ public class PrimitiveData: JsonReadableWritable {
 }
 
 public func ==(lhs: PrimitiveData, rhs: PrimitiveData) -> Bool {
-    do {
-        let lhsType: String = try PrimitiveData.getDataAbbrev(lhs)
-        let rhsType: String = try PrimitiveData.getDataAbbrev(lhs)
-        
-        guard lhsType == rhsType && lhs == rhs else {
+    let lhsType: String = PrimitiveData.getDataAbbrev(lhs)
+    let rhsType: String = PrimitiveData.getDataAbbrev(rhs)
+    
+    if lhsType == rhsType {
+        do {
+            switch lhsType {
+                case "b": return try lhs.b() == rhs.b()
+                case "i": return try lhs.i() == rhs.i()
+                case "l": return try lhs.l() == rhs.l()
+                case "d": return try lhs.d() == rhs.d()
+                case "s": return try lhs.s() == rhs.s()
+                default: return false
+            }
+        } catch {
             return false
         }
-        
-        return true
-    } catch {
-        return false
     }
+    
+    return false
 }
 
 public func !=(lhs: PrimitiveData, rhs: PrimitiveData) -> Bool {
