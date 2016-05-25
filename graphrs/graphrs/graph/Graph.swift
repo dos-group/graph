@@ -196,7 +196,7 @@ public class Graph: GraphElementVisitorAcceptor {
         var result = [UInt64 : Edge]()
         
         for v in vertices {
-            if let edges = v.1.getEdges() {
+            if let edges = v.1.getEdges(.Undefined) {
                 for e in edges {
                     if result[e.id] == nil {
                         result[e.id] = e
