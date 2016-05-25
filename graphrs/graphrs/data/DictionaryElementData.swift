@@ -97,11 +97,7 @@ public class DictionaryElementData: ElementData, GraphData {
     
     //-- Generic Converters
     func primitiveDataToString(key: String, d: PrimitiveData) -> String {
-        do {
-            return "(\(key),\(try PrimitiveData.getDataAbbrev(d)),\(d.toString()))"
-        } catch {
-            return ""
-        }
+        return "(\(key),\(PrimitiveData.getDataAbbrev(d)),\(d.toString()))"
     }
     
     func accept(visitor: GraphDataVisitor) -> String {
