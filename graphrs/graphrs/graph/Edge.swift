@@ -6,7 +6,7 @@
 //  Copyright © 2015 CITBDA. All rights reserved.
 //
 
-public class Edge: GraphElement, Equatable {
+public class Edge: GraphElement, Equatable, Hashable {
     var sideA: Vertex
     var sideB: Vertex
     var direction: Direction
@@ -47,6 +47,10 @@ public class Edge: GraphElement, Equatable {
     
     public func toString() -> String {
         return "Edge (id=\(id), data=\(data.toString()), src=\(sideA.id), target=\(sideB.id))"
+    }
+    
+    public var hashValue: Int {
+        return self.toString().hashValue
     }
 }
 
