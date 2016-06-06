@@ -175,7 +175,7 @@ public class Graph: GraphElementVisitorAcceptor {
         var result = [Edge]()
         
         for v in vertices {
-            if let edges = v.1.getEdges() {
+            if let edges = v.1.getEdges(.Undefined) {
                 for e in edges {
                     if !result.contains(e) {
                         result.append(e)
