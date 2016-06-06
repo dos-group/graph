@@ -78,27 +78,19 @@ public class Vertex: GraphElement, Hashable {
     }
     
     public func numberOutgoingEdges() -> Int {
-        var count = 0
-        
-        for edge in edges {
-            if edge.1.getSource() == self {
-                count += 1
-            }
-        }
-        
-        return count
+        return getOutgoingEdges().count
     }
     
     public func numberIncomingEdges() -> Int {
-        var count = 0
-        
-        for edge in edges {
-            if edge.1.getTarget() == self {
-                count += 1
-            }
-        }
-        
-        return count
+        return getIncomingEdges().count
+    }
+    
+    public func getOutgoingEdges() -> [Edge] {
+        return getEdges(.Forward) ?? [Edge]()
+    }
+    
+    public func getIncomingEdges() -> [Edge] {
+        return getEdges(.Backward) ?? [Edge]()
     }
     
     public func toString() -> String {
