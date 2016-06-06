@@ -69,6 +69,38 @@ public class Vertex: GraphElement, Hashable {
         return edges.count
     }
     
+    public func hasOutgoingEdge() -> Bool {
+        return numberOutgoingEdges() > 0
+    }
+    
+    public func hasIncommingEdge() -> Bool {
+        return numberIncomingEdges() > 0
+    }
+    
+    public func numberOutgoingEdges() -> Int {
+        var count = 0
+        
+        for edge in edges {
+            if edge.1.getSource() == self {
+                count += 1
+            }
+        }
+        
+        return count
+    }
+    
+    public func numberIncomingEdges() -> Int {
+        var count = 0
+        
+        for edge in edges {
+            if edge.1.getTarget() == self {
+                count += 1
+            }
+        }
+        
+        return count
+    }
+    
     public func toString() -> String {
         return "Vertex (id=\(id))"
     }
