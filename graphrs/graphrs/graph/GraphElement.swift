@@ -10,7 +10,7 @@ protocol GraphElementVisitorAcceptor {
     func accept(visitor: GraphElementVisitor)
 }
 
-public class GraphElement: GraphElementVisitorAcceptor {
+public class GraphElement: GraphElementVisitorAcceptor, Equatable {
     static var nextIdToIssue: UInt64 = 0
     
     var id: UInt64
@@ -35,4 +35,12 @@ public class GraphElement: GraphElementVisitorAcceptor {
     }
     
     func accept(visitor: GraphElementVisitor) {}
+}
+
+public func ==(lhs: GraphElement, rhs: GraphElement) -> Bool {
+    return lhs.id == rhs.id
+}
+
+public func !=(lhs: GraphElement, rhs: GraphElement) -> Bool {
+    return !(lhs == rhs)
 }

@@ -6,7 +6,7 @@
 //  Copyright © 2015 CITBDA. All rights reserved.
 //
 
-public class Edge: GraphElement, Equatable, Hashable {
+public class Edge: GraphElement, Hashable {
     var sideA: Vertex
     var sideB: Vertex
     var direction: Direction
