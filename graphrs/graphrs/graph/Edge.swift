@@ -30,10 +30,18 @@ public class Edge: GraphElement, Equatable, Hashable {
     }
     
     public func getSource() -> Vertex {
+        if direction == .Backward {
+            return sideB
+        }
+        
         return sideA
     }
     
     public func getTarget() -> Vertex {
+        if direction == .Backward {
+            return sideA
+        }
+        
         return sideB
     }
     
