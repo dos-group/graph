@@ -40,21 +40,41 @@ public class Vertex: GraphElement, Hashable {
             return edgeCollection
         }
         
+        var incommingEdges = [Edge]()
         var outgoingEdges = [Edge]()
+        var bidirectEdges = [Edge]()
         
         for e in edgeCollection {
-            if (e.sideA.id == self.id) {
-                outgoingEdges.append(e)
+            switch e.direction {
+                case .Forward:
+                    outgoingEdges.append(e)
+                    break
+                
+                case .Backward:
+                    incommingEdges.append(e)
+                    break
+                    
+                case .Bi:
+                    bidirectEdges.append(e)
+                    break
+                    
+                default:
+                    break
             }
         }
         
-        if (direction == Direction.Forward) {
-            return outgoingEdges
-        } else if (direction == Direction.Backward) {
-            var incommingEdges = edgeCollection
-            incommingEdges.removeObjectsInArray(outgoingEdges)
-            
-            return incommingEdges
+        switch direction {
+            case .Forward:
+                return outgoingEdges
+                
+            case .Backward:
+                return incommingEdges
+                
+            case .Bi:
+                return bidirectEdges
+                
+            default:
+                break
         }
         
         print("Unknown Direction \(direction)")
