@@ -86,19 +86,18 @@ public class Graph: GraphElementVisitorAcceptor {
      */
     public func getAllEdges() -> [Edge] {
         var result = [Edge]()
+        
         result.appendContentsOf(getEdges())
         result.appendContentsOf(getVertexEdges())
         
-        for i in 0 ..< result.count - 1 {
-            for var j in i + 1 ..< result.count {
-                if result[i] == result[j] {
-                    result.removeAtIndex(j)
-                    j -= 1
-                }
-            }
-        }
-        
-        return result
+        return uniq(result)
+    }
+    
+    func uniq<S: SequenceType, E: Hashable where E==S.Generator.Element>(source: S) -> [E] {
+        var seen: [E:Bool] = [:]
+        return source.filter({ (v) -> Bool in
+            return seen.updateValue(true, forKey: v) == nil
+        })
     }
     
     /**
