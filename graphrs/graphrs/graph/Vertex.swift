@@ -106,11 +106,51 @@ public class Vertex: GraphElement, Hashable {
     }
     
     public func getOutgoingEdges() -> [Edge] {
-        return getEdges(.Forward) ?? [Edge]()
+        var results = [Edge]()
+        
+        if let edges = getEdges(.Forward) {
+            for edge in edges {
+                if edge.getSource() == self {
+                    results.append(edge)
+                }
+            }
+        }
+        
+        if let edges = getEdges(.Backward) {
+            for edge in edges {
+                if edge.getTarget() == self {
+                    if !results.contains(edge) {
+                        results.append(edge)
+                    }
+                }
+            }
+        }
+        
+        return results
     }
     
     public func getIncomingEdges() -> [Edge] {
-        return getEdges(.Backward) ?? [Edge]()
+        var results = [Edge]()
+        
+        if let edges = getEdges(.Forward) {
+            for edge in edges {
+                if edge.getTarget() == self {
+                    results.append(edge)
+                }
+            }
+        }
+        
+        if let edges = getEdges(.Backward) {
+            for edge in edges {
+                if edge.getSource() == self {
+                    if !results.contains(edge) {
+                        results.append(edge)
+                    }
+                }
+            }
+        }
+        
+        return results
     }
     
     public func toString() -> String {
