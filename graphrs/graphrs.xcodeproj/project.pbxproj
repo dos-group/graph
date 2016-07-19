@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1827A7151D3E357600FCC555 /* exampleGraphs.xcassets in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1881C8891CB7BA9E00FFADA3 /* exampleGraphs.xcassets */; };
 		1881C8731CB5855B00FFADA3 /* GraphFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1881C8721CB5855B00FFADA3 /* GraphFactory.swift */; };
 		1881C8741CB585A100FFADA3 /* GraphFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1881C8721CB5855B00FFADA3 /* GraphFactory.swift */; };
-		1881C88A1CB7BA9E00FFADA3 /* exampleGraphs.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1881C8891CB7BA9E00FFADA3 /* exampleGraphs.xcassets */; };
 		1881C8B81CB7D6EA00FFADA3 /* exampleGraphs.xcassets in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1881C8891CB7BA9E00FFADA3 /* exampleGraphs.xcassets */; };
 		188752A31CB41578009402E6 /* PrimitiveDataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188752A21CB41578009402E6 /* PrimitiveDataTest.swift */; };
 		188CB89D1CAE8AD8009D2944 /* SnapImportIdMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADB78E1CAE7D4B003FA9CE /* SnapImportIdMapper.swift */; };
@@ -134,6 +134,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		1827A7131D3E356900FCC555 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				1827A7151D3E357600FCC555 /* exampleGraphs.xcassets in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		1881C8B71CB7D6DF00FFADA3 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -508,6 +518,7 @@
 				18ADB64E1CAD0E8D003FA9CE /* Frameworks */,
 				18ADB64F1CAD0E8D003FA9CE /* Headers */,
 				18ADB6501CAD0E8D003FA9CE /* Resources */,
+				1827A7131D3E356900FCC555 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -627,7 +638,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				18ADB6AA1CAD0ED4003FA9CE /* LICENSE in Resources */,
-				1881C88A1CB7BA9E00FFADA3 /* exampleGraphs.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

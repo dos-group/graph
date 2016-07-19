@@ -6,6 +6,8 @@
 //  Copyright © 2016 CITBDA. All rights reserved.
 //
 
+import AppKit
+
 public enum FileSystemHandlerErrors: ErrorType {
     case FileIsNotExisting
     case FileCantBeRead
@@ -14,21 +16,21 @@ public enum FileSystemHandlerErrors: ErrorType {
 public class FileSystemHandler {
     #if os(OSX)
     public class func openFileDialog() -> String? {
-        var myFileDialog: NSOpenPanel = NSOpenPanel()
+        let myFileDialog: NSOpenPanel = NSOpenPanel()
         myFileDialog.runModal()
         
         // Get the path to the file chosen in the NSOpenPanel
-        var path = myFileDialog.URL?.path
+        let path = myFileDialog.URL?.path
         
         // Make sure that a path was chosen
         if (path != nil) {
-            var err = NSError?()
-            let text = String(contentsOfFile: path!, encoding: NSUTF8StringEncoding, error: &err)
-            
-            if !(err != nil) {
+            do {
+                let text = try String(contentsOfFile: path!, encoding: NSUTF8StringEncoding)
                 return text
-            }
+            } catch {}
         }
+        
+        return nil
     }
     #endif
     
