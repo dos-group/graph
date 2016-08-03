@@ -6,7 +6,9 @@
 //  Copyright © 2016 CITBDA. All rights reserved.
 //
 
+#if os(OSX)
 import AppKit
+#endif
 
 public enum FileSystemHandlerErrors: ErrorType {
     case FileIsNotExisting
