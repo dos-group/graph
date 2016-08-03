@@ -11,7 +11,6 @@
 		1881C8731CB5855B00FFADA3 /* GraphFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1881C8721CB5855B00FFADA3 /* GraphFactory.swift */; };
 		1881C8741CB585A100FFADA3 /* GraphFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1881C8721CB5855B00FFADA3 /* GraphFactory.swift */; };
 		1881C8B81CB7D6EA00FFADA3 /* exampleGraphs.xcassets in CopyFiles */ = {isa = PBXBuildFile; fileRef = 1881C8891CB7BA9E00FFADA3 /* exampleGraphs.xcassets */; };
-		188752A31CB41578009402E6 /* PrimitiveDataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188752A21CB41578009402E6 /* PrimitiveDataTest.swift */; };
 		188CB89D1CAE8AD8009D2944 /* SnapImportIdMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADB78E1CAE7D4B003FA9CE /* SnapImportIdMapper.swift */; };
 		188CB89E1CAE8AD8009D2944 /* SnapImportFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADB7901CAE7DC6003FA9CE /* SnapImportFeature.swift */; };
 		188CB89F1CAE8AD8009D2944 /* DictionaryElementDataJsonVisitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADB7921CAE863F003FA9CE /* DictionaryElementDataJsonVisitor.swift */; };
@@ -58,8 +57,6 @@
 		18ADB6D41CAD0ED4003FA9CE /* VertexProcessingFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADB6A51CAD0ED4003FA9CE /* VertexProcessingFacade.swift */; };
 		18ADB6D61CAD0ED4003FA9CE /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADB6A81CAD0ED4003FA9CE /* ArrayExtension.swift */; };
 		18ADB6D71CAD0ED4003FA9CE /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADB6A91CAD0ED4003FA9CE /* StringExtension.swift */; };
-		18ADB72D1CAD1D32003FA9CE /* BasicGraphTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADB72C1CAD1D32003FA9CE /* BasicGraphTest.swift */; };
-		18ADB72F1CAD2007003FA9CE /* BasicGraphWithDataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADB72E1CAD2007003FA9CE /* BasicGraphWithDataTest.swift */; };
 		18ADB75E1CAD3A8F003FA9CE /* ConnectionDistanceAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADB6871CAD0ED4003FA9CE /* ConnectionDistanceAgent.swift */; };
 		18ADB75F1CAD3A8F003FA9CE /* ConnectionDistanceAgentPopulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADB6881CAD0ED4003FA9CE /* ConnectionDistanceAgentPopulator.swift */; };
 		18ADB7601CAD3A8F003FA9CE /* DirectedSpreadingAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADB6891CAD0ED4003FA9CE /* DirectedSpreadingAgent.swift */; };
@@ -93,6 +90,8 @@
 		18ADB7911CAE7DC6003FA9CE /* SnapImportFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADB7901CAE7DC6003FA9CE /* SnapImportFeature.swift */; };
 		18ADB7931CAE863F003FA9CE /* DictionaryElementDataJsonVisitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADB7921CAE863F003FA9CE /* DictionaryElementDataJsonVisitor.swift */; };
 		18ADB7951CAE86A4003FA9CE /* FileSystemHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADB7941CAE86A4003FA9CE /* FileSystemHandler.swift */; };
+		18D81E2D1D5246AC00F37D89 /* BasicGraphTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADB72C1CAD1D32003FA9CE /* BasicGraphTest.swift */; };
+		18D81E2E1D5246AC00F37D89 /* BasicGraphWithDataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADB72E1CAD2007003FA9CE /* BasicGraphWithDataTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,13 +101,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = AA949BD71BE8649C00F02242;
 			remoteInfo = SwiftSerializer;
-		};
-		18ADB65E1CAD0E8F003FA9CE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 18ADB6491CAD0E8D003FA9CE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 18ADB6511CAD0E8D003FA9CE;
-			remoteInfo = graphrs;
 		};
 		18ADB6F41CAD0F0D003FA9CE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -130,6 +122,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = AA949BD71BE8649C00F02242;
 			remoteInfo = SwiftSerializer;
+		};
+		18D81E2B1D5246A200F37D89 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 18ADB6491CAD0E8D003FA9CE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 18ADB6511CAD0E8D003FA9CE;
+			remoteInfo = graphrs_osx;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -162,7 +161,6 @@
 		1881C8891CB7BA9E00FFADA3 /* exampleGraphs.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = exampleGraphs.xcassets; path = res/exampleGraphs.xcassets; sourceTree = "<group>"; };
 		1881C8921CB7C22D00FFADA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1881C89C1CB7C2F700FFADA3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		188752A21CB41578009402E6 /* PrimitiveDataTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrimitiveDataTest.swift; path = data/PrimitiveDataTest.swift; sourceTree = "<group>"; };
 		188CB8A81CAECD98009D2944 /* JsonVisitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonVisitor.swift; sourceTree = "<group>"; };
 		188CB8AB1CAED229009D2944 /* JsonConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonConverter.swift; sourceTree = "<group>"; };
 		188CB8B01CAFBD05009D2944 /* graphrs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = graphrs.h; path = graphrs_osx/graphrs.h; sourceTree = SOURCE_ROOT; };
@@ -287,7 +285,6 @@
 		188752A01CB4155E009402E6 /* data */ = {
 			isa = PBXGroup;
 			children = (
-				188752A21CB41578009402E6 /* PrimitiveDataTest.swift */,
 			);
 			name = data;
 			sourceTree = "<group>";
@@ -541,7 +538,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				18ADB65F1CAD0E8F003FA9CE /* PBXTargetDependency */,
+				18D81E2C1D5246A200F37D89 /* PBXTargetDependency */,
 			);
 			name = graphrsTests;
 			productName = graphrsTests;
@@ -708,9 +705,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				188752A31CB41578009402E6 /* PrimitiveDataTest.swift in Sources */,
-				18ADB72D1CAD1D32003FA9CE /* BasicGraphTest.swift in Sources */,
-				18ADB72F1CAD2007003FA9CE /* BasicGraphWithDataTest.swift in Sources */,
+				18D81E2D1D5246AC00F37D89 /* BasicGraphTest.swift in Sources */,
+				18D81E2E1D5246AC00F37D89 /* BasicGraphWithDataTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -767,15 +763,15 @@
 			name = SwiftSerializer;
 			targetProxy = 188752A71CB41D9A009402E6 /* PBXContainerItemProxy */;
 		};
-		18ADB65F1CAD0E8F003FA9CE /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 18ADB6511CAD0E8D003FA9CE /* graphrs_osx */;
-			targetProxy = 18ADB65E1CAD0E8F003FA9CE /* PBXContainerItemProxy */;
-		};
 		18ADB72A1CAD127E003FA9CE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SwiftSerializer;
 			targetProxy = 18ADB7291CAD127E003FA9CE /* PBXContainerItemProxy */;
+		};
+		18D81E2C1D5246A200F37D89 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 18ADB6511CAD0E8D003FA9CE /* graphrs_osx */;
+			targetProxy = 18D81E2B1D5246A200F37D89 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -921,7 +917,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.tub.graphrsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				SUPPORTED_PLATFORMS = macosx;
 			};
 			name = Debug;
 		};
@@ -933,7 +929,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.tub.graphrsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos macosx";
+				SUPPORTED_PLATFORMS = macosx;
 			};
 			name = Release;
 		};

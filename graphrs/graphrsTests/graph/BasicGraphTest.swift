@@ -17,10 +17,10 @@ class BasicGraphTest: XCTestCase {
         
         graph = Graph()
         
-        let v1 = graph!.addVertex()
-        let v2 = graph!.addVertex()
-        let v3 = graph!.addVertex()
-        let v4 = graph!.addVertex()
+        let v1 = graph!.addVertex(nil)
+        let v2 = graph!.addVertex(nil)
+        let v3 = graph!.addVertex(nil)
+        let v4 = graph!.addVertex(nil)
         
         do {
             let e1: Edge? = try graph!.addEdge(v1.id, sideBId: v2.id, direction: .Forward, data: nil)
@@ -49,7 +49,6 @@ class BasicGraphTest: XCTestCase {
     }
     
     func testSimpleGraph() {
-        //if let d = e1.data
         XCTAssert(true)
     }
 }

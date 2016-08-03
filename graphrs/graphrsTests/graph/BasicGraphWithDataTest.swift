@@ -86,8 +86,10 @@ class BasicGraphWithDataTest: XCTestCase {
     func testBasicGraphWithData() {
         //populator = UserDepandantDirectedSpreadingAgentPopulator(775, 500, true,  "userID")
         //populator = ModuleAddTimedistanceAgentPopulator(30133, 500, true,  "user")
-        populator = RatingAgentPopulator(queriedVertexId: 30133, maxDistance: 500, settingVisibility: true, userIDKey: "user")
+        //populator = RatingAgentPopulator(queriedVertexId: 30133, maxDistance: 500, settingVisibility: true, userIDKey: "user")
+        populator = ConnectionDistanceAgentPopulator(queriedVertexId: 0, maxDistance: 500)
         manager = AgentManager(graph: graph!, pop: populator!, direction: Direction.Undefined)
+        
         manager!.runProcessing(500)
         
         //Nur bei gerateten sinnvoll
