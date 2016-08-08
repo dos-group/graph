@@ -34,10 +34,12 @@ class ConnectionDistanceAgent : Agent {
             modifyDistanceAndBroadcast(0);
         } else {
             do {
-                let vDistance = try (v.getValue("distance")!.i())
-                
-                if (vDistance > self.distance) {
-                    modifyDistanceAndBroadcast(self.distance)
+                if let distValue = v.getValue("distance") {
+                    let vDistance = try (distValue.i())
+                    
+                    if (vDistance > self.distance) {
+                        modifyDistanceAndBroadcast(self.distance)
+                    }
                 }
             } catch {}
         }
@@ -60,7 +62,9 @@ class ConnectionDistanceAgent : Agent {
         var cs = ""
         
         do {
-            d = try v.getValue("distance")!.i()
+            if let distValue = v.getValue("distance") {
+                d = try distValue.i()
+            }
         } catch {}
         
         switch (d) {

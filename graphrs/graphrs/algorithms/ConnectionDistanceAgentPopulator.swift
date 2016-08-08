@@ -17,8 +17,7 @@ class ConnectionDistanceAgentPopulator: AgentPopulator {
     
     func getPopulation(vertexId: UInt64, vertexProcessingFacade: VertexProcessingFacade) -> [Agent]? {
         if (vertexId == queriedVertexId) {
-            let a = createAgent(vertexId, distance: maxDistance, vertexProcessingFacade: vertexProcessingFacade)
-            return [a]
+            return [ createAgent(vertexId, distance: maxDistance, vertexProcessingFacade: vertexProcessingFacade) ]
         } else {
             return nil
         }

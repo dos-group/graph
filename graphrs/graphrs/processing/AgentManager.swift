@@ -34,9 +34,10 @@ class AgentManager: VertexProcessingFacade {
         
         // Getting population for initial schedule
         for v in graph.getVertices() {
-            let al = pop.getPopulation(v.id, vertexProcessingFacade: self)
-            if (al != nil && al!.count > 0) {
-                schedule[v.id] = al
+            if let al = pop.getPopulation(v.id, vertexProcessingFacade: self) {
+                if al.count > 0 {
+                    schedule[v.id] = al
+                }
             }
         }
     }
@@ -50,11 +51,13 @@ class AgentManager: VertexProcessingFacade {
         
         for vertexId in schedule.keys {
             localVertexId = vertexId
-            let agents = schedule[vertexId]
-            for var agent in agents! {
-                currentlyExecutedAgent = agent
-                agent.v = self
-                agent.runStep()
+            
+            if let agents = schedule[vertexId] {
+                for var agent in agents {
+                    currentlyExecutedAgent = agent
+                    agent.v = self
+                    agent.runStep()
+                }
             }
         }
         
@@ -72,7 +75,7 @@ class AgentManager: VertexProcessingFacade {
         var currentStep: UInt64 = 0
         
         while((currentStep <= numberOfBulkSteps) &&
-             (!((currentStep > 0) && (schedule.count == 0)) )) {
+             (!((currentStep > 0) && (schedule.count == 0)))) {
             runBulkStep()
             currentStep += 1
         }
@@ -83,13 +86,17 @@ class AgentManager: VertexProcessingFacade {
     // -- implements ProcessingFacade
     
     func getValue(key: String) -> PrimitiveData? {
-        let data: DictionaryElementData = graph.getVertex(localVertexId)!.data as! DictionaryElementData
-        return data.d[key]
+        if let vertex = graph.getVertex(localVertexId) {
+            return vertex.getData().getData(key)
+        }
+        
+        return nil
     }
     
     func setValue(key: String, value: PrimitiveData) {
-        let data: DictionaryElementData = graph.getVertex(localVertexId)!.data as! DictionaryElementData
-        data.d[key] = value
+        if let vertex = graph.getVertex(localVertexId) {
+            vertex.getData().updateData(key, value: value)
+        }
     }
     
     func getId() -> UInt64 {
@@ -97,17 +104,21 @@ class AgentManager: VertexProcessingFacade {
     }
     
     func broadcast() {
-        let vertex = graph.getVertex(localVertexId)
-        
-        if (direction == Direction.Forward || direction == Direction.Undefined) {
-            for e in vertex!.getEdges(Direction.Forward)! {
-                addAgent(e.sideB.id, e: e)
+        if let vertex = graph.getVertex(localVertexId) {
+            if (direction == Direction.Forward || direction == Direction.Undefined) {
+                if let edges = vertex.getEdges(Direction.Forward) {
+                    for e in edges {
+                        addAgent(e.sideB.id, e: e)
+                    }
+                }
             }
-        }
-        
-        if (direction == Direction.Backward || direction == Direction.Undefined) {
-            for e in vertex!.getEdges(Direction.Backward)! {
-                addAgent(e.sideA.id, e: e)
+            
+            if (direction == Direction.Backward || direction == Direction.Undefined) {
+                if let edges = vertex.getEdges(Direction.Backward) {
+                    for e in edges {
+                        addAgent(e.sideA.id, e: e)
+                    }
+                }
             }
         }
     }
